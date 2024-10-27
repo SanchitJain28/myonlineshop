@@ -18,6 +18,6 @@ app.get("/",(req,res)=>{
     res.send("HEy fucker !! I am running here")
 })
 
-app.listen(port,()=>{
-    console.log("Hey!! Fucker")
-})
+// app.listen(port,()=>{
+//     console.log("Hey!! Fucker")
+// })

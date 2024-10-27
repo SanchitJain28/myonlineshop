@@ -14,7 +14,7 @@ export function ProductContext(props) {
   const [productCart, setProductCart] = useState([])
   //will get all the products
   const getProducts = async () => {
-    let url = "http://localhost:8080/api/getallproducts?page=0"
+    let url = "https://instacart-9fh4.onrender.com/api/getallproducts?page=0"
     let response = await fetch(url)
     const data = await response.json()
     console.log(data)
@@ -27,7 +27,7 @@ export function ProductContext(props) {
     if (!productid) {
       return console.log("PLease enter the id")
     }
-    const url = `http://localhost:8080/api/getsingleproduct/${productid}`
+    const url = `https://instacart-9fh4.onrender.com/api/getsingleproduct/${productid}`
     let response = await fetch(url, {
       method: "GET",
       headers: {
@@ -50,7 +50,7 @@ export function ProductContext(props) {
     formDataToSend.append('productCategory', productCategory);  // Append the file
     formDataToSend.append('productPrice', productPrice);  // Append the file
     formDataToSend.append('productDescription', productDescription);  // Append the file
-    let url = "http://localhost:8080/api/createproduct"
+    let url = "https://instacart-9fh4.onrender.com/api/createproduct"
     let response = await fetch(url, {
       method: "POST",
       body: formDataToSend,
@@ -66,7 +66,7 @@ export function ProductContext(props) {
   //WHY I WAS NOT USING RETURN STATEMENT TILL NOW,WHY??
   //this will get the product be Categories
   const getProductsByCategory = async (category, page) => {
-    let url = `http://localhost:8080/api/getproductbycategory?category=${category}&page=${page}`
+    let url = `https://instacart-9fh4.onrender.com/api/getproductbycategory?category=${category}&page=${page}`
     const response = await fetch(url, {
       method: "GET"
     })
@@ -75,7 +75,7 @@ export function ProductContext(props) {
   }
 
   const getProductsbySeller = async () => {
-    let url = "http://localhost:8080/api/sellerproducts"
+    let url = "https://instacart-9fh4.onrender.com/api/sellerproducts"
     const response = await fetch(url, {
       methods: "GET",
       headers: {
@@ -89,7 +89,7 @@ export function ProductContext(props) {
     , postalCode, country, itemsPrice, taxPrice
     , shippingPrice, totalPrice) => {
     try {
-      let url = "http://localhost:8080/api/createorder"
+      let url = "https://instacart-9fh4.onrender.com/api/createorder"
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({

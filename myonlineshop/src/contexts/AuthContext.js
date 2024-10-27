@@ -12,7 +12,7 @@ export function AuthContext(props) {
 
   const getMeRegistered = async (email, password,name,phoneNo) => {
     try {
-      const url = 'http://localhost:8080/api/createuser'
+      const url = 'https://instacart-9fh4.onrender.com/api/createuser'
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({ email, password,name,phoneNo }),
@@ -30,7 +30,7 @@ export function AuthContext(props) {
 
   const getMelogin = async (email, password) => {
     try {
-      const url = "http://localhost:8080/api/loginuser"
+      const url = "https://instacart-9fh4.onrender.com/api/loginuser"
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({ email, password }),
@@ -53,7 +53,7 @@ export function AuthContext(props) {
       formDataToSend.append("email", email)
       formDataToSend.append("password", password)
 
-      const url = "http://localhost:8080/api/selleraccount"
+      const url = "https://instacart-9fh4.onrender.com/api/selleraccount"
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({ businessName, phoneNo, email, password }),
@@ -71,7 +71,7 @@ export function AuthContext(props) {
 
   const sellerLogin = async (email, password) => {
     try {
-      const url = "http://localhost:8080/api/sellerlogin";
+      const url = "https://instacart-9fh4.onrender.com/api/sellerlogin";
     const sellerFormData = new FormData();
     await sellerFormData.append("email", email);
     await sellerFormData.append("password", password);
@@ -92,7 +92,7 @@ export function AuthContext(props) {
 
   const getUserInfo=async()=>{
     try {
-      const url="http://localhost:8080/api/userdetails"
+      const url="https://instacart-9fh4.onrender.com/api/userdetails"
     const response=await fetch(url,{
       method:"GET",
       headers:{
