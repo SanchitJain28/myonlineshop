@@ -50,7 +50,7 @@ export default function CategoryPage() {
                 title: `all products reached`,
                 status: "info",
                 isClosable: true,
-              })} >Hell nah</Button>
+              })} >More item</Button>
     </> 
 
   )
