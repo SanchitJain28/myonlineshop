@@ -130,7 +130,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "all": "concurrently \"nodemon backend/index.js\"  \"npm --prefix ./myonlineshop start\""
+    "all": "concurrently \"nodemon backend/index.js\"  \"npm --prefix ./myonlineshop start\"",
+    "build":"npm --prefix myonlineshop run build"
   },
   "author": "",
   "license": "ISC",
