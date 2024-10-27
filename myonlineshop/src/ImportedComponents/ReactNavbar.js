@@ -88,10 +88,7 @@ export default function ReactNavbar() {
               Home
             </Link>
             <Link to="/becomeaseller">Become a seller</Link>
-            {/* <CartDrawer/> */}
             <CartDrawerChakra/>
-            <Link to="/cart" className='z-0'>Cart <span className='z-10 text-red-600'> {product.productCart.length}</span></Link>
-
           </Navbar.Collapse>
         </div>
       </MegaMenu>

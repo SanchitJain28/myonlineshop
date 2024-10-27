@@ -29,13 +29,14 @@ export default function CartDrawerChakra() {
     return (
         <>
             <Button ref={btnRef} colorScheme='teal' onClick={onOpen}>
-                Open
+                Cart
             </Button>
             <Drawer
                 isOpen={isOpen}
                 placement='right'
                 onClose={onClose}
                 finalFocusRef={btnRef}
+                size="lg"
             >
                 <DrawerOverlay />
                 <DrawerContent>
@@ -83,3 +84,6 @@ export default function CartDrawerChakra() {
         </>
     )
 }
+
+
+
