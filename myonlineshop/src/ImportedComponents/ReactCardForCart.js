@@ -23,7 +23,7 @@ export default function ReactCardForCart(props) {
       return e._id!==_id
     })
     cartInfo.setProductCart(cartProducts)
-  }}>Remove</Button>
+  }} className='bg-red-700 my-2'>Remove</Button>
   </div>
   <div className="">
     <img src={images[0]} className='w-20'/>

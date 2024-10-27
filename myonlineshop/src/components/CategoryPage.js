@@ -32,7 +32,12 @@ export default function CategoryPage() {
   useEffect(() => {
     productsByCategory()
     console.log(productInfo.category)
-  }, [currentPage,productInfo.category])
+  }, [currentPage])
+
+  useEffect(() => {
+    setProducts([])
+  }, [productInfo.category])
+  
 
   return (
     <>

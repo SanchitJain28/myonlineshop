@@ -19,6 +19,7 @@ import OrderPage from './components/OrderPage';
 import Cart from './components/Cart';
 import OrderSuccess from './components/OrderSuccess';
 import DashBoard from './components/DashBoard';
+import FlowBiteFooter from './ImportedComponents/FlowBiteFooter';
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
       element: <>
       <ReactNavbar/>
         <Home/>
-        <Footer/>
+        <FlowBiteFooter/>
       </>,
     },
     {
