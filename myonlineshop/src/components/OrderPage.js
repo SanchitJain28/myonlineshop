@@ -4,6 +4,7 @@ import { Card, CardHeader, CardBody, CardFooter, Text, Heading, Stack, Box, Stac
 import { useNavigate } from 'react-router-dom'
 import { useToast } from '@chakra-ui/react'
 import { authContext } from '../contexts/AuthContext'
+import LoginModal from '../ImportedComponents/LoginModal'
 
 export default function OrderPage() {
   const toast=useToast()
@@ -175,7 +176,7 @@ export default function OrderPage() {
     </>:
     
     <>
-    <Button>LOG IN</Button>
+    <LoginModal msg="Log in"/>
     </>}
      
     </>
