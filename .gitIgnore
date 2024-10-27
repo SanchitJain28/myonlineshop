@@ -1,0 +1,6 @@
+# dependencies
+node_modules
+myonlineshop/node_modules
+backend/node_modules
+# production
+/myonlineshop/build
