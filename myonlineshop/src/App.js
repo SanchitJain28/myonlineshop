@@ -20,6 +20,7 @@ import Cart from './components/Cart';
 import OrderSuccess from './components/OrderSuccess';
 import DashBoard from './components/DashBoard';
 import FlowBiteFooter from './ImportedComponents/FlowBiteFooter';
+import FlowbiteNavbar from './ImportedComponents/FlowbiteNavbar';
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
     {
       path: "/",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
         <Home/>
         <FlowBiteFooter/>
       </>,
@@ -75,7 +76,7 @@ function App() {
     {
       path: "/categorypage",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
       <CategoryPage/>
 
       </>,

@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { authContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-export default function RegisterModal() {
+export default function RegisterModal(props) {
     const [openModal, setOpenModal] = useState(false);
     const toast = useToast()
     const auth = useContext(authContext)
@@ -19,7 +19,7 @@ export default function RegisterModal() {
 
     return (
         <>
-            <ChakraButton onClick={() => setOpenModal(true)}>SignUp</ChakraButton>
+            <a onClick={() => setOpenModal(true)} className={props.className}>SignUp</a>
             <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} className="bg-black text-white">
                 <Modal.Header className=" rounded text-white" >Register</Modal.Header>
                 <Modal.Body className="bg-black p-20">

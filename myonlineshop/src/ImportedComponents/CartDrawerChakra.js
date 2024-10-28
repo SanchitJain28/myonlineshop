@@ -19,7 +19,7 @@ import { productAPI } from '../contexts/ProductContext'
 import { authContext } from '../contexts/AuthContext'
 
 
-export default function CartDrawerChakra() {
+export default function CartDrawerChakra(props) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
     const cartInfo = useContext(productAPI)
@@ -28,7 +28,7 @@ export default function CartDrawerChakra() {
 
     return (
         <>
-            <Button ref={btnRef} colorScheme='teal' onClick={onOpen}>
+            <Button href="#" ref={btnRef} colorScheme='teal' onClick={onOpen} className={props.className}>
                 Cart
             </Button>
             <Drawer

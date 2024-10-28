@@ -1,14 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 import { Button, MegaMenu, Navbar, Dropdown, Avatar } from 'flowbite-react';
-import { Button as ChakraButton, useToast } from '@chakra-ui/react';
+import { Button as ChakraButton, useToast,useDisclosure } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { productAPI } from '../contexts/ProductContext';
-import { ButtonGroup, useDisclosure, Lorem } from '@chakra-ui/react';
-import ReactModal from './ReactModal';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import { authContext } from '../contexts/AuthContext';
-import CartDrawer from './CartDrawer';
 import CartDrawerChakra from './CartDrawerChakra';
 
 
@@ -25,8 +22,8 @@ export default function ReactNavbar() {
   }, [auth.loginDetails])
   return (
     <>
-      <MegaMenu className='bg-black text-white flex justify-center align-center'>
-        <div className="mx-auto flex max-w-screen-xl flex-wrap md:space-x-8">
+      <MegaMenu className='bg-black text-white flex justify-between align-center'>
+        <div className="mx-auto flex max-w-screen-xl flex-wrap md:space-x-8 ">
           <Link to="/" className='mt-4'>
             <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">InstaCart</span>
           </Link>

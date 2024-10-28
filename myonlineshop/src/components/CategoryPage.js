@@ -5,6 +5,7 @@ import { Pagination } from "flowbite-react";
 import { Button } from '@chakra-ui/react';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useToast } from '@chakra-ui/react'
+import CategoryPageProductCard from '../ImportedComponents/CategoryPageProductCard';
 
 
 
@@ -14,44 +15,51 @@ export default function CategoryPage() {
   const [product, setProducts] = useState([])
   const productInfo = useContext(productAPI)
   const [currentPage, setCurrentPage] = useState(0);
-  const[disable,setDisable]=useState(false)
-  const onPageChange=()=>{
-    setCurrentPage(currentPage+1)    
+  const [disable, setDisable] = useState(false)
+  const onPageChange = () => {
+    setCurrentPage(currentPage + 1)
   }
 
   const productsByCategory = async () => {
-    const data = await productInfo.getProductsByCategory(productInfo.category, currentPage)
-    if(data.length<10){
-      setDisable(true)
-    }
-    setProducts([...product,...data])
-    
+    const data = await productInfo.getProductsByCategory(productInfo.category, 0)
+    // if (data.length < 10) {
+    //   setDisable(true)
+    // }
+    setProducts([ ...data])
+    setCurrentPage(0)
     console.log(data)
   }
 
+  const fetchMore = async () => {
+    const data = await productInfo.getProductsByCategory(productInfo.category, currentPage)
+    // if(data.length<=10){
+    //   setDisable(true)
+    // }
+    setProducts([...product, ...data])
+  }
+
   useEffect(() => {
-    productsByCategory()
+    fetchMore()
     console.log(productInfo.category)
   }, [currentPage])
 
   useEffect(() => {
-    setProducts([])
+    productsByCategory()
+    console.log(productInfo.category)
+    // productsByCategory()
+
   }, [productInfo.category])
-  
+
 
   return (
     <>
-      <div className="grid grid-cols-5 m-12">
+      <div className="flex flex-col">
         {product.map((e) => {
-          return <ProductCard name={e.productName} price={e.productPrice} Description={e.productDescription} sellername={e.sellerName} id={e} imageLinks={e.images} productCategory={e.productCategory} />
+          return <CategoryPageProductCard data={e} />
         })}
       </div>
-        <Button onClick={onPageChange} className='mx-12' disabled={disable && toast({
-                title: `all products reached`,
-                status: "info",
-                isClosable: true,
-              })} >More item</Button>
-    </> 
+      <Button onClick={onPageChange} className='mx-12' disabled={disable}>More item</Button>
+    </>
 
   )
 }
