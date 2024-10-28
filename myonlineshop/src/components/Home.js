@@ -18,12 +18,12 @@ export default function Home() {
       <ReactCarousel/>
 
       </div>
-      <div className="items-corousel p-12 bg-gray-300">
-        <div className="m-8">
+      <div className="items-corousel lg:p-0 xl:p-24 bg-gray-300">
+        <div className="lg:m-0 md:m-0">
           <p className='text-3xl align-center text-center mb-8 '>Clothes</p>
-          <ItemsCarousel category="Clothes" />
+          <ItemsCarousel category="Clothes"/>
         </div>
-          <div className="m-4">
+          <div className="lg:m-0 md:m-0">
           <p className='text-3xl align-center text-center mb-8 '>Electronics</p>
           <ItemsCarousel category="Electronics" />
           </div>
