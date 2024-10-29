@@ -72,11 +72,7 @@ export default function FlowbiteNavbar() {
                 <RegisterModal />
                 <p href="#">About us</p>
                 <p href="#">Contact</p>
-
                 <CartDrawerChakra className="" />
-
-
-
             </Navbar.Collapse>
         </Navbar>
     );
