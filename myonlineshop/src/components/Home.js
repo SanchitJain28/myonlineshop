@@ -16,7 +16,6 @@ export default function Home() {
 
   return (
     <>
-    <MUIButton>sdfg</MUIButton>
       <div className="flex flex-col">
         <ReactCarousel />
 
