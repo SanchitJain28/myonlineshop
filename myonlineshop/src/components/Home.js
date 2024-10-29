@@ -4,6 +4,7 @@ import { productAPI } from '../contexts/ProductContext'
 import {  ReactCarousel } from '../ImportedComponents/ReactCarousel'
 import { Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import {Button as MUIButton} from '@mui/material';
 
 
 
@@ -15,6 +16,7 @@ export default function Home() {
 
   return (
     <>
+    <MUIButton>sdfg</MUIButton>
       <div className="flex flex-col">
         <ReactCarousel />
 

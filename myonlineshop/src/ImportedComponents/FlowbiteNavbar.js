@@ -7,11 +7,9 @@ import LoginModal from "./LoginModal";
 import { Link } from "react-router-dom";
 import CartDrawerChakra from "./CartDrawerChakra";
 import RegisterModal from "./RegisterModal";
-import Button from '@mui/material/Button';
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
+
+
 
 export default function FlowbiteNavbar() {
     const toast = useToast()
@@ -74,13 +72,10 @@ export default function FlowbiteNavbar() {
                 <RegisterModal />
                 <p href="#">About us</p>
                 <p href="#">Contact</p>
-                {/* <Rating
-                    name="simple-controlled"
-                    value={2}
-                    
-                />   */}         
-                     <CartDrawerChakra className="" /> 
-                    {/* <Button variant="contained">Hello world</Button> */}
+
+                <CartDrawerChakra className="" />
+
+
 
             </Navbar.Collapse>
         </Navbar>
