@@ -1,5 +1,5 @@
-import { useDisclosure, useToast } from "@chakra-ui/react";
-import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
+import { useToast } from "@chakra-ui/react";
+import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import { useContext, useEffect } from "react";
 import { authContext } from "../contexts/AuthContext";
 import { productAPI } from "../contexts/ProductContext";
@@ -7,10 +7,14 @@ import LoginModal from "./LoginModal";
 import { Link } from "react-router-dom";
 import CartDrawerChakra from "./CartDrawerChakra";
 import RegisterModal from "./RegisterModal";
+import Button from '@mui/material/Button';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
 
 export default function FlowbiteNavbar() {
     const toast = useToast()
-    const { isOpen, onOpen, onClose } = useDisclosure()
     const auth = useContext(authContext)
 
 
@@ -25,8 +29,9 @@ export default function FlowbiteNavbar() {
                 <Dropdown label="Categories" inline className="">
                     <Link to="/categorypage" onClick={() => { product.setCategory("Electronics") }}><Dropdown.Item>Electronics</Dropdown.Item></Link>
                     <Link to="/categorypage" onClick={() => { product.setCategory("Grocery") }}><Dropdown.Item>Grocery</Dropdown.Item></Link>
-                   <Link to="/categorypage" onClick={() => { product.setCategory("Clothes") }}> <Dropdown.Item>Clothes</Dropdown.Item></Link>
-                  <Link to="/categorypage" onClick={() => { product.setCategory("Stationary") }}>  <Dropdown.Item>Stationary</Dropdown.Item></Link>
+                    <Link to="/categorypage" onClick={() => { product.setCategory("Clothes") }}> <Dropdown.Item>Clothes</Dropdown.Item></Link>
+                    <Link to="/categorypage" onClick={() => { product.setCategory("Stationary") }}>  <Dropdown.Item>Stationary</Dropdown.Item></Link>
+                    {/* <Button variant="contained">Hello world</Button> */}
                 </Dropdown>
             </Navbar.Brand>
             <div className="flex md:order-2">
@@ -62,14 +67,20 @@ export default function FlowbiteNavbar() {
                 <Navbar.Toggle />
             </div>
             <Navbar.Collapse className="mb-4">
-              <Link to="/"> <p href="#" active>
+                <Link to="/"> <p href="#" active>
                     Home
-                </p></Link> 
-               <Link to="/becomeaseller"><p href="#">Become a seller</p></Link> 
+                </p></Link>
+                <Link to="/becomeaseller"><p href="#">Become a seller</p></Link>
                 <RegisterModal />
                 <p href="#">About us</p>
                 <p href="#">Contact</p>
-                <CartDrawerChakra className=""/>
+                {/* <Rating
+                    name="simple-controlled"
+                    value={2}
+                    
+                />   */}         
+                     <CartDrawerChakra className="" /> 
+                    {/* <Button variant="contained">Hello world</Button> */}
 
             </Navbar.Collapse>
         </Navbar>

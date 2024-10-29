@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import ProductCard from './ProductCard'
 import { productAPI } from '../contexts/ProductContext'
-import { Pagination } from "flowbite-react";
 import { Button } from '@chakra-ui/react';
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useToast } from '@chakra-ui/react'
 import CategoryPageProductCard from '../ImportedComponents/CategoryPageProductCard';
 
@@ -22,19 +19,20 @@ export default function CategoryPage() {
 
   const productsByCategory = async () => {
     const data = await productInfo.getProductsByCategory(productInfo.category, 0)
-    // if (data.length < 10) {
-    //   setDisable(true)
-    // }
-    setProducts([ ...data])
+    if (data.length < 10) {
+      setDisable(true)
+    }
+    setProducts(data)
     setCurrentPage(0)
+
     console.log(data)
   }
 
   const fetchMore = async () => {
     const data = await productInfo.getProductsByCategory(productInfo.category, currentPage)
-    // if(data.length<=10){
-    //   setDisable(true)
-    // }
+    if(data.length<10){
+      setDisable(true)
+    }
     setProducts([...product, ...data])
   }
 
@@ -44,10 +42,9 @@ export default function CategoryPage() {
   }, [currentPage])
 
   useEffect(() => {
+    setDisable(false)
     productsByCategory()
     console.log(productInfo.category)
-    // productsByCategory()
-
   }, [productInfo.category])
 
 

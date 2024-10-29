@@ -1,6 +1,3 @@
-
-"use client";
-
 import { Button, Card } from "flowbite-react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -8,13 +5,16 @@ import { productAPI } from "../contexts/ProductContext";
 
 export default function CategoryPageProductCard(props) {
     const productContext = useContext(productAPI)
-    const { productName, productPrice, images, productDescription,_id } = props.data
+    const { productName, productPrice, images,_id } = props.data
     return (
         <Card className="m-4">
             <div className="flex justify-between">
                 <div className="">
                     <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {productName}
+                    </h5>
+                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {productPrice}
                     </h5>
                     {/* <p className="font-normal text-gray-700 dark:text-gray-400 max-w-48">
                         {productDescription}

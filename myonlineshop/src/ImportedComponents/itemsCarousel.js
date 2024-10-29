@@ -93,12 +93,10 @@ export default function ItemsCarousel(props) {
       slidesToSlide={1}
       swipeable
     >
-      {/* <div className="flex justify-center">
-        {productData.length == 0 && <FLowBiteSpinner />}
-      </div> */}
-      {productData.map((e) => {
+     
+      {productData.length!==0?productData.map((e) => {
         return <ProductCard name={e.productName} price={e.productPrice} Description={e.productDescription} sellername={e.sellerName} id={e} imageLinks={e.images} />
-      })}
+      }):<FLowBiteSpinner/>}
 
 
     </Carousel>

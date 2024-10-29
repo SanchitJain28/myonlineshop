@@ -1,10 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import Home from './components/Home';
 import ProductCard from './components/ProductCard';
 import RegisterPage from './components/RegisterPage';
 import {createBrowserRouter,RouterProvider,} from "react-router-dom";
-import { AuthContext } from './contexts/AuthContext';
 import LoginPage from './components/LoginPage';
 import { ProductContext } from './contexts/ProductContext';
 import FileUpload from './components/FileUpload';
@@ -12,8 +10,6 @@ import ProductPage from './components/ProductPage';
 import BecomeAseller from './components/BecomeAseller';
 import CategoryPage from './components/CategoryPage';
 import SellerLogin from './components/SellerLogin';
-import Footer from './components/Footer';
-import ReactNavbar  from './ImportedComponents/ReactNavbar';
 import SellerDashboard from './components/SellerDashboard';
 import OrderPage from './components/OrderPage';
 import Cart from './components/Cart';
@@ -36,40 +32,45 @@ function App() {
     {
       path: "/register",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
       <RegisterPage/>
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/login",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
       <LoginPage />
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/addproduct",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
       <FileUpload/>
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/product",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
       <ProductPage/>
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/becomeaseller",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
       <BecomeAseller/>
+      <FlowBiteFooter/>
 
       </>,
     },
@@ -78,54 +79,61 @@ function App() {
       element: <>
       <FlowbiteNavbar/>
       <CategoryPage/>
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/sellerlogin",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
       <SellerLogin/>
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/sellerdashboard",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
       <SellerDashboard/>
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/createOrder",
       element: <>
-      <ReactNavbar/>
+      <FlowbiteNavbar/>
       <OrderPage/>
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/cart",
       element: <>
-      <ReactNavbar/>
-     <Cart/>
+      <FlowbiteNavbar/>
+      <Cart/>
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/ordersuccess",
       element: <>
-      <ReactNavbar/>
-     <OrderSuccess/>
+      <FlowbiteNavbar/>
+      <OrderSuccess/>
+      <FlowBiteFooter/>
 
       </>,
     },
     {
       path: "/userdashboard",
       element: <>
-      <ReactNavbar/>
-     <DashBoard/>
+      <FlowbiteNavbar/>
+      <DashBoard/>
+      <FlowBiteFooter/>
 
       </>,
     }
