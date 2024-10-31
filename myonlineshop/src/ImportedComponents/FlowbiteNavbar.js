@@ -21,7 +21,7 @@ export default function FlowbiteNavbar() {
 
     }, [auth.loginDetails])
     return (
-        <Navbar fluid rounded>
+        <Navbar fluid rounded className="">
             <Navbar.Brand>
                 <Link to="/"><span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white mx-4">Instacart</span></Link>
                 <Dropdown label="Categories" inline className="">
@@ -75,5 +75,6 @@ export default function FlowbiteNavbar() {
                 <CartDrawerChakra className="" />
             </Navbar.Collapse>
         </Navbar>
+
     );
 }

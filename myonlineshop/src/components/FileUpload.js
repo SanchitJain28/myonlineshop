@@ -38,7 +38,7 @@ export default function FileUpload() {
   return (
     <>
       <p className='text-center text-2xl p-8'>Create a Product</p>
-      <div className="flex flex-col justify-center p-12 border m-12">
+      <div className="flex flex-col justify-center border m-2 p-2">
         <FileInput type="file" name="file" className='my-4 p-2 form-control-file' multiple onChange={(e) => {
           //Waah chatgpt wah ,kya baat hai URL.createObjectURL helped in image Preview
           const files = Array.from(e.target.files)
@@ -48,11 +48,11 @@ export default function FileUpload() {
           setImagePreview(previewUrls); // For preview
           console.log(previewUrls)
         }} />
-        <div className="flex">
+        <div className="flex flex-col grid grid-cols-4 xl:flex xl:flex-row xl:">
           {imagePreview.map((e) => {
             return <>
               <div className="flex flex-col">
-                <img src={e} className='w-24 mx-2' />
+                <img src={e} className='w-24 mx-2 my-2' />
               </div>
             </>
           })}

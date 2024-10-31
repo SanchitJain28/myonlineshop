@@ -1,6 +1,7 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import React, { useContext, useEffect, useState } from 'react'
 import ProductCard from "../components/ProductCard";
 import { productAPI } from "../contexts/ProductContext";
@@ -93,10 +94,9 @@ export default function ItemsCarousel(props) {
       slidesToSlide={1}
       swipeable
     >
-     
       {productData.length!==0?productData.map((e) => {
         return <ProductCard name={e.productName} price={e.productPrice} Description={e.productDescription} sellername={e.sellerName} id={e} imageLinks={e.images} />
-      }):<FLowBiteSpinner/>}
+      }):<Skeleton count={5} className="w-full"/>}
 
 
     </Carousel>

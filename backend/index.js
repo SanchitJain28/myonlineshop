@@ -5,7 +5,7 @@ import { router as orderRouter } from "./routes/order.js";
 import { main as Database } from "./Database.js";
 import cors from 'cors'
 
-const port=8080;
+const port=3001;
 const app=express();
 app.use(cors())
 
@@ -18,6 +18,6 @@ app.get("/",(req,res)=>{
     res.send("HEy fucker !! I am running here")
 })
 
-// app.listen(port,()=>{
-//     console.log("Hey!! Fucker")
-// })
+app.listen(port,()=>{
+    console.log("Hey!! Fucker")
+})

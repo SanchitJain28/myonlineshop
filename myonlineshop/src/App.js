@@ -17,6 +17,7 @@ import OrderSuccess from './components/OrderSuccess';
 import DashBoard from './components/DashBoard';
 import FlowBiteFooter from './ImportedComponents/FlowBiteFooter';
 import FlowbiteNavbar from './ImportedComponents/FlowbiteNavbar';
+import UpdateProduct from './components/UpdateProduct';
 
 
 function App() {
@@ -133,6 +134,15 @@ function App() {
       element: <>
       <FlowbiteNavbar/>
       <DashBoard/>
+      <FlowBiteFooter/>
+
+      </>,
+    },
+    {
+      path: "/updateproduct",
+      element: <>
+      <FlowbiteNavbar/>
+      <UpdateProduct/>
       <FlowBiteFooter/>
 
       </>,

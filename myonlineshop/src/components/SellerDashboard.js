@@ -25,7 +25,7 @@ export default function SellerDashboard() {
         <p className='text-3xl align-center'>Your products</p>
         <Link to="/addproduct" className="p-4 bg-black rounded-2xl text-white w-40 mx-8">Add product</Link>
         </div>
-    <div className="flex">
+    <div className="flex flex-col">
     {product && product.map((e)=>{return <ReactProductCard myproduct={e}/>})}
     </div>
 
