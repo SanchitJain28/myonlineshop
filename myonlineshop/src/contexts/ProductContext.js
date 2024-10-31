@@ -121,7 +121,7 @@ export function ProductContext(props) {
     formDataToSend.append('productDescription', productDescription);  // Append the file
     formDataToSend.append('images',images)
     formDataToSend.append("productId",productId)
-    const url="http://localhost:3001/api/updateorder"
+    const url="https://instacart-9fh4.onrender.com/api/updateorder"
     const response=await fetch(url,{
       method:"POST",
       // headers:{
@@ -136,7 +136,7 @@ export function ProductContext(props) {
 
   const deleteProduct=async(productId)=>{
     try {
-      const url="http://localhost:3001/api/deleteproduct"
+      const url="https://instacart-9fh4.onrender.com/api/deleteproduct"
       const response=await fetch(url,{
         method:"DELETE",
         headers:{
