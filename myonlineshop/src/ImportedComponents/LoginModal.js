@@ -1,9 +1,14 @@
 import { useToast } from "@chakra-ui/react";
-import { Button, Modal } from "flowbite-react";
-import { Button as ChakraButton } from "@chakra-ui/react";
+import { Modal } from "flowbite-react";
 import { useContext, useState } from "react";
 import { authContext } from "../contexts/AuthContext";
-import { FormHelperText, Input, FormControl, FormLabel } from "@chakra-ui/react";
+import { FormHelperText, Input, FormControl, FormLabel, Button as ChakraButton } from "@chakra-ui/react";
+import LoginIcon from '@mui/icons-material/Login';
+import { TextField, Button } from "@mui/material";
+import RegisterModal from "./RegisterModal";
+import CircularProgress from '@mui/material/CircularProgress';
+import LinearProgress from '@mui/material/LinearProgress';
+
 
 export default function LoginModal(props) {
   const [openModal, setOpenModal] = useState(false);
@@ -11,32 +16,25 @@ export default function LoginModal(props) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const auth = useContext(authContext)
-
+  const[load,setLoad]=useState(false)
   return (
-    <>
-      <ChakraButton onClick={() => setOpenModal(true)} className="mx-4">{props.msg}</ChakraButton>
+    <>{load &&<LinearProgress />}
+      <a className="my-2 mx-2" onClick={() => setOpenModal(true)} >{props.msg}<LoginIcon /></a>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>login</Modal.Header>
         <Modal.Body>
-          <FormControl className=''>
-            <FormLabel>Email address</FormLabel>
-            <Input type='email' onChange={(e) => {
-              setEmail(e.target.value)
-            }} value={email} />
-            <FormHelperText className='text-white'>We'll never share your email.</FormHelperText>
-          </FormControl>
-
-
-          <FormControl className=''>
-            <FormLabel>password</FormLabel>
-            <Input type='email' onChange={(e) => {
-              setPassword(e.target.value)
-            }} value={password} />
-          </FormControl>
-
-          <Button backgroundColor='#000000' onClick={async () => {
+          <div className="flex flex-col">
+          <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e) => {
+            setEmail(e.target.value)
+          }} value={email} className='mx-2 my-2'/>
+          <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e) => {
+            setPassword(e.target.value)
+          }} value={password} className='mx-2 my-2'/>
+          <Button disabled={load} variant="outlined" onClick={async () => {
+            setLoad(true)
             const data = await auth.getMelogin(email, password)
             console.log(data)
+            setLoad(false)
             if (!data.errors) {
               localStorage.setItem("userId", data.token)
               auth.setLoginDetails(data.user)
@@ -60,7 +58,12 @@ export default function LoginModal(props) {
               duration: 9000,
               isClosable: true,
             })
-          }} className='text-white w-40 my-4 '>Register</Button>
+          }} className='mx-2 my-2'>Login {load && <CircularProgress/>}</Button>
+          <p className="mx-2 my-2 text-lg">Not an user?</p>
+          <Button variant="outlined" onClick={()=>{
+            // setOpenModal(false)
+          }} component={RegisterModal}></Button>
+          </div>
         </Modal.Body>
       </Modal>
     </>

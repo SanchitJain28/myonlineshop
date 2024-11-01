@@ -12,7 +12,8 @@ export function ProductContext(props) {
   const [category, setCategory] = useState("Electronics")
   const [orderProducts, setOrderProducts] = useState([])
   const [productCart, setProductCart] = useState([])
-  const[updateProduct,setUpdateProduct]=useState([])
+  const [updateProduct, setUpdateProduct] = useState([])
+  const [wishList, setWishList] = useState([])
   //will get all the products
   const getProducts = async () => {
     let url = "https://instacart-9fh4.onrender.com/api/getallproducts?page=0"
@@ -76,7 +77,7 @@ export function ProductContext(props) {
   }
 
   const getProductsbySeller = async () => {
-    let url = "https://instacart-9fh4.onrender.com/api/sellerproducts"
+    let url = "https://instacart-9fh4.onrender.com/api/sellerinfo"
     const response = await fetch(url, {
       methods: "GET",
       headers: {
@@ -110,7 +111,7 @@ export function ProductContext(props) {
     }
   }
 
-  const UpdateSellerProduct=async(file,images,productName,productDescription,productPrice,productCategory,productId)=>{
+  const UpdateSellerProduct = async (file, images, productName, productDescription, productPrice, productCategory, productId) => {
     const formDataToSend = new FormData();
     for (let i = 0; i < file.length; i++) {
       formDataToSend.append('file', file[i]);
@@ -119,45 +120,63 @@ export function ProductContext(props) {
     formDataToSend.append('productCategory', productCategory);  // Append the file
     formDataToSend.append('productPrice', productPrice);  // Append the file
     formDataToSend.append('productDescription', productDescription);  // Append the file
-    formDataToSend.append('images',images)
-    formDataToSend.append("productId",productId)
-    const url="https://instacart-9fh4.onrender.com/api/updateorder"
-    const response=await fetch(url,{
-      method:"POST",
+    formDataToSend.append('images', images)
+    formDataToSend.append("productId", productId)
+    const url = "https://instacart-9fh4.onrender.com/api/updateorder"
+    const response = await fetch(url, {
+      method: "POST",
       // headers:{
       //   "content-type":"application/json"
       // },
-      body:formDataToSend
+      body: formDataToSend
       // body:JSON.stringify({productName,productDescription,productCategory,productPrice,productId})
     })
-    const data=await response.json()
+    const data = await response.json()
     return data
   }
 
-  const deleteProduct=async(productId)=>{
+  const deleteProduct = async (productId) => {
     try {
-      const url="https://instacart-9fh4.onrender.com/api/deleteproduct"
-      const response=await fetch(url,{
-        method:"DELETE",
-        headers:{
-          "content-type":"application/json"
+      const url = "https://instacart-9fh4.onrender.com/api/deleteproduct"
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json"
         },
-        body:JSON.stringify({productId})
+        body: JSON.stringify({ productId })
       })
-      const data=await response.json()
+      const data = await response.json()
       return data
     } catch (error) {
       console.log(error)
     }
-  
+
   }
   return (
     <productAPI.Provider value={{
-      getProductsByCategory, getProducts, productInfo
-      , setCreateProductInfo, getCurrentProduct, currentProduct, setCurrentProduct
-      , createProduct, createProductInfo, getProductsbySeller, category, setCategory
-      , orderProducts, setOrderProducts, productCart, setProductCart, createMeAOrder,
-      UpdateSellerProduct,updateProduct,setUpdateProduct,deleteProduct
+      getProductsByCategory,
+      getProducts,
+      productInfo,
+      setCreateProductInfo,
+      getCurrentProduct,
+      currentProduct,
+      setCurrentProduct,
+      createProduct,
+      createProductInfo,
+      getProductsbySeller,
+      category,
+      setCategory,
+      orderProducts,
+      setOrderProducts,
+      productCart,
+      setProductCart,
+      createMeAOrder,
+      UpdateSellerProduct,
+      updateProduct,
+      setUpdateProduct,
+      deleteProduct,
+      wishList,
+      setWishList
     }}>
       {props.children}
     </productAPI.Provider>

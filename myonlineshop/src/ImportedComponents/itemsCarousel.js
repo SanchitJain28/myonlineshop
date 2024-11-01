@@ -41,9 +41,10 @@ export default function ItemsCarousel(props) {
   };
 
   return (
-    <Carousel
+    <>
+    {productData.length!==0? <Carousel
       additionalTransfrom={0}
-      arrows
+      arrows={false}
       autoPlaySpeed={3000}
       centerMode={true}
       className="w-full"
@@ -94,12 +95,13 @@ export default function ItemsCarousel(props) {
       slidesToSlide={1}
       swipeable
     >
-      {productData.length!==0?productData.map((e) => {
-        return <ProductCard name={e.productName} price={e.productPrice} Description={e.productDescription} sellername={e.sellerName} id={e} imageLinks={e.images} />
-      }):<Skeleton count={5} className="w-full"/>}
-
-
-    </Carousel>
+      {productData.map((e) => {
+        return <ProductCard data={e} />
+      })}
+    </Carousel>:<Skeleton count={5} className="w-full"/>}
+    
+    </>
+   
   )
 }
 

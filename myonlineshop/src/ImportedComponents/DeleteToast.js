@@ -1,7 +1,9 @@
 import { Input, useConst, useToast } from "@chakra-ui/react";
-import { Button, Modal } from "flowbite-react";
+import {  Modal } from "flowbite-react";
 import { useContext, useState } from "react";
 import { productAPI } from "../contexts/ProductContext";
+import { Button } from "@mui/material";
+
 
 export function DeleteModal(props) {
     const [openModal, setOpenModal] = useState(false);
@@ -15,7 +17,7 @@ export function DeleteModal(props) {
                 setOpenModal(true)
                 deleteDetails.setUpdateProduct(props.myproduct)
 
-            }}>Delete Product</Button>
+            }} variant="outlined">Delete Product</Button>
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header>Terms of Service</Modal.Header>
                 <Modal.Body>

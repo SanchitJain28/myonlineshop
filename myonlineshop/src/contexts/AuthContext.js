@@ -9,6 +9,8 @@ export const authContext = createContext(null)
 export function AuthContext(props) {
   const dispatch = useDispatch()
   const[loginDetails,setLoginDetails]=useState(null)
+  const[sellerDetails,setSellerDetails]=useState(null)
+
 
   const getMeRegistered = async (email, password,name,phoneNo) => {
     try {
@@ -108,7 +110,7 @@ export function AuthContext(props) {
   }
   
   return (
-    <authContext.Provider value={{ getMeRegistered, getMelogin, createSellerAccount, sellerLogin,loginDetails,setLoginDetails,getUserInfo }}>
+    <authContext.Provider value={{ getMeRegistered, getMelogin, createSellerAccount, sellerLogin,loginDetails,setLoginDetails,getUserInfo,sellerDetails,setSellerDetails }}>
       {props.children}
     </authContext.Provider>
   )

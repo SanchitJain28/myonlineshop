@@ -110,7 +110,7 @@ router.get("/api/getsingleproduct/:productid", async (req, res) => {
 
 })
 
-router.get("/api/sellerproducts", Sellermiddleware, async (req, res) => {
+router.get("/api/sellerinfo", Sellermiddleware, async (req, res) => {
   try {
     const { sellerid } = req.seller;
     if (!sellerid) {
@@ -118,10 +118,8 @@ router.get("/api/sellerproducts", Sellermiddleware, async (req, res) => {
     }
     console.log(sellerid)
     const findProducts = await Product.find({ sellerId: sellerid })
-    if (findProducts.length == 0) {
-      return res.send({ msg: "You dont have any product uploaded", data: req.seller })
-    }
-    res.send({ findProducts, data: req.seller })
+    const findOrders=await order.find({"orderItems.seller": sellerid})
+    res.send({ findProducts, data: req.seller,findOrders,length:findOrders.length })
   } catch (error) {
     console.log(error)
   }

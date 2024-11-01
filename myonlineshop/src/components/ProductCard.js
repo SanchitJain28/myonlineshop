@@ -1,40 +1,55 @@
-import React, { useContext } from 'react'
-import { Button, ButtonGroup, } from '@chakra-ui/react'
+import React, { useContext, useEffect } from 'react'
 import { productAPI } from '../contexts/ProductContext'
 import { Link } from 'react-router-dom'
-import { Rating } from "flowbite-react";
-
-
+import { Card, Rating } from "flowbite-react";
+import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
 export default function ProductCard(props) {
   const productContext = useContext(productAPI)
+  const { productName, productDescription, images, _id } = props.data
+  const { wishList, setWishList,setCurrentProduct } = productContext
+  useEffect(() => {}, [wishList])
+
   return (
     <>
-      <div className=" border-zinc-400 rounded-xl flex flex-col bg-gray-900 text-white text-gray-500 my-1 w-48 max-h-full sm:h-full xl:w-80">
-        <img src={props.imageLinks ? props.imageLinks[0] : "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D"} className='rounded-t-xl h-48' />
-        <div className=" p-4">
-          <p className='font-sans'>{props.name}</p>
-          <p className='font-bold mb-4'>₹{props.price}</p>
-          <Rating>
-            <Rating.Star />
-            <Rating.Star />
-            <Rating.Star />
-            <Rating.Star />
-            <Rating.Star filled={false} />
-            <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">4.95</p>
+      <Card className="mx-2 my-2 p-0">
+        <CardMedia
+          sx={{ height: 140 }}
+          image={images[0]}
+          title="green iguana"
+        />
+        <CardContent className="p-0 m-0 h-32 xl:h-32">
+          <Typography gutterBottom variant="p" component="div" className="text-xl">
+            {productName.length>20?productDescription.slice(0, 20)+"...":productName}
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            {productDescription.length>75?productDescription.slice(0, 75)+"...":productDescription}
+          </Typography>
+        </CardContent>
+        <CardActions className="p-0 m-0 py-4">
+          <Button size="small" variant="outlined" onClick={()=>{
+            setCurrentProduct(props.data)
+          }} component={Link} to="/product">Buy</Button>
+          {wishList.map((e) => {
+            return e._id
+          }).indexOf(_id) !== -1 ? <>
+            <Button size="small" className='' onClick={(e) => {
+             const updatedWishList = wishList.filter((e) => {
+                return e._id!==_id
+              })
+              setWishList(updatedWishList)
+            }} ><FavoriteIcon /></Button>
+          </> : <>
+            <Button size="small" className='' onClick={() => {
+              setWishList([...productContext.wishList, props.data])
+            }}><FavoriteBorderIcon /></Button>
+          </>}
 
-          </Rating>
-          {/* <p className='my-2'>{props.sellername}</p> */}
-          <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">{props.productCategory}</p>
-
-          {/* <Button variant='outline' colorScheme='green' >Buy now</Button> */}
-          <Link to="/product" onClick={() => {
-            productContext.setCurrentProduct(props.id)
-          }}><Button className='my-2 text-white hover:text-black' variant='outline' colorScheme='blackAlpha'>Buy now</Button></Link>
-        </div>
-
-      </div>
+        </CardActions>
+      </Card>
     </>
   )
 }

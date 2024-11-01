@@ -3,7 +3,7 @@ import React from 'react'
 export default function Footer() {
     return (
         <>
-            <div className="flex bg-black text-white justify-center absolute">
+            <div className="flex bg-black text-white justify-center absolute bottom-0	">
                 <div className='m-4 p-4 w-1/2'>About Us
                     Welcome to InstaCart, your go-to destination for premium Products designed to meet your needs. We offer an exclusive range of high-quality products, all handpicked to ensure the best shopping experience for our customers. Whether you're looking for Electronics, Clothes, or Descoration, we've got you covered.
                     <div className="mt-4">

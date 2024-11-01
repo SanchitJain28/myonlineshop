@@ -37,10 +37,9 @@ export default function DashBoard() {
                             {e.orderItems.map((f) => {
                                 return <>
                                     <div className="flex justify-between">
-                                        <p className="text-xl w-28">{f.product.productName}</p>
-                                        <p>₹
-                                        {f.product.productPrice}</p>
-                                        <img src={f.product.images[0]} className="w-12" />
+                                        {/* <p className="text-xl w-28">{f.product.productName}</p> */}
+                                         {/* <p>₹{f.product.productCategory}</p> */}
+                                      {/*  <img src={f.product.images[0]} className="w-12" /> */}
                                     </div>
                                     <Divider />
                                 </>

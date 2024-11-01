@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react'
-import { Input, useToast } from '@chakra-ui/react'
-import { Button } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 import { authContext } from '../contexts/AuthContext'
-import { Toast } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-
+import { Button, TextField } from '@mui/material'
 export default function SellerLogin() {
   const navigate = useNavigate()
   const toast = useToast()
@@ -13,34 +11,41 @@ export default function SellerLogin() {
   const [password, setPassword] = useState("")
   return (
     <>
-      <Input placeholder='Enter Email' name='email' onChange={(e) => {
-        setEmail(e.target.value)
-      }} />
-      <Input placeholder='Enter password' name='password' onChange={(e) => {
-        setPassword(e.target.value)
-      }} />
-      <Button onClick={async () => {
-        const data = await sellerLogin.sellerLogin(email, password)
-        console.log(data)
-        if (!data.errors) {
-          localStorage.setItem("sellerId", data.token)
-          navigate('/sellerdashboard')
-          return toast({
-            title: 'Login Successful',
-            description: "you have Succesfully logged in",
-            status: 'success',
+      <div className="flex flex-col m-2 ">
+        <TextField label="Email" variant="outlined" onChange={(e) => {
+          setEmail(e.target.value)
+        }} value={email} className='my-2' />
+
+        <TextField label="Password" variant="outlined" onChange={(e) => {
+          setPassword(e.target.value)
+        }} value={password} />
+
+
+        <Button className='my-2' onClick={async () => {
+          const data = await sellerLogin.sellerLogin(email, password)
+          sellerLogin.setSellerDetails(data)
+          console.log(data)
+          if (!data.errors) {
+            localStorage.setItem("sellerId", data.token)
+            navigate('/sellerdashboard')
+            return toast({
+              title: 'Login Successful',
+              description: "you have Succesfully logged in",
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+            })
+          }
+          toast({
+            title: 'user login failed',
+            description: data.errors[0].msg,
+            status: 'error',
             duration: 9000,
             isClosable: true,
           })
-        }
-        toast({
-          title: 'user login failed',
-          description: data.errors[0].msg,
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        })
-      }}>Login</Button>
+        }} variant="outlined">Login</Button>
+      </div>
+
     </>
   )
 }

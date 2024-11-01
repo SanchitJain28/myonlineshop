@@ -1,8 +1,11 @@
 import './App.css';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+
 import Home from './components/Home';
 import ProductCard from './components/ProductCard';
 import RegisterPage from './components/RegisterPage';
-import {createBrowserRouter,RouterProvider,} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import LoginPage from './components/LoginPage';
 import { ProductContext } from './contexts/ProductContext';
 import FileUpload from './components/FileUpload';
@@ -18,6 +21,9 @@ import DashBoard from './components/DashBoard';
 import FlowBiteFooter from './ImportedComponents/FlowBiteFooter';
 import FlowbiteNavbar from './ImportedComponents/FlowbiteNavbar';
 import UpdateProduct from './components/UpdateProduct';
+import BottomNavbar from './ImportedComponents/BottomNavbar';
+import SimpleBottomNavigation from './ImportedComponents/BottomNavbar';
+import Wishlist from './components/Wishlist';
 
 
 function App() {
@@ -25,134 +31,155 @@ function App() {
     {
       path: "/",
       element: <>
-      <FlowbiteNavbar/>
-        <Home/>
-        <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <Home />
+        <SimpleBottomNavigation />
       </>,
     },
     {
       path: "/register",
       element: <>
-      <FlowbiteNavbar/>
-      <RegisterPage/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <RegisterPage />
+        <FlowBiteFooter />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/login",
       element: <>
-      <FlowbiteNavbar/>
-      <LoginPage />
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <LoginPage />
+        <FlowBiteFooter />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/addproduct",
       element: <>
-      <FlowbiteNavbar/>
-      <FileUpload/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <FileUpload />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/product",
       element: <>
-      <FlowbiteNavbar/>
-      <ProductPage/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <ProductPage />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/becomeaseller",
       element: <>
-      <FlowbiteNavbar/>
-      <BecomeAseller/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <BecomeAseller />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/categorypage",
       element: <>
-      <FlowbiteNavbar/>
-      <CategoryPage/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <CategoryPage />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/sellerlogin",
       element: <>
-      <FlowbiteNavbar/>
-      <SellerLogin/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <SellerLogin />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/sellerdashboard",
       element: <>
-      <FlowbiteNavbar/>
-      <SellerDashboard/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <SellerDashboard />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/createOrder",
       element: <>
-      <FlowbiteNavbar/>
-      <OrderPage/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <OrderPage />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/cart",
       element: <>
-      <FlowbiteNavbar/>
-      <Cart/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <Cart />
+        <FlowBiteFooter />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/ordersuccess",
       element: <>
-      <FlowbiteNavbar/>
-      <OrderSuccess/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <OrderSuccess />
+        <FlowBiteFooter />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/userdashboard",
       element: <>
-      <FlowbiteNavbar/>
-      <DashBoard/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <DashBoard />
+        <SimpleBottomNavigation />
 
       </>,
     },
     {
       path: "/updateproduct",
       element: <>
-      <FlowbiteNavbar/>
-      <UpdateProduct/>
-      <FlowBiteFooter/>
+        <FlowbiteNavbar />
+        <UpdateProduct />
+        <SimpleBottomNavigation />
 
+      </>,
+    },
+    {
+      path: "/wishlist",
+      element: <>
+        <FlowbiteNavbar />
+        <Wishlist />
+        <SimpleBottomNavigation />
       </>,
     }
   ]);
+
+  const theme = createTheme();
+
   return (
     <>
-      <ProductContext>
-        <RouterProvider router={router} />
-      </ProductContext>
+
+      <ThemeProvider theme={theme}>
+        <ChakraProvider>
+          <ProductContext>
+            <RouterProvider router={router} />
+          </ProductContext>
+        </ChakraProvider>
+
+      </ThemeProvider>
 
     </>
   );

@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
-import { useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import ReactCardForCart from './ReactCardForCart'
-import LoginModal from './LoginModal'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
     Drawer,
     DrawerBody,
@@ -12,11 +11,10 @@ import {
     DrawerContent,
     DrawerCloseButton,
     useDisclosure,
-    Button,
-    Input
 } from '@chakra-ui/react'
 import { productAPI } from '../contexts/ProductContext'
 import { authContext } from '../contexts/AuthContext'
+import { BottomNavigationAction, Button } from '@mui/material'
 
 
 export default function CartDrawerChakra(props) {
@@ -28,9 +26,9 @@ export default function CartDrawerChakra(props) {
 
     return (
         <>
-            <Button href="#" ref={btnRef} colorScheme='teal' onClick={onOpen} className={props.className}>
-                Cart
-            </Button>
+        {/* <p href="#" ref={btnRef} colorScheme='teal' onClick={onOpen} className={props.className}><i class="fa-solid fa-cart-shopping"></i></p> */}
+        <BottomNavigationAction onClick={onOpen} ref={btnRef} label="Cartfdsdfs" icon={<ShoppingCartIcon />} />
+
             <Drawer
                 isOpen={isOpen}
                 placement='right'
@@ -47,8 +45,7 @@ export default function CartDrawerChakra(props) {
                         <>
                             {cartInfo.productCart.length == 0 ? <>
                                 <div className="flex justify-center">
-                                    <p className='text-center text-3xl my-20'>Your cart is empty</p>
-                                    <Link to="/" className='my-20 mx-4'><Button>Order something</Button></Link>
+                                    <p className='text-center text-xl '>Empty,order something</p>
                                 </div>
 
                             </> : <>
@@ -69,14 +66,14 @@ export default function CartDrawerChakra(props) {
                     </DrawerBody>
 
                     <DrawerFooter>
-                        <Button variant='outline' mr={3} onClick={onClose}>
+                        <Button variant='outlined' mr={3} onClick={onClose}>
                             Cancel
                         </Button>
-                        <Button colorScheme='blue' onClick={() => {
+                        <Button variant='contained' onClick={() => {
                             cartInfo.setOrderProducts(cartInfo.productCart)
                             navigate("/createorder")
                             onClose()
-                        }}>Checkout</Button>
+                        }} className='mx-2'>Checkout</Button>
                         
                     </DrawerFooter>
                 </DrawerContent>

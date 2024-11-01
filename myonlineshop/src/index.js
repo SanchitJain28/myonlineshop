@@ -4,21 +4,24 @@ import './index.css';
 import App from './App';
 
 import reportWebVitals from './reportWebVitals';
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider,extendTheme } from '@chakra-ui/react'
 import { Provider } from 'react-redux';
+
 
 import { store } from './redux/store';
 import { AuthContext, authContext } from './contexts/AuthContext';
 
+const theme=extendTheme()
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ChakraProvider>
+  // <ChakraProvider theme={theme}>
     <Provider store={store}>
       <AuthContext>
       <App />
       </AuthContext>
     </Provider>
-     </ChakraProvider>
+      // </ChakraProvider>
 
 );
 
