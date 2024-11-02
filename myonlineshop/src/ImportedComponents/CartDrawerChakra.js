@@ -73,7 +73,7 @@ export default function CartDrawerChakra(props) {
                             cartInfo.setOrderProducts(cartInfo.productCart)
                             navigate("/createorder")
                             onClose()
-                        }} className='mx-2'>Checkout</Button>
+                        }} className='mx-2' disabled={cartInfo.productCart.length == 0}>Checkout</Button>
                         
                     </DrawerFooter>
                 </DrawerContent>

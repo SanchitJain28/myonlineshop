@@ -29,11 +29,14 @@ export default function CategoryPage() {
   }
 
   const fetchMore = async () => {
-    const data = await productInfo.getProductsByCategory(productInfo.category, currentPage)
-    if(data.length<10){
-      setDisable(true)
+    if(currentPage>0){
+      const data = await productInfo.getProductsByCategory(productInfo.category, currentPage)
+      if(data.length<10){
+        setDisable(true)
+      }
+      setProducts([...product, ...data])
     }
-    setProducts([...product, ...data])
+   
   }
 
   useEffect(() => {
@@ -55,7 +58,7 @@ export default function CategoryPage() {
           return <CategoryPageProductCard data={e} />
         })}
       </div>
-      <Button onClick={onPageChange} className='mx-12' disabled={disable}>More item</Button>
+      <Button onClick={onPageChange} className='mx-12 mb-20' disabled={disable}>More item</Button>
     </>
 
   )

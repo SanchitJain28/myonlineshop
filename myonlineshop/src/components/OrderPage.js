@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { productAPI } from '../contexts/ProductContext'
-import { Card, CardHeader, CardBody, CardFooter, Text, Heading, Stack, Box, StackDivider, Input, Button } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter, Text, Heading, Stack, Box, StackDivider, Input } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useToast } from '@chakra-ui/react'
 import { authContext } from '../contexts/AuthContext'
 import LoginModal from '../ImportedComponents/LoginModal'
+import { Button } from '@mui/material'
 
 export default function OrderPage() {
   const toast=useToast()
@@ -106,7 +107,7 @@ export default function OrderPage() {
 
 
       {/* //Billing */}
-      <div className="m-8">
+      <div className="mx-8 mb-20">
         <Card >
           <CardHeader>
             <Heading size='md'>Billing</Heading>
@@ -139,6 +140,7 @@ export default function OrderPage() {
                 </Text>
               </Box>
               <Box>
+
                 <Heading size='xs' textTransform='uppercase'>
                   Total Billing amount
                 </Heading>
@@ -149,11 +151,8 @@ export default function OrderPage() {
             </Stack>
           </CardBody>
         </Card>
-      </div>
-      <Button onClick={async()=>{
-        console.log("I am been clicked")
+        <Button variant='outlined' onClick={async()=>{
         const data =await orderDetails.createMeAOrder(orderProductDetails,fullName,address,city,postalCode,country,itemsPrice,taxPrice,shippingPrice,totalPrice)
-        console.log("success")
         console.log(data)
         if(!data.errors){
           setTimeout(() => {
@@ -172,7 +171,31 @@ export default function OrderPage() {
           description:data.errors[0].msg,
           isClosable: true,
         })
-      }} className='p-8  mx-8 my-2 w-full bg-black text-white'>Make order</Button>
+      }} className='my-2'>Make order</Button>
+      </div>
+      <Button variant='outlined' onClick={async()=>{
+        const data =await orderDetails.createMeAOrder(orderProductDetails,fullName,address,city,postalCode,country,itemsPrice,taxPrice,shippingPrice,totalPrice)
+        console.log(data)
+        if(!data.errors){
+          setTimeout(() => {
+            navigate("/ordersuccess")
+          }, 1000);
+          return toast({
+          title: `Order Created Succesfully`,
+          status: "success",
+          description:"Order created Succesfully",
+          isClosable: true,
+        })
+        }
+        toast({
+          title: `Order Cannot be created`,
+          status: "error",
+          description:data.errors[0].msg,
+          isClosable: true,
+        })
+      }} className='mx-4 text-white '>Make order</Button>
+          
+
     </>:
     
     <>

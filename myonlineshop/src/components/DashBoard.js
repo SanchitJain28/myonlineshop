@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { authContext } from '../contexts/AuthContext'
 import { Card } from "flowbite-react";
-import { Divider,Button } from '@chakra-ui/react'
+import { Divider, useToast} from '@chakra-ui/react'
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
+
 
 
 
 export default function DashBoard() {
+    const toast=useToast()
     const loginContext = useContext(authContext)
     const [details, setDetails] = useState(null)
     const [orders, setOrders] = useState([])
@@ -26,6 +30,16 @@ export default function DashBoard() {
                     <p className='text-3xl  font-sans m-4'> {details.name}</p>
                     <p className='text-3xl  font-sans m-4'>{details.email}</p>
                     <p className='text-3xl  font-sans m-4'>{details.phoneNo}</p>
+                    <Button variant='contained' onClick={()=>{
+                        loginContext.setLoginDetails(null)
+                        toast({
+                            title: 'Logged Out',
+                            description: 'You have successfully logged out',
+                            status: 'warning',
+                            duration: 5000,
+                            isClosable: true
+                        })
+                    }} component={Link} to="/">Log out</Button>
                 </Card>
                 <p className='text-3xl m-8'>Your orders</p>
                 {/* <Separator /> */}

@@ -7,7 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 export default function Wishlist() {
   const product = useContext(productAPI)
-  const { wishList, setWishList } = product
+  const { wishList, setWishList,productCart,setProductCart,setOrderProducts } = product
   useEffect(() => { }, [wishList])
 
   return (
@@ -34,7 +34,21 @@ export default function Wishlist() {
                 </CardContent>
                 <CardActions>
                   <Button size="small" variant="outlined" component={Link} to="/product">Buy</Button>
-                  <Button size="small" variant="outlined">Add to cart</Button>
+                  {productCart.map((p)=>{
+                    return p._id
+                  }).indexOf(e._id)!==-1?<>
+                  <Button size="small" variant="contained" onClick={(event)=>{
+                    const filteredCart=productCart.filter((eventCart)=>{
+                      return eventCart._id!==e._id
+                    })
+                    setProductCart(filteredCart)
+                  }}>Added</Button>
+                  </>:<>
+                  <Button size="small" variant="outlined" onClick={(event)=>{
+                    setProductCart([...productCart,e])
+                  }}>Add to cart</Button>
+                  </>}
+                  
                   <Button size="small" variant="outlined" onClick={(event) => {
                     const updatedWishList = wishList.filter((f) => {
                       return e._id !== f._id
@@ -46,7 +60,9 @@ export default function Wishlist() {
             </>
           })}
           <div className="flex justify-center">
-            <Button variant='contained' className='mx-2 my-2'>Order</Button>
+            <Button variant='contained' className='mx-2 my-2' component={Link} to="/createorder" onClick={(event)=>{
+              setOrderProducts(wishList)
+            }}>Order</Button>
 
           </div>
         </>}
