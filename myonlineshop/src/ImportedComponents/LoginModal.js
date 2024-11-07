@@ -38,6 +38,7 @@ export default function LoginModal(props) {
             if (!data.errors) {
               localStorage.setItem("userId", data.token)
               auth.setLoginDetails(data.user)
+              localStorage.setItem("loginDetails",JSON.stringify(data.user))
               setEmail("")
               setPassword("")
               setTimeout(() => {

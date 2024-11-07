@@ -118,7 +118,7 @@ router.get("/api/sellerinfo", Sellermiddleware, async (req, res) => {
     }
     console.log(sellerid)
     const findProducts = await Product.find({ sellerId: sellerid })
-    const findOrders=await order.find({"orderItems.seller": sellerid})
+    const findOrders=await order.find({"orderItems.seller": sellerid}).populate("orderItems.product").populate("user")
     res.send({ findProducts, data: req.seller,findOrders,length:findOrders.length })
   } catch (error) {
     console.log(error)

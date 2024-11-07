@@ -77,7 +77,7 @@ export function ProductContext(props) {
   }
 
   const getProductsbySeller = async () => {
-    let url = "https://instacart-9fh4.onrender.com/api/sellerinfo"
+    let url = "http://localhost:3001/api/sellerinfo"
     const response = await fetch(url, {
       methods: "GET",
       headers: {

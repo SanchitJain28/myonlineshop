@@ -8,8 +8,8 @@ export const authContext = createContext(null)
 
 export function AuthContext(props) {
   const dispatch = useDispatch()
-  const[loginDetails,setLoginDetails]=useState(null)
-  const[sellerDetails,setSellerDetails]=useState(null)
+  const[loginDetails,setLoginDetails]=useState(JSON.parse(localStorage.getItem('loginDetails'))?JSON.parse(localStorage.getItem('loginDetails')):null)
+  const[sellerDetails,setSellerDetails]=useState(JSON.parse(localStorage.getItem("sellerDetails"))?JSON.parse(localStorage.getItem("sellerDetails")):null)
 
 
   const getMeRegistered = async (email, password,name,phoneNo) => {

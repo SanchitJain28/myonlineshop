@@ -22,7 +22,7 @@ export default function OrderPage() {
   const[city,setCity]=useState("")
   const[country,setCountry]=useState("")
   const[postalCode,setPostalCode]=useState("")
-
+  const {setOrderProducts}=orderDetails
   const BillingDetails = () => {
     let totalAmount = 0
     let itemsAmount = 0
@@ -154,6 +154,7 @@ export default function OrderPage() {
         <Button variant='outlined' onClick={async()=>{
         const data =await orderDetails.createMeAOrder(orderProductDetails,fullName,address,city,postalCode,country,itemsPrice,taxPrice,shippingPrice,totalPrice)
         console.log(data)
+        setOrderProducts([])
         if(!data.errors){
           setTimeout(() => {
             navigate("/ordersuccess")

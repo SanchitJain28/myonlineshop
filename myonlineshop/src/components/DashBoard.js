@@ -44,29 +44,34 @@ export default function DashBoard() {
                 <p className='text-3xl m-8'>Your orders</p>
                 {/* <Separator /> */}
                 <Divider />
-                <div className="flex flex-col m-4">
+                <div className="flex flex-col mb-20 mx-4 mt-4">
                     {orders.map((e) => {
                         return <Card href="#" className="m-2">
                             <p>Your items</p>
-                            {e.orderItems.map((f) => {
+                            <div className="">
+                            {e.orderItems.map((g)=>{
                                 return <>
-                                    <div className="flex justify-between">
-                                        {/* <p className="text-xl w-28">{f.product.productName}</p> */}
-                                         {/* <p>₹{f.product.productCategory}</p> */}
-                                      {/*  <img src={f.product.images[0]} className="w-12" /> */}
-                                    </div>
-                                    <Divider />
+                                <div className="flex flex-row justify-between">
+                                <p>{g.product.productName}</p>
+                                <p>{Math.floor(g.product.productPrice).toFixed(2)}</p>
+
+                                <img src={g.product.images[0]} className='w-20'/>
+                                </div>
+
                                 </>
                             })}
+                            </div>
                             <div className="flex justify-between">
-                            <p className="w-28">Address :-{e.shippingAddress.address}</p>
                             <p className="font-normal text-gray-700 dark:text-gray-400">
-                               {e.totalPrice}
+                               {Math.floor(e.totalPrice).toFixed(2)}
                             </p>
                             <p>Total itmes :-{e.orderItems.length}</p>
                             </div>
-                            <Button className="w-40 bg-red-700">Cancel order</Button>
-                            <p>Expected delivery date :-{Number(e.createdAt.slice(8,10))+2} of this month</p>
+                            <div className="flex justify-center">
+                            <Button className="w-40 bg-red-700 mx-4" variant='contained'>Cancel order</Button>
+                            <Button variant='contained' className='w-40 mx-4'>Track order</Button>
+                            </div>
+                         
                         </Card>
                     })}
                 </div>

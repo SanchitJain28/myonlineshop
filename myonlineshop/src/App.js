@@ -41,7 +41,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <RegisterPage />
-        <FlowBiteFooter />
         <SimpleBottomNavigation />
 
       </>,
@@ -51,7 +50,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <LoginPage />
-        <FlowBiteFooter />
         <SimpleBottomNavigation />
 
       </>,
@@ -124,7 +122,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <Cart />
-        <FlowBiteFooter />
         <SimpleBottomNavigation />
 
       </>,
@@ -134,7 +131,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <OrderSuccess />
-        <FlowBiteFooter />
         <SimpleBottomNavigation />
 
       </>,

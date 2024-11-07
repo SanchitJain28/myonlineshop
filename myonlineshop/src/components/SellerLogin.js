@@ -27,6 +27,7 @@ export default function SellerLogin() {
           console.log(data)
           if (!data.errors) {
             localStorage.setItem("sellerId", data.token)
+            localStorage.setItem("sellerDetails",data)
             navigate('/sellerdashboard')
             return toast({
               title: 'Login Successful',

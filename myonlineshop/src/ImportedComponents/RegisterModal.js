@@ -49,6 +49,7 @@ export default function RegisterModal(props) {
                             setPassword("")
                             setPhoneNo("")
                             localStorage.setItem("userId", data.token)
+                            localStorage.setItem("loginDetails",JSON.stringify(data.user))
                             setTimeout(() => {
                                 setOpenModal(false)
                             }, 1500);
