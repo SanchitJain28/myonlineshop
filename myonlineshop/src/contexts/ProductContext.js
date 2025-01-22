@@ -41,7 +41,7 @@ export function ProductContext(props) {
     console.log(currentProduct)
   }
 
-  //FormData is phenomenol function which does not require content type header
+  //FormData is phenomenol function which does not require content type header,ONLY WORKS IF THERE IS AN IMAGE COMPONENT IN YOUR CALLING OF API
   //this will create  the product
   const createProduct = async (file, productName, productCategory, productPrice, productDescription) => {
     const formDataToSend = new FormData();
