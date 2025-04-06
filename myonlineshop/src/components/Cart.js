@@ -6,7 +6,7 @@ import ReactCardForCart from '../ImportedComponents/ReactCardForCart'
 import { Button } from '@chakra-ui/react'
 import { authContext } from '../contexts/AuthContext'
 import LoginModal from '../ImportedComponents/LoginModal'
-
+//SOME CHANGES IN THE FUNCTIONAL CART
 export default function Cart() {
     const cartInfo=useContext(productAPI)
     const userDetails=useContext(authContext)
