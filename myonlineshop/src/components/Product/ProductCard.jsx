@@ -3,7 +3,7 @@ import { productAPI } from "../../contexts/ProductContext";
 import { Link, useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Star } from "lucide-react";
+import { Badge, Star } from "lucide-react";
 
 export default function ProductCard({ data }) {
   const { productName, productDescription, images, _id } = data;
@@ -22,9 +22,8 @@ export default function ProductCard({ data }) {
       >
         <div className="overflow-hidden border rounded-lg ">
           <div className="relative aspect-square">
-            {/* {product.sale && (
+            
               <Badge className="absolute z-10 right-2 top-2">Sale</Badge>
-            )} */}
             <img
               src={images[0] || "/placeholder.svg"}
               alt={productName}
@@ -36,7 +35,7 @@ export default function ProductCard({ data }) {
             <h3 className="font-semibold">{productName}</h3>
             <div className="flex items-center gap-2 pt-1">
               <div className="flex items-center">
-                {/* <Star className="w-4 h-4 fill-primary text-primary" /> */}
+                <Star className="w-4 h-4 fill-primary text-primary" />
                 <span className="ml-1 text-sm">{4}</span>
               </div>
               <div className="flex items-center">
