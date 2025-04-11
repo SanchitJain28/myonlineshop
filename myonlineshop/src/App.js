@@ -30,9 +30,9 @@ function App() {
     {
       path: "/",
       element: <>
-        <FlowbiteNavbar />
+        {/* <FlowbiteNavbar /> */}
         <Home />
-        <SimpleBottomNavigation />
+        {/* <SimpleBottomNavigation /> */}
       </>,
     },
     {

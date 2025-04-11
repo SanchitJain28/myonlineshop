@@ -1,27 +1,27 @@
-import "react-multi-carousel/lib/styles.css";
-import "react-loading-skeleton/dist/skeleton.css";
-import React, { useContext, useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/css";
-import { productAPI } from '../../contexts/ProductContext';
-import ProductCard from "../Product/ProductCard";
 
-export default function ItemsCarousel(props) {
-  const productInfo = useContext(productAPI);
-  const [productData, setProductData] = useState([]);
-  const getMeData = async () => {
-    const data = await productInfo.getProductsByCategory(props.category, "0");
-    setProductData(data);
-    console.log(data);
-  };
-  useEffect(() => {
-    getMeData();
-  }, []);
+// import  { useContext, useEffect, useState } from "react";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+// import "swiper/css";
+// import { productAPI } from '../../contexts/ProductContext';
+// import ProductCard from "../Product/ProductCard";
+
+export default function ItemsCarouselNew(props) {
+  // const productInfo = useContext(productAPI);
+  // const [productData, setProductData] = useState([]);
+  // const getMeData = async () => {
+  //   const data = await productInfo.getProductsByCategory('Electronics', "0");
+  //   setProductData(data);
+  //   console.log(data);
+  // };
+  // useEffect(() => {
+  //   getMeData();
+  // }, []);
 
   return (
     <>
-      <Swiper
+    <p className="text-5xl"> RUN </p>
+      {/* <Swiper
         spaceBetween={0}
         slidesPerView={1.8}
         onSlideChange={() => console.log("slide change")}
@@ -42,15 +42,15 @@ export default function ItemsCarousel(props) {
         }}
       >
         <div className="flex">
-          {productData.map((product) => {
+          {[1,2,3,4,5].map((product) => {
             return (
               <SwiperSlide>
-                <ProductCard data={product} />
+                <div className="">Slide</div>
               </SwiperSlide>
             );
           })}
         </div>
-      </Swiper>
+      </Swiper> */}
     </>
   );
 }

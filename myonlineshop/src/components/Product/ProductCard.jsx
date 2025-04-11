@@ -1,51 +1,65 @@
-import React, { useContext, useEffect } from 'react'
-import { productAPI } from '../../contexts/ProductContext'
-import { Link, useNavigate } from 'react-router-dom'
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import React, { useContext, useEffect } from "react";
+import { productAPI } from "../../contexts/ProductContext";
+import { Link, useNavigate } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Star } from "lucide-react";
 
-
-export default function ProductCard(props) {
-  const navigate=useNavigate()
-  const productContext = useContext(productAPI)
-  const { productName, productDescription, images, _id } = props.data
-  const { wishList, setWishList, setCurrentProduct } = productContext
-  useEffect(() => { }, [wishList])
+export default function ProductCard({ data }) {
+  const { productName, productDescription, images, _id } = data;
+  const navigate = useNavigate();
+  const productContext = useContext(productAPI);
+  const { wishList, setWishList, setCurrentProduct } = productContext;
+  useEffect(() => {}, [wishList]);
 
   return (
     <>
-      <div className="p-0 mx-1 border rounded-lg border-zinc-400 ">
-        <img src={images[0]} className='m-auto w-60 h-60'/>
-        <div id="productdata " className='px-3 pt-2'>
-          <p className="mt-4 mb-2 font-sans text-xl font-bold text">
-            {productName.length > 15 ? productDescription.slice(0, 15) + "..." : productName}
-          </p>
-          <p className='font-sans text-sm lg:text-lg'>
-            {productDescription.length > 75 ? productDescription.slice(0, 75) + "..." : productDescription}
-          </p>
-        </div>
-
-        <div id="action" className='px-3 py-4'>
-          <button className='px-4 py-2 mr-4 text-white bg-blue-500 rounded-lg' onClick={() => {
-            setCurrentProduct(props.data)
-            navigate("/product")
-          }} component={Link} to="/product">Buy</button>
-          {wishList.map((e) => {
-            return e._id
-          }).indexOf(_id) !== -1 ? <>
-            <button size="small" className='' onClick={(e) => {
-              const updatedWishList = wishList.filter((e) => {
-                return e._id !== _id
-              })
-              setWishList(updatedWishList)
-            }} ><FavoriteIcon /></button>
-          </> : <>
-            <button size="small" className='' onClick={() => {
-              setWishList([...productContext.wishList, props.data])
-            }}><FavoriteBorderIcon /></button>
-          </>}
+      
+      <div
+        key={_id}
+        className="min-w-full snap-start px-4 md:min-w-[50%] lg:min-w-[33.333%] xl:min-w-[25%]"
+        
+      >
+        <div className="overflow-hidden border rounded-lg ">
+          <div className="relative aspect-square">
+            {/* {product.sale && (
+              <Badge className="absolute z-10 right-2 top-2">Sale</Badge>
+            )} */}
+            <img
+              src={images[0] || "/placeholder.svg"}
+              alt={productName}
+              fill
+              className="object-cover w-full hover:scale-105 h-60"
+            />
+          </div>
+          <div className="px-4 pb-2">
+            <h3 className="font-semibold">{productName}</h3>
+            <div className="flex items-center gap-2 pt-1">
+              <div className="flex items-center">
+                {/* <Star className="w-4 h-4 fill-primary text-primary" /> */}
+                <span className="ml-1 text-sm">{4}</span>
+              </div>
+              <div className="flex items-center">
+                {true ? (
+                  <>
+                    <span className="text-sm font-medium line-through text-muted-foreground">
+                      ${499}
+                    </span>
+                    <span className="ml-1 text-sm font-medium text-primary">
+                      ${399}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-sm font-medium">{499}</span>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="p-3 text-white">
+            <button className="w-full px-4 py-2 rounded-xl bg-[#18181B]">Add to Cart</button>
+          </div>
         </div>
       </div>
     </>
-  )
+  );
 }
