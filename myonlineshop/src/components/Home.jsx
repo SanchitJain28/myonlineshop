@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from 'react'
-import ItemsCarousel from '../ImportedComponents/itemsCarousel'
 import { productAPI } from '../contexts/ProductContext'
-import {  ReactCarousel } from '../ImportedComponents/ReactCarousel'
 import { Link } from 'react-router-dom'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { Button } from '@mui/material'
+import ItemsCarousel from './UI/itemsCarousel'
 
 export default function Home() {
   const productInfo = useContext(productAPI)

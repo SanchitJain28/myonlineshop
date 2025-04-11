@@ -1,12 +1,11 @@
 import React, { useContext,useEffect } from 'react'
-import { productAPI } from '../contexts/ProductContext'
+import { productAPI } from '../../contexts/ProductContext'
 import { Link, useNavigate } from 'react-router-dom'
-import ReactCardForCart from '../ImportedComponents/ReactCardForCart'
 import { Button } from '@chakra-ui/react'
-import { authContext } from '../contexts/AuthContext'
-import LoginModal from './UI/LoginModal'
+import { authContext } from '../../contexts/AuthContext'
+import LoginModal from '../UI/LoginModal'
+import ReactCardForCart from '../UI/ReactCardForCart'
 //SOME CHANGES IN THE FUNCTIONAL CART
-
 export default function Cart() {
     const cartInfo=useContext(productAPI)
     const userDetails=useContext(authContext)

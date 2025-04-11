@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import {Modal,ModalOverlay,Button,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton,useDisclosure,Input,useToast,FormControl,FormLabel,FormHelperText} from '@chakra-ui/react'
-import { authContext } from '../contexts/AuthContext'
+import { authContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom'
 export default function ReactModal() {
     const toast = useToast()
@@ -56,7 +56,7 @@ export default function ReactModal() {
                             duration: 9000,
                             isClosable: true,
                         })
-                    }} className='text-white w-40 my-4 '>Register</Button>
+                    }} className='w-40 my-4 text-white '>Register</Button>
       </ModalBody>
 
       <ModalFooter>

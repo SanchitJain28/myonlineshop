@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { Modal } from "flowbite-react";
 import { useContext, useState } from "react";
-import { authContext } from "../contexts/AuthContext";
+import { authContext } from '../../contexts/AuthContext';
 import { useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 
@@ -23,22 +23,22 @@ export default function RegisterModal(props) {
         <>
             <a onClick={() => setOpenModal(true)} className={props.className}>SignUp</a>
             <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} className="">
-                <Modal.Header className=" rounded text-white" >Register</Modal.Header>
+                <Modal.Header className="text-white rounded " >Register</Modal.Header>
                 <Modal.Body className="">
                     <div className="flex-col">
                     <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e) => {
                         setEmail(e.target.value)
-                    }} value={email} className='mx-2 my-2 w-full' />
+                    }} value={email} className='w-full mx-2 my-2' />
                     <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e) => {
                         setPassword(e.target.value)
-                    }} value={password} className='mx-2 my-2 w-full' />
+                    }} value={password} className='w-full mx-2 my-2' />
                     <TextField id="outlined-basic" label="Name" variant="outlined" onChange={(e) => {
                         setName(e.target.value)
-                    }} value={name} className='mx-2 my-2 w-full' />
+                    }} value={name} className='w-full mx-2 my-2' />
                 
                     <TextField id="outlined-basic" label="Phone no" variant="outlined" onChange={(e) => {
                         setPhoneNo(e.target.value)
-                    }} value={phoneNo} className='mx-2 my-2 w-full' />
+                    }} value={phoneNo} className='w-full mx-2 my-2' />
                    
 
                     <Button variant="outlined" onClick={async () => {
@@ -66,7 +66,7 @@ export default function RegisterModal(props) {
                             isClosable: true,
                         })
 
-                    }} className='mx-2 my-2  '>Register</Button>
+                    }} className='mx-2 my-2 '>Register</Button>
                     </div>
                     
                 </Modal.Body>

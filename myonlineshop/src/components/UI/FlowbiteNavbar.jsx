@@ -1,14 +1,12 @@
-import { useToast } from "@chakra-ui/react";
 import {  Dropdown, Navbar } from "flowbite-react";
 import { useContext, useEffect } from "react";
-import { authContext } from "../contexts/AuthContext";
-import { productAPI } from "../contexts/ProductContext";
+import { authContext } from "../../contexts/AuthContext";
+import { productAPI } from '../../contexts/ProductContext';
 import { Link } from "react-router-dom";
-import RegisterModal from "./RegisterModal";
 import * as React from 'react';
-
 import LocalMallIcon from '@mui/icons-material/LocalMall';
-import LoginModal from "../components/UI/LoginModal";
+import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
 
 
 export default function FlowbiteNavbar() {

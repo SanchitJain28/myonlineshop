@@ -1,7 +1,7 @@
 import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
 import { Card } from 'flowbite-react'
 import React, { useContext, useEffect } from 'react'
-import { productAPI } from '../contexts/ProductContext'
+import { productAPI } from '../../contexts/ProductContext'
 import { Link } from 'react-router-dom'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';

@@ -5,8 +5,8 @@ import LoginIcon from '@mui/icons-material/Login';
 import { TextField, Button } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
-import { authContext } from "../../contexts/AuthContext";
-import RegisterModal from "../../ImportedComponents/RegisterModal";
+import { authContext } from '../../contexts/AuthContext';
+import RegisterModal from "./RegisterModal";
 
 
 export default function LoginModal(props) {

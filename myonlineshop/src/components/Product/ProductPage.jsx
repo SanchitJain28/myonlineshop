@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { productAPI } from '../../contexts/ProductContext'
-import Stats from '../../ImportedComponents/Stats'
 import { Button } from '@chakra-ui/react'
 import { Link, useNavigate } from 'react-router-dom'
 import { authContext } from '../../contexts/AuthContext'
 import LoginModal from '../UI/LoginModal'
+import Stats from '../UI/Stats'
 
 
 export default function ProductPage() {

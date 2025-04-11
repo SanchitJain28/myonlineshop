@@ -4,7 +4,7 @@ import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/ma
 import { Card } from 'flowbite-react'
 import { authContext } from '../../contexts/AuthContext'
 import { productAPI } from '../../contexts/ProductContext'
-import ReactProductCard from '../../ImportedComponents/ProductCard'
+import ReactProductCard from '../UI/ProductCard'
 
 
 export default function SellerDashboard() {

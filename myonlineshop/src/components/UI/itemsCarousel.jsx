@@ -1,13 +1,11 @@
 import "react-multi-carousel/lib/styles.css";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import React, { useContext, useEffect, useState } from "react";
-import ProductCard from "../components/Product/ProductCard";
-import { productAPI } from "../contexts/ProductContext";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 // Import Swiper styles
 import "swiper/css";
+import { productAPI } from '../../contexts/ProductContext';
+import ProductCard from "../Product/ProductCard";
 
 export default function ItemsCarousel(props) {
   const productInfo = useContext(productAPI);

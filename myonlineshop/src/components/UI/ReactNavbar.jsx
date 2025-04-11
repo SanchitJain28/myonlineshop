@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from 'react'
 import { Button, MegaMenu, Navbar, Dropdown, Avatar } from 'flowbite-react';
 import { Button as ChakraButton, useToast,useDisclosure } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { productAPI } from '../contexts/ProductContext';
+import { productAPI } from '../../contexts/ProductContext';
 import LoginModal from './LoginModal';
-import RegisterModal from './RegisterModal';
-import { authContext } from '../contexts/AuthContext';
+import RegisterModal from '../../ImportedComponents/RegisterModal';
+import { authContext } from '../../contexts/AuthContext';
 import CartDrawerChakra from './CartDrawerChakra';
 
 
@@ -22,12 +22,12 @@ export default function ReactNavbar() {
   }, [auth.loginDetails])
   return (
     <>
-      <MegaMenu className='bg-black text-white flex justify-between align-center'>
-        <div className="mx-auto flex max-w-screen-xl flex-wrap md:space-x-8 ">
+      <MegaMenu className='flex justify-between text-white bg-black align-center'>
+        <div className="flex flex-wrap max-w-screen-xl mx-auto md:space-x-8 ">
           <Link to="/" className='mt-4'>
-            <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">InstaCart</span>
+            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">InstaCart</span>
           </Link>
-          <div className="order-2 hidden items-center md:flex">
+          <div className="items-center order-2 hidden md:flex">
             {/* <Link to="/login" className='mx-4'>Login</Link> */}
             <div className="mx-4">
               {auth.loginDetails ? <>
@@ -40,7 +40,7 @@ export default function ReactNavbar() {
                 >
                   <Dropdown.Header>
                     <span className="block text-sm">{auth.loginDetails.name}</span>
-                    <span className="block truncate text-sm font-medium">{auth.loginDetails.email}</span>
+                    <span className="block text-sm font-medium truncate">{auth.loginDetails.email}</span>
                   </Dropdown.Header>
                   <Dropdown.Item><Link to="/userdashboard">Dashboard</Link></Dropdown.Item>
                   <Dropdown.Divider />
@@ -63,10 +63,10 @@ export default function ReactNavbar() {
           </div>
           <Navbar.Toggle />
           <Navbar.Collapse>
-            <Navbar.Link className='text-white mb-4'>
+            <Navbar.Link className='mb-4 text-white'>
               <MegaMenu.Dropdown toggle={<>Categories</>} className='text-black'>
                 <ul className="grid grid-cols-2">
-                  <div className="space-y-4 p-4">
+                  <div className="p-4 space-y-4">
                     <li>
                       <Link to="/categorypage">Electronics</Link>
                     </li>

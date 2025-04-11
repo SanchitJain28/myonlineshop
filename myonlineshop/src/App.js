@@ -6,12 +6,12 @@ import Home from './components/Home';
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import { ProductContext } from './contexts/ProductContext';
 import ProductPage from './components/Product/ProductPage';
-import Cart from './components/Cart';
+import Cart from './components/User/Cart';
 
 import OrderSuccess from './components/order/OrderSuccess';
-import FlowbiteNavbar from './ImportedComponents/FlowbiteNavbar';
-import SimpleBottomNavigation from './ImportedComponents/BottomNavbar';
-import Wishlist from './components/Wishlist';
+import FlowbiteNavbar from './components/UI/FlowbiteNavbar';
+import SimpleBottomNavigation from './components/UI/BottomNavbar';
+import Wishlist from './components/User/Wishlist';
 import BecomeAseller from './components/Seller/BecomeAseller';
 import CategoryPage from './components/Product/CategoryPage';
 import DashBoard from './components/User/DashBoard';

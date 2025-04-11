@@ -6,18 +6,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Paper } from '@mui/material';
 import CartDrawerChakra from './CartDrawerChakra';
 import { Link } from 'react-router-dom';
-import { useDisclosure } from '@chakra-ui/react';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { authContext } from '../contexts/AuthContext';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import { Badge } from 'flowbite-react';
+import { authContext } from '../../contexts/AuthContext';
 
 
 export default function SimpleBottomNavigation() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
     const auth = React.useContext(authContext)
-    const [showComponent, setShowComponent] = React.useState(false)
     const [value, setValue] = React.useState(0);
     return (
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3} className='bg-black'>

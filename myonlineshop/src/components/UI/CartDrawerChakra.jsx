@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ReactCardForCart from './ReactCardForCart'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
     Drawer,
@@ -12,9 +11,10 @@ import {
     DrawerCloseButton,
     useDisclosure,
 } from '@chakra-ui/react'
-import { productAPI } from '../contexts/ProductContext'
-import { authContext } from '../contexts/AuthContext'
+import { authContext } from '../../contexts/AuthContext';
 import { BottomNavigationAction, Button } from '@mui/material'
+import ReactCardForCart from './ReactCardForCart';
+import { productAPI } from '../../contexts/ProductContext';
 
 
 export default function CartDrawerChakra(props) {
@@ -45,7 +45,7 @@ export default function CartDrawerChakra(props) {
                         <>
                             {cartInfo.productCart.length == 0 ? <>
                                 <div className="flex justify-center">
-                                    <p className='text-center text-xl '>Empty,order something</p>
+                                    <p className='text-xl text-center '>Empty,order something</p>
                                 </div>
 
                             </> : <>

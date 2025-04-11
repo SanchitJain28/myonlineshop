@@ -1,9 +1,8 @@
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { productAPI } from "../contexts/ProductContext";
-import { DeleteModal } from "./DeleteToast";
 import { Button } from "@mui/material";
+import { productAPI } from '../../contexts/ProductContext';
 
 
 export default function ReactProductCard(props) {
@@ -26,7 +25,6 @@ export default function ReactProductCard(props) {
       // console.log(data)
 
     }}>DELETE PRODUCT</Button> */}
-    <DeleteModal myproduct={props.myproduct}/>
     </Card>
   );
 }
