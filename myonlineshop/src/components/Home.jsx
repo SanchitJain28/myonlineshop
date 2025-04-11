@@ -45,7 +45,7 @@ export default function LandingPage() {
           </nav>
           <div className="flex items-center gap-4">
             <Link
-              to="#"
+              to="/login"
               className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
             >
               Sign In
