@@ -13,7 +13,7 @@ export default function ReactProductCard(props) {
     <Card className="m-2">
         <img src={images[0]} className="w-24"/>
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        {productName}
+        {productName}+"asas"
       </h5>
       <p className="font-normal text-gray-700 dark:text-gray-400">
         {productDescription}

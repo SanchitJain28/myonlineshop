@@ -3,27 +3,26 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 
 import Home from './components/Home';
-import ProductCard from './components/ProductCard';
-import RegisterPage from './components/RegisterPage';
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
-import LoginPage from './components/LoginPage';
 import { ProductContext } from './contexts/ProductContext';
-import FileUpload from './components/FileUpload';
-import ProductPage from './components/ProductPage';
-import BecomeAseller from './components/BecomeAseller';
-import CategoryPage from './components/CategoryPage';
-import SellerLogin from './components/SellerLogin';
-import SellerDashboard from './components/SellerDashboard';
-import OrderPage from './components/OrderPage';
+import ProductPage from './components/Product/ProductPage';
 import Cart from './components/Cart';
-import OrderSuccess from './components/OrderSuccess';
-import DashBoard from './components/DashBoard';
-import FlowBiteFooter from './ImportedComponents/FlowBiteFooter';
+
+import OrderSuccess from './components/order/OrderSuccess';
 import FlowbiteNavbar from './ImportedComponents/FlowbiteNavbar';
-import UpdateProduct from './components/UpdateProduct';
-import BottomNavbar from './ImportedComponents/BottomNavbar';
 import SimpleBottomNavigation from './ImportedComponents/BottomNavbar';
 import Wishlist from './components/Wishlist';
+import BecomeAseller from './components/Seller/BecomeAseller';
+import CategoryPage from './components/Product/CategoryPage';
+import DashBoard from './components/User/DashBoard';
+import LoginPage from './components/auth/LoginPage';
+import OrderPage from './components/order/OrderPage';
+import RegisterPage from './components/auth/RegisterPage';
+import SellerDashboard from './components/Seller/SellerDashboard';
+import SellerLogin from './components/Seller/SellerLogin';
+import UpdateProduct from './components/Product/UpdateProduct';
+import FileUpload from './components/Product/FileUpload';
+
 
 
 function App() {

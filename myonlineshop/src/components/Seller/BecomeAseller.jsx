@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useToast } from '@chakra-ui/react'
 import { Button } from '@mui/material'
-import { authContext } from '../contexts/AuthContext'
+import { authContext } from '../../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 
@@ -94,7 +94,7 @@ export default function BecomeAseller() {
 
 
       }}>Become a Seller</Button>
-      <Link to="/sellerlogin" className='text-white text-2xl p-2 my-2 '>Already a seller</Link>
+      <Link to="/sellerlogin" className='p-2 my-2 text-2xl text-white '>Already a seller</Link>
     </div>
     </>
   )

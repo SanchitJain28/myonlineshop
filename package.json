@@ -114,6 +114,7 @@
     "sparse-bitfield": "^3.0.3",
     "statuses": "^2.0.1",
     "supports-color": "^5.5.0",
+    "swiper": "^11.2.6",
     "to-regex-range": "^5.0.1",
     "toidentifier": "^1.0.1",
     "touch": "^3.1.1",
@@ -131,7 +132,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "all": "concurrently \"nodemon backend/index.js\"  \"npm --prefix ./myonlineshop start\"",
-    "build":"npm --prefix myonlineshop run build"
+    "build": "npm --prefix myonlineshop run build"
   },
   "author": "",
   "license": "ISC",

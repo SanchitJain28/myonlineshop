@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { useToast } from '@chakra-ui/react'
-import { authContext } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { Button, TextField } from '@mui/material'
+import { authContext } from '../../contexts/AuthContext'
+
 export default function SellerLogin() {
   const navigate = useNavigate()
   const toast = useToast()

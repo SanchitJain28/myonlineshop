@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { productAPI } from '../contexts/ProductContext'
-import { Button, ButtonGroup, Toast } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 import { useToast } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
-import { Progress } from "flowbite-react";
-import { FileInput, Label } from "flowbite-react";
+import { FileInput } from "flowbite-react";
 import { useNavigate } from 'react-router-dom'
+import { productAPI } from '../../contexts/ProductContext'
 
 
 
@@ -37,9 +36,9 @@ export default function FileUpload() {
 
   return (
     <>
-      <p className='text-center text-2xl p-8'>Create a Product</p>
-      <div className="flex flex-col justify-center border m-2 p-2">
-        <FileInput type="file" name="file" className='my-4 p-2 form-control-file' multiple onChange={(e) => {
+      <p className='p-8 text-2xl text-center'>Create a Product</p>
+      <div className="flex flex-col justify-center p-2 m-2 border">
+        <FileInput type="file" name="file" className='p-2 my-4 form-control-file' multiple onChange={(e) => {
           //Waah chatgpt wah ,kya baat hai URL.createObjectURL helped in image Preview
           const files = Array.from(e.target.files)
           setFile(e.target.files);
@@ -48,7 +47,7 @@ export default function FileUpload() {
           setImagePreview(previewUrls); // For preview
           console.log(previewUrls)
         }} />
-        <div className="flex flex-col grid grid-cols-4 xl:flex xl:flex-row xl:">
+        <div className="flex grid flex-col grid-cols-4 xl:flex xl:flex-row xl:">
           {imagePreview.map((e) => {
             return <>
               <div className="flex flex-col">
@@ -58,7 +57,7 @@ export default function FileUpload() {
           })}
         </div>
 
-        <Input placeholder='product Name ' className='my-4 p-4 border' onChange={(e) => {
+        <Input placeholder='product Name ' className='p-4 my-4 border' onChange={(e) => {
           setProductName(e.target.value)
         }} value={productName}></Input>
         <Select placeholder='Select Category' size='md' onChange={(e) => {
@@ -72,10 +71,10 @@ export default function FileUpload() {
           <option value='Pharmacy'>Pharmacy</option>
           <option value='Others'>Others</option>
         </Select>
-        <Input placeholder='product Price ' className='my-4 p-4 border' onChange={(e) => {
+        <Input placeholder='product Price ' className='p-4 my-4 border' onChange={(e) => {
           setProductPrice(e.target.value)
         }} value={productPrice}></Input>
-        <Textarea placeholder='product Description ' className='my-4 p-4 border' onChange={(e) => {
+        <Textarea placeholder='product Description ' className='p-4 my-4 border' onChange={(e) => {
           setProductDescription(e.target.value)
         }} size='xl' value={productDescription} />
         <Button onClick={async () => {

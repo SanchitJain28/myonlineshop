@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { authContext } from '../contexts/AuthContext'
 import { Card } from "flowbite-react";
 import { Divider, useToast} from '@chakra-ui/react'
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { authContext } from '../../contexts/AuthContext';
 
 
 
@@ -27,9 +27,9 @@ export default function DashBoard() {
             {details ? <>
                 <Card className='m-4'>
                     <div>Your details</div>
-                    <p className='text-3xl  font-sans m-4'> {details.name}</p>
-                    <p className='text-3xl  font-sans m-4'>{details.email}</p>
-                    <p className='text-3xl  font-sans m-4'>{details.phoneNo}</p>
+                    <p className='m-4 font-sans text-3xl'> {details.name}</p>
+                    <p className='m-4 font-sans text-3xl'>{details.email}</p>
+                    <p className='m-4 font-sans text-3xl'>{details.phoneNo}</p>
                     <Button variant='contained' onClick={()=>{
                         loginContext.setLoginDetails(null)
                         toast({
@@ -41,10 +41,10 @@ export default function DashBoard() {
                         })
                     }} component={Link} to="/">Log out</Button>
                 </Card>
-                <p className='text-3xl m-8'>Your orders</p>
+                <p className='m-8 text-3xl'>Your orders</p>
                 {/* <Separator /> */}
                 <Divider />
-                <div className="flex flex-col mb-20 mx-4 mt-4">
+                <div className="flex flex-col mx-4 mt-4 mb-20">
                     {orders.map((e) => {
                         return <Card href="#" className="m-2">
                             <p>Your items</p>
@@ -68,7 +68,7 @@ export default function DashBoard() {
                             <p>Total itmes :-{e.orderItems.length}</p>
                             </div>
                             <div className="flex justify-center">
-                            <Button className="w-40 bg-red-700 mx-4" variant='contained'>Cancel order</Button>
+                            <Button className="w-40 mx-4 bg-red-700" variant='contained'>Cancel order</Button>
                             <Button variant='contained' className='w-40 mx-4'>Track order</Button>
                             </div>
                          

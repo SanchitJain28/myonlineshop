@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { productAPI } from '../contexts/ProductContext'
 import { Button } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react'
-import CategoryPageProductCard from '../ImportedComponents/CategoryPageProductCard';
+import { productAPI } from '../../contexts/ProductContext';
+import CategoryPageProductCard from './CategoryPageProductCard';
 
 
 

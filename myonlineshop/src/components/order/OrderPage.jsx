@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { productAPI } from '../contexts/ProductContext'
-import { Card, CardHeader, CardBody, CardFooter, Text, Heading, Stack, Box, StackDivider, Input } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, Text, Heading, Stack, Box, StackDivider, Input } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useToast } from '@chakra-ui/react'
-import { authContext } from '../contexts/AuthContext'
-import LoginModal from '../ImportedComponents/LoginModal'
 import { Button } from '@mui/material'
+import { productAPI } from '../../contexts/ProductContext'
+import { authContext } from '../../contexts/AuthContext'
+import LoginModal from '../UI/LoginModal'
 
 export default function OrderPage() {
   const toast=useToast()
@@ -66,12 +66,12 @@ export default function OrderPage() {
   return (
     <>
     {userDetails.loginDetails?<>
-      <p className='text-3xl m-8'>For products</p>
+      <p className='m-8 text-3xl'>For products</p>
       {orderDetails.orderProducts.map((e,index) => {
         return <Card className='mx-8 my-2' key={index}>
           <CardBody>
             <div className="flex justify-between">
-              <Text className='mx-4 font-bold text-xl'>{e.productName}</Text>
+              <Text className='mx-4 text-xl font-bold'>{e.productName}</Text>
 
               <img src={e.images[0]} className='w-12 mx-4'></img>
             </div>
@@ -83,7 +83,7 @@ export default function OrderPage() {
 
       <div className="m-8">
         <Card className='p-4'>
-          <p className='text-3xl m-8'>Shipping details</p>
+          <p className='m-8 text-3xl'>Shipping details</p>
         <Stack spacing={3}>
         <Input variant='flushed' placeholder='Full name' className='mx-8 my-2' onChange={(e)=>{
           setFullName(e.target.value)

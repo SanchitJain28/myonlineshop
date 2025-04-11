@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { productAPI } from '../contexts/ProductContext'
+import { productAPI } from '../../contexts/ProductContext'
 import { Link, useNavigate } from 'react-router-dom'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -14,24 +14,19 @@ export default function ProductCard(props) {
 
   return (
     <>
-      <div className="shadow shadow-cyan/20 mx-2 my-2 p-0 border border-zinc-400 rounded-lg max-w-[200px] h-[400px]">
-        <img src={images[0]} className='lg:h-[240px] h-[160px]  m-auto'/>
-        {/* <CardMedia
-          sx={{ height: 140 }}
-          image={images[0]}
-          title="green iguana"
-        /> */}
-        <div id="productdata " className='px-4 pt-2'>
-          <p className="text font-mono font-bold">
+      <div className="p-0 mx-1 border rounded-lg border-zinc-400 ">
+        <img src={images[0]} className='m-auto w-60 h-60'/>
+        <div id="productdata " className='px-3 pt-2'>
+          <p className="mt-4 mb-2 font-sans text-xl font-bold text">
             {productName.length > 15 ? productDescription.slice(0, 15) + "..." : productName}
           </p>
-          <p className='font-sans lg:text-lg text-sm'>
+          <p className='font-sans text-sm lg:text-lg'>
             {productDescription.length > 75 ? productDescription.slice(0, 75) + "..." : productDescription}
           </p>
         </div>
 
-        <div id="action" className='px-4 py-4'>
-          <button className='bg-blue-500 rounded-lg mr-4 py-2 px-4 text-white' onClick={() => {
+        <div id="action" className='px-3 py-4'>
+          <button className='px-4 py-2 mr-4 text-white bg-blue-500 rounded-lg' onClick={() => {
             setCurrentProduct(props.data)
             navigate("/product")
           }} component={Link} to="/product">Buy</button>

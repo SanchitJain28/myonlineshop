@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { productAPI } from "../contexts/ProductContext";
+import { productAPI } from "../../contexts/ProductContext";
 import { CardMedia,Card,Button,CardContent,Typography,CardActions } from "@mui/material";
 
 export default function CategoryPageProductCard(props) {
     const productContext = useContext(productAPI)
     const { productName, productPrice, images,_id,productDescription } = props.data
     return (
-        <Card  className="bg-slate-800 border rounded mx-2 my-2">
+        <Card  className="mx-2 my-2 border rounded bg-slate-800">
         <CardMedia
           sx={{ height: 140 }}
           image={images[0]}
@@ -48,7 +48,7 @@ export default function CategoryPageProductCard(props) {
         //     productContext.setCurrentProduct(props.data)
         //   }}><Button>
         //         Buy now
-        //         <svg className="-mr-1 ml-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        //         <svg className="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
         //             <path
         //                 fillRule="evenodd"
         //                 d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"

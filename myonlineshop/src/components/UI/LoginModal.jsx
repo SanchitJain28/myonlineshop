@@ -1,13 +1,12 @@
 import { useToast } from "@chakra-ui/react";
 import { Modal } from "flowbite-react";
 import { useContext, useState } from "react";
-import { authContext } from "../contexts/AuthContext";
-import { FormHelperText, Input, FormControl, FormLabel, Button as ChakraButton } from "@chakra-ui/react";
 import LoginIcon from '@mui/icons-material/Login';
 import { TextField, Button } from "@mui/material";
-import RegisterModal from "./RegisterModal";
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
+import { authContext } from "../../contexts/AuthContext";
+import RegisterModal from "../../ImportedComponents/RegisterModal";
 
 
 export default function LoginModal(props) {
@@ -19,7 +18,7 @@ export default function LoginModal(props) {
   const[load,setLoad]=useState(false)
   return (
     <>{load &&<LinearProgress />}
-      <a className="my-2 mx-2" onClick={() => setOpenModal(true)} >{props.msg}<LoginIcon /></a>
+      <a className="mx-2 my-2" onClick={() => setOpenModal(true)} >{props.msg}<LoginIcon /></a>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>login</Modal.Header>
         <Modal.Body>

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { productAPI } from '../contexts/ProductContext'
-import Stats from '../ImportedComponents/Stats'
+import { productAPI } from '../../contexts/ProductContext'
+import Stats from '../../ImportedComponents/Stats'
 import { Button } from '@chakra-ui/react'
 import { Link, useNavigate } from 'react-router-dom'
-import { authContext } from '../contexts/AuthContext'
-import LoginModal from '../ImportedComponents/LoginModal'
+import { authContext } from '../../contexts/AuthContext'
+import LoginModal from '../UI/LoginModal'
+
 
 export default function ProductPage() {
   const navigate = useNavigate()
@@ -25,10 +26,10 @@ export default function ProductPage() {
 
   return (
     <>  <div className="flex flex-col p-24">
-      <div className='flex justify-center  my-4'>
+      <div className='flex justify-center my-4'>
         <img src={images ? images[0] : "https://i.ytimg.com/vi/z3iKpCNlWU8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDx1Tbs2-3cwiU-zbwE2Ad0z9JHEA"} />
         <div className="flex flex-col pr-20">
-          <p className='font-sans text-3xl my-4'>{productName}</p>
+          <p className='my-4 font-sans text-3xl'>{productName}</p>
           <p>{productDescription}</p>
           <p className='text-2xl font-bold'>{productPrice}</p>
           {auth.loginDetails?<>

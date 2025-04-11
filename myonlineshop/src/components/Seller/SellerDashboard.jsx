@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { productAPI } from '../contexts/ProductContext'
 import { Link } from 'react-router-dom'
-import ReactProductCard from '../ImportedComponents/ProductCard'
-import { authContext } from '../contexts/AuthContext'
 import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
 import { Card } from 'flowbite-react'
+import { authContext } from '../../contexts/AuthContext'
+import { productAPI } from '../../contexts/ProductContext'
+import ReactProductCard from '../../ImportedComponents/ProductCard'
 
 
 export default function SellerDashboard() {
@@ -41,13 +41,13 @@ export default function SellerDashboard() {
           </div>
 
           <div className="flex flex-col mb-20">
-            <p className='text-3xl align-center m-4'>Your orders</p>
+            <p className='m-4 text-3xl align-center'>Your orders</p>
             <div className="flex flex-col">
               {console.log(orders)}
               {orders.map((e) => {
                 return <>
-                  <div className="m-4 border rounded p-4">
-                    <p className='text-2xl my-2'>Order by : </p>
+                  <div className="p-4 m-4 border rounded">
+                    <p className='my-2 text-2xl'>Order by : </p>
                     <div className="">
                       <Card className='bg-cyan-500'>
                       <p className='text-2xl' variant="body2" sx={{ color: 'text.secondary' }}>
@@ -95,8 +95,8 @@ export default function SellerDashboard() {
 
         </div>
       </> : <>
-        <div className="flex flex-col border m-2 p-4">
-          <p className='text-2xl text-center pt-4'>Start Your Selling Journey Today!</p>
+        <div className="flex flex-col p-4 m-2 border">
+          <p className='pt-4 text-2xl text-center'>Start Your Selling Journey Today!</p>
           <p className='text-center '>Welcome to our eCommerce platform, where your business dreams can turn into reality! Whether you're a passionate entrepreneur or a small business owner, our app provides all the tools and support you need to showcase your products, reach new customers, and grow your brand.
             Becoming a seller on our platform is simple and empowering. With user-friendly tools to manage your listings, seamless payment processing, and dedicated customer support, you can focus on what you do best: creating and curating amazing products. Join a thriving community of sellers and reach shoppers who are ready to discover and love what you offer!
             Ready to get started? Sign up today and take the first step toward success in eCommerce!</p>

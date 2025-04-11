@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { Input, useToast } from '@chakra-ui/react'
 import { Button, FileInput } from 'flowbite-react'
-import { productAPI } from '../contexts/ProductContext'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from '@chakra-ui/react'
+import { productAPI } from '../../contexts/ProductContext'
+
 export default function UpdateProduct() {
     const navigate = useNavigate()
     const toast = useToast()
@@ -35,7 +36,7 @@ export default function UpdateProduct() {
                         }
                     })}
                 </div>
-                <FileInput type="file" name="file" className='my-4 p-2 form-control-file' multiple onChange={(e) => {
+                <FileInput type="file" name="file" className='p-2 my-4 form-control-file' multiple onChange={(e) => {
                     //Waah chatgpt wah ,kya baat hai URL.createObjectURL helped in image Preview
                     //   const files = Array.from(e.target.files)
                     setFile(e.target.files);

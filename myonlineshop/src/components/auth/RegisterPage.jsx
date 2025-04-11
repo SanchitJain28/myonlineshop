@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import {FormControl,FormLabel,FormErrorMessage,FormHelperText,Input, Toast, useToast, Button} from '@chakra-ui/react'
-import { authContext } from '../contexts/AuthContext';
+import { authContext } from '../../contexts/AuthContext';
 
 export default function RegisterPage() {
   const toast = useToast()
@@ -23,7 +23,7 @@ export default function RegisterPage() {
     <>
     <div className="flex justify-center">
     <img src='https://img.freepik.com/free-vector/hand-drawn-colorful-groovy-psychedelic-background_23-2149083914.jpg' className='w-full h-screen'/>
-        <div className="flex flex-col p-20 m-20 absolute top-48 w-1/2  items-center	 rounded-xl bg-black text-white">
+        <div className="absolute flex flex-col items-center w-1/2 p-20 m-20 text-white bg-black top-48 rounded-xl">
           <FormControl className='my-4'>
             <FormLabel>Email address</FormLabel>
             <Input type='email' onChange={(e) => {
@@ -73,7 +73,7 @@ export default function RegisterPage() {
               isClosable: true,
             })
 
-          }} className=' w-40 my-4 hover:bg-black hover:text-black '>Register</Button>
+          }} className='w-40 my-4 hover:bg-black hover:text-black'>Register</Button>
         </div>
       </div>
     </>

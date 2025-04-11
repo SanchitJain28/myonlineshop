@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { authContext } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom';
-import {FormControl,FormLabel,FormErrorMessage,FormHelperText,Input, Button,ButtonGroup,useToast} from '@chakra-ui/react'
+
+import {FormControl,FormLabel,FormHelperText,Input, Button,useToast} from '@chakra-ui/react'
+import { authContext } from '../../contexts/AuthContext';
 
 export default function LoginPage() {
     const navigate = useNavigate()
@@ -14,8 +15,8 @@ export default function LoginPage() {
     const [password, setPassword] = useState("")
     return (
         <>
-            <div className="bg-black text-white p-12">
-                <div className="bg-sky-800 p-12 m-20 rounded-2xl">
+            <div className="p-12 text-white bg-black">
+                <div className="p-12 m-20 bg-sky-800 rounded-2xl">
                     <FormControl className='my-4'>
                         <FormLabel>Email address</FormLabel>
                         <Input type='email' onChange={(e) => {
@@ -53,7 +54,7 @@ export default function LoginPage() {
                             duration: 9000,
                             isClosable: true,
                         })
-                    }} className='text-white w-40 my-4 '>Register</Button>
+                    }} className='w-40 my-4 text-white '>Register</Button>
                 </div>
 
             </div>
