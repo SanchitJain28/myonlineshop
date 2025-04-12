@@ -1,4 +1,4 @@
 import axios from 'axios'
 export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://instacart-9fh4.onrender.com',
   });
