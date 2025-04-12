@@ -5,7 +5,6 @@ import { useToast } from '@chakra-ui/react'
 import { Button } from '@mui/material'
 import { productAPI } from '../../contexts/ProductContext'
 import { authContext } from '../../contexts/AuthContext'
-import LoginModal from '../UI/LoginModal'
 
 export default function OrderPage() {
   const toast=useToast()
@@ -200,7 +199,6 @@ export default function OrderPage() {
     </>:
     
     <>
-    <LoginModal msg="Log in"/>
     </>}
      
     </>

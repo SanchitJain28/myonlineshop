@@ -3,7 +3,6 @@ import { productAPI } from '../../contexts/ProductContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '@chakra-ui/react'
 import { authContext } from '../../contexts/AuthContext'
-import LoginModal from '../UI/LoginModal'
 import ReactCardForCart from '../UI/ReactCardForCart'
 //SOME CHANGES IN THE FUNCTIONAL CART
 export default function Cart() {
@@ -36,7 +35,7 @@ export default function Cart() {
         navigate("/createorder")
     }}>Checkout</Button>
     </>:<>
-      <Button className='w-1/3 p-12 mx-20'><LoginModal msg="Checkout"/></Button>
+      <Button className='w-1/3 p-12 mx-20'>TEst</Button>
     </>}
     
     </>}

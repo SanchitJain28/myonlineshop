@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import ItemsCarousel from "./UI/itemsCarousel";
 import ProductCarousel from "./UI/ProductCarousel";
 import "swiper/css";
 

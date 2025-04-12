@@ -3,7 +3,6 @@ import { productAPI } from '../../contexts/ProductContext'
 import { Button } from '@chakra-ui/react'
 import { Link, useNavigate } from 'react-router-dom'
 import { authContext } from '../../contexts/AuthContext'
-import LoginModal from '../UI/LoginModal'
 import Stats from '../UI/Stats'
 
 
@@ -38,7 +37,6 @@ export default function ProductPage() {
             navigate("/createorder")
           }}><Button className='w-40 my-2'>Buy now</Button></Link>
           </>:<>
-          <LoginModal msg="LOGIN TO BUY"/>
           </>}
 
           <Button className='w-40 my-2' onClick={() => {

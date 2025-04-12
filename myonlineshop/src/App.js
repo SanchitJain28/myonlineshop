@@ -9,7 +9,7 @@ import ProductPage from './components/Product/ProductPage';
 import Cart from './components/User/Cart';
 
 import OrderSuccess from './components/order/OrderSuccess';
-import FlowbiteNavbar from './components/UI/FlowbiteNavbar';
+import FlowbiteNavbar from './components/UI/Header';
 import SimpleBottomNavigation from './components/UI/BottomNavbar';
 import Wishlist from './components/User/Wishlist';
 import BecomeAseller from './components/Seller/BecomeAseller';
