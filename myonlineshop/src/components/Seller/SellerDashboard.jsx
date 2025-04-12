@@ -4,7 +4,7 @@ import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/ma
 import { Card } from 'flowbite-react'
 import { authContext } from '../../contexts/AuthContext'
 import { productAPI } from '../../contexts/ProductContext'
-import ReactProductCard from '../UI/ProductCard'
+import ProductCard from '../Product/ProductCard'
 
 
 export default function SellerDashboard() {
@@ -37,7 +37,7 @@ export default function SellerDashboard() {
             <Button component={Link} variant='outlined' to="/addproduct">ADD</Button>
           </div>
           <div className="flex flex-col">
-            {sellerProducts && sellerProducts.map((e) => { return <ReactProductCard myproduct={e} /> })}
+            {sellerProducts && sellerProducts.map((e) => { return <ProductCard myproduct={e} /> })}
           </div>
 
           <div className="flex flex-col mb-20">

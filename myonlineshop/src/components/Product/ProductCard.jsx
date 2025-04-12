@@ -6,7 +6,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Badge, Star } from "lucide-react";
 
 export default function ProductCard({ data }) {
-  const { productName, productDescription, images, _id } = data;
+  const { productName, images, _id } = data;
   const navigate = useNavigate();
   const productContext = useContext(productAPI);
   const { wishList, setWishList, setCurrentProduct } = productContext;
@@ -18,7 +18,9 @@ export default function ProductCard({ data }) {
       <div
         key={_id}
         className="min-w-full snap-start px-4 md:min-w-[50%] lg:min-w-[33.333%] xl:min-w-[25%]"
-        
+        onClick={()=>{
+          navigate(`/product?productid=${_id}`)
+        }}
       >
         <div className="overflow-hidden border rounded-lg ">
           <div className="relative aspect-square">
