@@ -1,8 +1,27 @@
 import { Link } from "react-router-dom";
 import ProductCarousel from "./UI/ProductCarousel";
 import "swiper/css";
+import { axiosInstance } from "../axiosConfig";
+import { useEffect, useState } from "react";
+import CartDrawerChakra from "./UI/CartDrawerChakra";
 
 export default function LandingPage() {
+  const [user,setUser]=useState(null)
+  const getUser=async()=>{
+    console.log("RUn")
+    try {
+      const response = await axiosInstance.get("/api/getuser")
+      console.log("kuch to likhde")
+      setUser(response.data.user)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    getUser()
+  }, [])
+  
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -43,12 +62,13 @@ export default function LandingPage() {
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            <Link
+            {!user && <Link
               to="/login"
               className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
             >
               Sign In
-            </Link>
+            </Link>}
+            <CartDrawerChakra/>
             <button>
             </button>
           </div>

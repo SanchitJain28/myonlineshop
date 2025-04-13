@@ -1,15 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import {
-  FormControl,
-  FormLabel,
-  FormHelperText,
-  Input,
-  Button,
-  useToast,
-} from "@chakra-ui/react";
+import { useToast,} from "@chakra-ui/react";
 import { authContext } from "../../contexts/AuthContext";
+import { axiosInstance } from "../../axiosConfig";
+import axios from "axios";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -29,27 +24,13 @@ export default function LoginPage() {
       return;
     }
     try {
-      const data = await auth.getMelogin(email, password);
-      if (!data.errors) {
-        setTimeout(() => {
-          navigate("/");
-        }, 1500);
-        return toast({
-          title: "You have been logged in.",
-          description: "We've created your account for you.",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
+        const response =await axiosInstance.post("/api/loginuser",{
+          email,
+          password
+        })
+        console.log(response.data)
       }
-      toast({
-        title: "Error logging you in.",
-        description: data.errors[0].msg,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    } catch (error) {
+     catch (error) {
       console.log(error);
     }
     finally{

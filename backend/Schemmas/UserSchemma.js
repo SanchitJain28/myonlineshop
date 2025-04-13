@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jsonwebtoken from 'jsonwebtoken'
 
 const UserSchemma = new mongoose.Schema({
   name:{
@@ -16,8 +17,35 @@ const UserSchemma = new mongoose.Schema({
   password:{
     type:String,
     required:true
-  }
+  },
+  refreshToken: {
+    type: String,
+}
 });
+
+UserSchemma.methods.generateAccessToken = async function () {
+  const token= jsonwebtoken.sign(
+      {
+          id: this._id,
+          name: this.name,
+          email: this.password
+      },
+      "SAnchit28",
+      {expiresIn:"2d"}
+  )
+  return token
+}
+UserSchemma.methods.generateRefreshToken = async function () {
+  return jsonwebtoken.sign(
+      {
+          id: this._id,
+          name: this.name,
+          email: this.password
+      },
+      "SAnchit28",
+      {expiresIn:"10d"}
+  )
+}
 
 export const UserModel=mongoose.model('ExpressTutorial-MakingUser', UserSchemma);
 

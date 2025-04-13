@@ -2,6 +2,7 @@
   "name": "myonlineshop",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@chakra-ui/react": "^2.10.3",
