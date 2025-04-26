@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
@@ -17,12 +17,19 @@ import ReactCardForCart from "./ReactCardForCart";
 import { productAPI } from "../../contexts/ProductContext";
 
 export default function CartDrawerChakra(props) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const cartInfo = useContext(productAPI);
   const userDetails = useContext(authContext);
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  
 
+  const onOpen = () => {
+    setIsOpen(true);
+  };
+  const onClose = () => {
+    setIsOpen(false);
+  };
   return (
     <>
       {/* <p href="#" ref={btnRef} colorScheme='teal' onClick={onOpen} className={props.className}><i class="fa-solid fa-cart-shopping"></i></p> */}

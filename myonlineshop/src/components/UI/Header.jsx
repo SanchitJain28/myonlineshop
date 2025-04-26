@@ -2,10 +2,24 @@ import { useContext, useEffect } from "react";
 import { authContext } from "../../contexts/AuthContext";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { axiosInstance } from "../../axiosConfig";
+import CartDrawerChakra from "./CartDrawerChakra";
 
 export default function Header() {
-  const auth = useContext(authContext);
-  useEffect(() => {}, [auth.loginDetails]);
+  const [user, setUser] = React.useState(null);
+  const getUser = async () => {
+    console.log("RUn");
+    try {
+      const response = await axiosInstance.get("/api/getuser");
+      console.log("kuch to likhde");
+      setUser(response.data.user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex items-center justify-between h-16">
@@ -45,12 +59,15 @@ export default function Header() {
           </Link>
         </nav>
         <div className="flex items-center gap-4">
-          <Link
-            to="/login"
-            className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
-          >
-            Sign In
-          </Link>
+          {!user && (
+            <Link
+              to="/login"
+              className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
+            >
+              Sign In
+            </Link>
+          )}
+          <CartDrawerChakra />
           <button></button>
         </div>
       </div>

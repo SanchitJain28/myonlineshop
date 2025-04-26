@@ -21,6 +21,7 @@ export default function ProductPage() {
   //     setDisabled(true);
   //   }
   // };
+  const [isInCart, setIsInCart] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const nextImage = () => {
@@ -57,8 +58,9 @@ export default function ProductPage() {
     fetchProduct();
   }, []);
   useEffect(() => {
-  const result=cart.checkInCart(searchParams.get("productid"))
-  console.log(result)
+    const result = cart.checkInCart(searchParams.get("productid"));
+    setIsInCart(result);
+    console.log(result);
   }, [product]);
 
   if (!product) {
@@ -189,10 +191,12 @@ export default function ProductPage() {
             className="flex items-center justify-center gap-2 px-6 py-3 mt-8 font-medium text-white transition-colors rounded-md bg-rose-600 hover:bg-rose-700"
             onClick={() => {
               cart.addToCart(product);
+              setIsInCart(true);
+              cart.setIsCartOpen(true)
             }}
           >
             <ShoppingCart className="w-5 h-5" />
-            Add to Cart
+            {isInCart ? "Already in cart" : "Add in cart"}
           </button>
         </div>
       </div>

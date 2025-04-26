@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import { createContext, useEffect, useState } from "react";
 import React from "react";
 import { useSearchParams } from "react-router-dom";
@@ -5,8 +6,8 @@ import { useSearchParams } from "react-router-dom";
 export const productAPI = createContext(undefined);
 
 export function ProductContext(props) {
-  
-
+  const toast=useToast()
+  const [isCartOpen,setIsCartOpen]=useState(false)
   const [productInfo, setProductInfo] = useState({ data: [] });
   const [currentProduct, setCurrentProduct] = useState([]);
   const [createProductInfo, setCreateProductInfo] = useState({ loader: false });
@@ -19,7 +20,7 @@ export function ProductContext(props) {
     const productsInCart = JSON.parse(localStorage.getItem("cart"));
     if (productsInCart) {
       setProductCart([...productsInCart]);
-      return
+      return;
     }
     setProductCart([]);
   }, []);
@@ -192,27 +193,37 @@ export function ProductContext(props) {
   const addToCart = (product) => {
     const productsInCart = productCart;
     const newProduct = product;
-    if (productsInCart) {
+    const isProductInCart =
+      productCart.map((product) => product._id).indexOf(newProduct._id) !== -1;
+    if (!isProductInCart) {
       const updatedproductsInCart = [...productsInCart, newProduct];
       setProductCart(updatedproductsInCart);
       localStorage.setItem("cart", JSON.stringify(updatedproductsInCart));
-      console.log("manyCart");
-      return;
+      toast({
+        title:"Added in cart",
+        description:"Product added in cart",
+        colorScheme:"yellow"
+      })
+      return
     }
-    console.log("singleCart");
-    setProductCart([...productCart, product]);
-    localStorage.setItem("cart", JSON.stringify([...productCart, product]));
-    console.log(productCart);
+    toast({
+      title:"Already in cart",
+      description:"Product already in cart",
+    })
+    return
   };
 
-  const checkInCart=(id)=>{
-    const isInCart=productCart.map((product)=>product._id).indexOf(id)!==-1
-    if(isInCart)return true
-    return false
-  }
+  const checkInCart = (id) => {
+    const isInCart =
+      productCart.map((product) => product._id).indexOf(id) !== -1;
+    if (isInCart) return true;
+    return false;
+  };
   return (
     <productAPI.Provider
       value={{
+        isCartOpen,
+        setIsCartOpen,
         checkInCart,
         addToCart,
         getProductsByCategory,

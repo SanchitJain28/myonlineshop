@@ -173,7 +173,6 @@ function App() {
             <RouterProvider router={router} />
           </ProductContext>
         </ChakraProvider>
-
       </ThemeProvider>
 
     </>
