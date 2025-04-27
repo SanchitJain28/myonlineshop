@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
@@ -9,9 +9,8 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  useDisclosure,
+  
 } from "@chakra-ui/react";
-import { authContext } from "../../contexts/AuthContext";
 import { BottomNavigationAction, Button } from "@mui/material";
 import ReactCardForCart from "./ReactCardForCart";
 import { productAPI } from "../../contexts/ProductContext";
@@ -19,7 +18,6 @@ import { productAPI } from "../../contexts/ProductContext";
 export default function CartDrawerChakra(props) {
   const btnRef = React.useRef();
   const cartInfo = useContext(productAPI);
-  const userDetails = useContext(authContext);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   
@@ -65,13 +63,11 @@ export default function CartDrawerChakra(props) {
               ) : (
                 <>
                   <div className="">
-                    {cartInfo.productCart.map((e) => {
+                    {cartInfo.productCart.map((e,index) => {
                       return (
-                        <>
-                          <div className="m-2">
+                          <div className="m-2" key={index}>
                             <ReactCardForCart product={e} />
                           </div>
-                        </>
                       );
                     })}
                   </div>
@@ -92,7 +88,7 @@ export default function CartDrawerChakra(props) {
                 onClose();
               }}
               className="mx-2"
-              disabled={cartInfo.productCart.length == 0}
+              disabled={cartInfo.productCart.length === 0}
             >
               Checkout
             </Button>

@@ -1,13 +1,13 @@
 import { useToast } from "@chakra-ui/react";
 import { createContext, useEffect, useState } from "react";
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import { axiosInstance } from "../axiosConfig";
 
 export const productAPI = createContext(undefined);
 
 export function ProductContext(props) {
-  const toast=useToast()
-  const [isCartOpen,setIsCartOpen]=useState(false)
+  const toast = useToast();
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [productInfo, setProductInfo] = useState({ data: [] });
   const [currentProduct, setCurrentProduct] = useState([]);
   const [createProductInfo, setCreateProductInfo] = useState({ loader: false });
@@ -82,12 +82,14 @@ export function ProductContext(props) {
   //WHY I WAS NOT USING RETURN STATEMENT TILL NOW,WHY??
   //this will get the product be Categories
   const getProductsByCategory = async (category, page) => {
-    let url = `https://instacart-9fh4.onrender.com/api/getproductbycategory?category=${category}&page=${page}`;
-    const response = await fetch(url, {
-      method: "GET",
-    });
-    const data = await response.json();
-    return data;
+    try {
+      const { data } = await axiosInstance.get(
+        `/api/getproductbycategory?category=${category}&page=${page}`
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getProductsbySeller = async () => {
@@ -200,17 +202,17 @@ export function ProductContext(props) {
       setProductCart(updatedproductsInCart);
       localStorage.setItem("cart", JSON.stringify(updatedproductsInCart));
       toast({
-        title:"Added in cart",
-        description:"Product added in cart",
-        colorScheme:"yellow"
-      })
-      return
+        title: "Added in cart",
+        description: "Product added in cart",
+        colorScheme: "yellow",
+      });
+      return;
     }
     toast({
-      title:"Already in cart",
-      description:"Product already in cart",
-    })
-    return
+      title: "Already in cart",
+      description: "Product already in cart",
+    });
+    return;
   };
 
   const checkInCart = (id) => {

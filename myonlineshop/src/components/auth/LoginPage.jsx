@@ -1,16 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useToast,} from "@chakra-ui/react";
-import { authContext } from "../../contexts/AuthContext";
 import { axiosInstance } from "../../axiosConfig";
-import axios from "axios";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const toast = useToast();
   //context
-  const auth = useContext(authContext);
 
   //states
   const [isLoading, setIsLoading] = useState(false);
@@ -24,11 +21,19 @@ export default function LoginPage() {
       return;
     }
     try {
-        const response =await axiosInstance.post("/api/loginuser",{
+        const {data} =await axiosInstance.post("/api/loginuser",{
           email,
           password
         })
-        console.log(response.data)
+        console.log(data)
+        navigate("/");
+        toast({
+          title: "Login Successful",
+          description: "You have successfully logged in.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
       }
      catch (error) {
       console.log(error);

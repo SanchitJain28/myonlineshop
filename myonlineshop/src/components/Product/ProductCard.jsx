@@ -1,15 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { productAPI } from "../../contexts/ProductContext";
-import { Link, useNavigate } from "react-router-dom";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useNavigate } from "react-router-dom";
 import { Badge, Star } from "lucide-react";
-
 export default function ProductCard({ data }) {
   const { productName, images, _id } = data;
   const navigate = useNavigate();
   const productContext = useContext(productAPI);
-  const { wishList, setWishList, setCurrentProduct } = productContext;
+  const { wishList} = productContext;
   useEffect(() => {}, [wishList]);
 
   return (

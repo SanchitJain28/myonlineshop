@@ -8,11 +8,10 @@ import CartDrawerChakra from "./CartDrawerChakra";
 export default function Header() {
   const [user, setUser] = React.useState(null);
   const getUser = async () => {
-    console.log("RUn");
     try {
-      const response = await axiosInstance.get("/api/getuser");
-      console.log("kuch to likhde");
-      setUser(response.data.user);
+      const {data} = await axiosInstance.get("/api/getuser");
+      setUser(data.user);
+      console.log(data)
     } catch (error) {
       console.log(error);
     }

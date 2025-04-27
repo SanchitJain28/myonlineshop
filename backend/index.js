@@ -10,7 +10,7 @@ const port = 8080;
 const app = express();
 app.use(
   cors({
-    origin: "https://instamart28.netlify.app",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
