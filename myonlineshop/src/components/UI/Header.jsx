@@ -9,9 +9,9 @@ export default function Header() {
   const [user, setUser] = React.useState(null);
   const getUser = async () => {
     try {
-      const {data} = await axiosInstance.get("/api/getuser");
+      const {data,config} = await axiosInstance.get("/api/getuser");
       setUser(data.user);
-      console.log(data)
+      console.log(data,config)
     } catch (error) {
       console.log(error);
     }

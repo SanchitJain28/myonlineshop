@@ -8,7 +8,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const toast = useToast();
   //context
-
+  
   //states
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,11 +21,11 @@ export default function LoginPage() {
       return;
     }
     try {
-        const {data} =await axiosInstance.post("/api/loginuser",{
+        const {data,config} =await axiosInstance.post("/api/loginuser",{
           email,
           password
         })
-        console.log(data)
+        console.log(data,config)
         navigate("/");
         toast({
           title: "Login Successful",

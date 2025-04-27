@@ -5,7 +5,6 @@ import "swiper/css";
 import Header from "./UI/Header";
 
 export default function LandingPage() {
-  console.log(process.env.BACKEND_URL)
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
