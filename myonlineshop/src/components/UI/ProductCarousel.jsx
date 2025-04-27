@@ -12,7 +12,7 @@ export default function ProductCarousel(props) {
     const getMeData = async () => {
       try {
         const data = await productInfo.getProductsByCategory('Clothes', "0");
-        setProductData(data);
+        setProductData(data?data:[]);
         console.log(data);
       } catch (error) {
         console.error("Error fetching product data:", error);

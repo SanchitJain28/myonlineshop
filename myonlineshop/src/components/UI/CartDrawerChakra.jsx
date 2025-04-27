@@ -9,7 +9,6 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  
 } from "@chakra-ui/react";
 import { BottomNavigationAction, Button } from "@mui/material";
 import ReactCardForCart from "./ReactCardForCart";
@@ -20,7 +19,6 @@ export default function CartDrawerChakra(props) {
   const cartInfo = useContext(productAPI);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  
 
   const onOpen = () => {
     setIsOpen(true);
@@ -63,11 +61,11 @@ export default function CartDrawerChakra(props) {
               ) : (
                 <>
                   <div className="">
-                    {cartInfo.productCart.map((e,index) => {
+                    {cartInfo.productCart.map((e, index) => {
                       return (
-                          <div className="m-2" key={index}>
-                            <ReactCardForCart product={e} />
-                          </div>
+                        <div className="m-2" key={index}>
+                          <ReactCardForCart product={e} />
+                        </div>
                       );
                     })}
                   </div>
