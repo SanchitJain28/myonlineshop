@@ -5,12 +5,10 @@ import "swiper/css";
 import Header from "./UI/Header";
 
 export default function LandingPage() {
-  
-  
-
+  console.log(process.env.BACKEND_URL)
   return (
     <div className="flex flex-col min-h-screen">
-      <Header/>
+      <Header />
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
           <div className="container px-4 md:px-6">
@@ -21,7 +19,8 @@ export default function LandingPage() {
                     Discover Amazing Products for Your Lifestyle
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Shop the latest trends with free shipping on orders over $50. Quality products at affordable prices.
+                    Shop the latest trends with free shipping on orders over
+                    $50. Quality products at affordable prices.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -50,10 +49,15 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block px-3 py-1 text-sm rounded-lg bg-muted">New Arrivals</div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Featured Products</h2>
+                <div className="inline-block px-3 py-1 text-sm rounded-lg bg-muted">
+                  New Arrivals
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                  Featured Products
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl">
-                  Check out our latest collection of products that are trending right now
+                  Check out our latest collection of products that are trending
+                  right now
                 </p>
               </div>
             </div>
@@ -61,9 +65,7 @@ export default function LandingPage() {
               {/* <ProductCarousel category="Clothes"/> */}
             </div>
             <div className="flex justify-center mt-8">
-              <button className="gap-1">
-                View All Products 
-              </button>
+              <button className="gap-1">View All Products</button>
             </div>
           </div>
         </section>
@@ -73,24 +75,33 @@ export default function LandingPage() {
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Why Choose Us</h2>
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                    Why Choose Us
+                  </h2>
                   <p className=" md:text-xl">
-                    We're committed to providing the best shopping<br className="" /> experience with quality products and excellent
-                    service.
+                    We're committed to providing the best shopping
+                    <br className="" /> experience with quality products and
+                    excellent service.
                   </p>
                 </div>
                 <ul className="grid gap-4">
                   <li className="flex items-center gap-2">
-                    <span className="font-medium">Free shipping on orders over $50</span>
+                    <span className="font-medium">
+                      Free shipping on orders over $50
+                    </span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="font-medium">30-day money-back guarantee</span>
+                    <span className="font-medium">
+                      30-day money-back guarantee
+                    </span>
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="font-medium">24/7 customer support</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="font-medium">Secure payment processing</span>
+                    <span className="font-medium">
+                      Secure payment processing
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -111,7 +122,9 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Shop by Category</h2>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                  Shop by Category
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl">
                   Browse our wide selection of products by category
                 </p>
@@ -128,7 +141,6 @@ export default function LandingPage() {
                     <img
                       src={category.img || "/placeholder.svg"}
                       alt={category.name}
-                      
                       className="object-cover w-[300px] h-[500px] transition-transform group-hover:scale-105"
                     />
                   </div>
@@ -154,9 +166,12 @@ export default function LandingPage() {
               </div>
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Join Our Newsletter</h2>
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                    Join Our Newsletter
+                  </h2>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Subscribe to our newsletter to receive updates on new products, special offers, and more.
+                    Subscribe to our newsletter to receive updates on new
+                    products, special offers, and more.
                   </p>
                 </div>
                 <div className="flex max-w-md flex-col gap-2 min-[400px]:flex-row">
@@ -180,18 +195,29 @@ export default function LandingPage() {
             <span className="text-xl font-bold">ShopNow</span>
           </div>
           <nav className="flex gap-4 md:gap-6">
-            <Link href="#" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
+            <Link
+              href="#"
+              className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
+            >
               Terms
             </Link>
-            <Link href="#" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
+            <Link
+              href="#"
+              className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
+            >
               Privacy
             </Link>
-            <Link href="#" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
+            <Link
+              href="#"
+              className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
+            >
               Contact
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            <p className="text-sm text-muted-foreground">© 2023 ShopNow. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">
+              © 2023 ShopNow. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
