@@ -95,11 +95,13 @@ router.post(
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+        sameSite: "None",
       };
       const option = {
         httpOnly: true,
         secure: true,
         expires: new Date(Date.now() + 6 * 60 * 60 * 1000),
+        sameSite: "None",
       };
       return res
         .status(200)
@@ -120,22 +122,22 @@ router.post(
   }
 );
 
-router.get("/api/getuser",verifyUser,async(req,res)=>{
-    try {
-        const user = await User.findById(req.user.id).select("-password");
-        return res.status(200).json({
-          status: true,
-          message: "User Fetched Successfully",
-          user,
-        });
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({
-            status: false,
-            message: "Internal servor error",
-          });
-    }
-})
+router.get("/api/getuser", verifyUser, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    return res.status(200).json({
+      status: true,
+      message: "User Fetched Successfully",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal servor error",
+    });
+  }
+});
 
 //Seller account
 router.post(

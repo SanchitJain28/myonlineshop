@@ -31,7 +31,7 @@ UserSchemma.methods.generateAccessToken = async function () {
           email: this.password
       },
       "SAnchit28",
-      {expiresIn:"2d"}
+      {expiresIn:"6d"}
   )
   return token
 }
