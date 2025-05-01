@@ -61,7 +61,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="mt-8 md:mt-12 lg:mt-16">
-              {/* <ProductCarousel category="Clothes"/> */}
+              <ProductCarousel category="Clothes"/>
             </div>
             <div className="flex justify-center mt-8">
               <button className="gap-1">View All Products</button>
