@@ -100,7 +100,7 @@ router.post(
       const option = {
         httpOnly: true,
         secure: true,
-        expires: new Date(Date.now() + 6 * 60 * 60 * 1000),
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         sameSite: "None",
       };
       return res
