@@ -251,3 +251,58 @@ router.get("/api/userdetails", verifyUser, async (req, res) => {
     console.log(error);
   }
 });
+
+router.post("/api/seller-register",verifyUser, async (req, res) => {
+  try {
+    const { name, address, phone, email } = req.body;
+    const existingSeller = await Seller.findOne({ email });
+    if (existingSeller) {
+      return res.status(400).json({
+        status: false,
+        message: "Seller account already exists with this email",
+      });
+    }
+    const seller = new Seller({
+      businessName: name,
+      phoneNo: phone,
+      AccountCreated: new Date(),
+      email: email,
+      address: address,
+    });
+    await seller.save();
+    const user= await User.findById(req.user.id);
+    user.isSeller = true;
+    user.sellerId = seller._id; // Set the sellerId to the newly created seller's ID
+    await user.save();
+    return res.status(200).json({
+      status: true,
+      message: "Seller account created successfully",
+      seller,
+      user
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error",
+    });
+  }
+});
+
+router.get("/api/get-seller", verifyUser, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password").populate("sellerId");
+    return res.status(200).json({
+      status: true,
+      message: "seller Fetched Successfully",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal servor error",
+    });
+  }
+});
+

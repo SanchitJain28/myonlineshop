@@ -11,11 +11,12 @@ import { UserModel as user } from "../Schemmas/UserSchemma.js";
 export const router = Router();
 import { getSellerInformation as Sellermiddleware } from "../MiddleWare/sellerAccount.js";
 import { ProductModel as Product } from "../Schemmas/ProductSchemmas.js";
+import { verifyUser } from "../MiddleWare/userMiddleWare.js";
 
 //Creating a product
 router.post(
   "/api/createproduct",
-  Sellermiddleware,
+  verifyUser,
   upload.array("file", 10),
   body("productName").notEmpty().withMessage("Product name cannot be empty"),
   body("productCategory")
@@ -34,7 +35,7 @@ router.post(
     try {
       const images = req.files;
       const productImages = [];
-
+      
       //uploads on cloudinary
       if (!images || images.length == 0) {
         return res.send({ errors: [{ msg: "please upload an image" }] });
@@ -46,11 +47,9 @@ router.post(
       if (!result) {
         res.send({ error: "please upload an image" });
       }
-      productImages.push(result.url);
-
       const product = new Product({
-        sellerId: req.seller.sellerid,
-        sellerName: req.seller.BusinessName,
+        sellerId: req.body.sellerid,
+        sellerName: req.body.BusinessName,
         productName: req.body.productName,
         productCategory: req.body.productCategory,
         productCreated: new Date(),

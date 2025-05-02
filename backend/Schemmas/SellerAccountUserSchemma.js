@@ -17,8 +17,8 @@ const SellerSchema = new mongoose.Schema({
   email:{
     type:String,
     required:true
-  }, // String is shorthand for {type: String}
-  password:{
+  },
+  address:{
     type:String,
     required:true
   }

@@ -9,9 +9,6 @@ import { FileInput } from "flowbite-react";
 import { useNavigate } from 'react-router-dom'
 import { productAPI } from '../../contexts/ProductContext'
 
-
-
-
 export default function FileUpload() {
   const toast = useToast()
   const navigate = useNavigate()
@@ -80,6 +77,7 @@ export default function FileUpload() {
         <Button onClick={async () => {
           setLoader(true)
           const data = await productContext.createProduct(file, productName, productCategory, productPrice, productDescription)
+          console.log(data)
           setLoader(false)
           emptyFeilds()
           setTimeout(() => {
@@ -94,11 +92,7 @@ export default function FileUpload() {
           })
           console.log(data)
         }} disabled={loader}>Upload   {loader ? <Spinner /> : ""}</Button>
-
       </div>
-
     </>
-
-
   )
 }

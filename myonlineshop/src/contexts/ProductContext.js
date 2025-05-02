@@ -72,15 +72,7 @@ export function ProductContext(props) {
     formDataToSend.append("productCategory", productCategory); // Append the file
     formDataToSend.append("productPrice", productPrice); // Append the file
     formDataToSend.append("productDescription", productDescription); // Append the file
-    let url = "https://instacart-9fh4.onrender.com/api/createproduct";
-    let response = await fetch(url, {
-      method: "POST",
-      body: formDataToSend,
-      headers: {
-        "auth-token": localStorage.getItem("sellerId"),
-      },
-    });
-    const data = await response.json();
+    const {data}=await axiosInstance.post("/api/createproduct",formDataToSend)
     return data;
   };
 

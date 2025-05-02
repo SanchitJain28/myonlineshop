@@ -1,118 +1,104 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
-import { Card } from 'flowbite-react'
-import { authContext } from '../../contexts/AuthContext'
-import { productAPI } from '../../contexts/ProductContext'
-import ProductCard from '../Product/ProductCard'
-import { axiosInstance } from '../../axiosConfig'
-
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import OrdersList from "./OrderList";
+import { axiosInstance } from "../../axiosConfig";
+import AddProduct from "./AddProduct";
 
 export default function SellerDashboard() {
-  const auth = useContext(authContext)
-  const [sellerData, setSellerData] = useState(null)
-  const sellerInformation = useContext(productAPI)
-  const [sellerProducts, setSellerProducts] = useState([])
-  const getProductsbySeller = async () => {
-    const {data}=await axiosInstance.get('api/sellerinfo')
-    console.log(data)
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("orders");
+  const [seller, setSeller] = useState(null);
+  const getSeller = async () => {
+    try {
+      setLoading(true);
+      const {
+        data: { user },
+      } = await axiosInstance.get("/api/get-seller");
+      console.log(user.sellerId);
+      setSeller(user.sellerId);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
-
-  const [orders, setOrders] = useState([])
-  const getProducts = async () => {
-    const data = await sellerInformation.getProductsbySeller()
-    setSellerProducts(data.findProducts)
-    setOrders(data.findOrders)
-    setSellerData(data.data)
-    localStorage.setItem("sellerDetails", JSON.stringify(data.data))
-    console.log(data)
-  }
   useEffect(() => {
-    // getProducts()
-    getProductsbySeller()
-  }, [])
+    getSeller();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="">
+        <p className="">Loading</p>
+      </div>
+    );
+  }
+
+  if (!seller) {
+    return (
+      <div className="">
+        <p className="">Please become a seller</p>
+        <Link to="/becomeaseller" className="p-4 mx-auto my-4 bg-blue-600">
+          Become a seller
+        </Link>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {auth.sellerDetails ? <>
-        <div className="flex flex-col">
-          <div className="flex m-4">
-            <p className='text align-center'>Welcome to the seller dashobaord</p>
+    <div>
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <header className="bg-white shadow">
+          <div className="px-4 py-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between">
+              <h1 className="text-xl font-bold text-gray-800">
+                Seller Dashboard
+              </h1>
+              <div className="text-sm text-gray-600">
+                <p className="font-medium">{seller.businessName}</p>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-between m-4">
-            <p className='text align-center'>Your products</p>
-            <Button component={Link} variant='outlined' to="/addproduct">ADD</Button>
-          </div>
-          <div className="flex flex-col">
-            {sellerProducts && sellerProducts.map((e) => { return <ProductCard myproduct={e} /> })}
-          </div>
+        </header>
 
-          <div className="flex flex-col mb-20">
-            <p className='m-4 text-3xl align-center'>Your orders</p>
-            <div className="flex flex-col">
-              {console.log(orders)}
-              {orders.map((e) => {
-                return <>
-                  <div className="p-4 m-4 border rounded">
-                    <p className='my-2 text-2xl'>Order by : </p>
-                    <div className="">
-                      <Card className='bg-cyan-500'>
-                      <p className='text-2xl' variant="body2" sx={{ color: 'text.secondary' }}>
-                        {e.user?.name || <p>NOT AVAILABLE</p>}
-                      </p>
-                      <p variant="body2" sx={{ color: 'text.secondary' }} className='text-2xl'>
-                        {e.user?.email || <p>NOT AVAILABLE</p>}
-                      </p>
-                      <p variant="body2" sx={{ color: 'text.secondary' }} className='text-2xl'>
-                        {e.user?.phoneNo|| <p>NOT AVAILABLE</p>}
-                      </p>
-                      </Card>
-                    </div>
-
-                    {e.orderItems.filter((f) => {
-                      return f.seller == sellerData.sellerid
-                    }).map((m) => {
-                      return <Card className='my-2'>
-                        <CardContent>
-                          <div className="flex justify-between">
-                            <Typography gutterBottom variant="h5" component="div">
-                              {m.product?.productName || <p>NOT AVAILABLE</p>}
-                            </Typography>
-                            <img src={m.product?.images[0]} className='w-20' />
-
-                          </div>
-
-                          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            {m.product?.productDescription || <p>NOT AVAILABLE</p>}
-                          </Typography>
-                        </CardContent>
-                        <CardActions>
-                        </CardActions>
-                      </Card>
-                    })}
-                    <p><br /></p>
-                    <Button size="small" variant='contained'>Complete order</Button>
-
-                  </div>
-                </>
-              })}
+        {/* Main Content */}
+        <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <div className="overflow-hidden bg-white rounded-lg shadow">
+            {/* Tabs */}
+            <div className="border-b border-gray-200">
+              <nav className="flex -mb-px">
+                <button
+                  onClick={() => setActiveTab("orders")}
+                  className={`py-4 px-6 text-sm font-medium ${
+                    activeTab === "orders"
+                      ? "border-b-2 border-blue-500 text-blue-600"
+                      : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                >
+                  Orders
+                </button>
+                <button
+                  onClick={() => setActiveTab("add-product")}
+                  className={`py-4 px-6 text-sm font-medium ${
+                    activeTab === "add-product"
+                      ? "border-b-2 border-blue-500 text-blue-600"
+                      : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                >
+                  Add Product
+                </button>
+              </nav>
             </div>
 
+            {/* Tab Content */}
+            <div className="p-6">
+              {activeTab === "orders" && <OrdersList />}
+              {activeTab === "add-product" && <AddProduct sellerid = {seller._id} BusinessName= {seller.businessName}/>}
+            </div>
           </div>
-
         </div>
-      </> : <>
-        <div className="flex flex-col p-4 m-2 border">
-          <p className='pt-4 text-2xl text-center'>Start Your Selling Journey Today!</p>
-          <p className='text-center '>Welcome to our eCommerce platform, where your business dreams can turn into reality! Whether you're a passionate entrepreneur or a small business owner, our app provides all the tools and support you need to showcase your products, reach new customers, and grow your brand.
-            Becoming a seller on our platform is simple and empowering. With user-friendly tools to manage your listings, seamless payment processing, and dedicated customer support, you can focus on what you do best: creating and curating amazing products. Join a thriving community of sellers and reach shoppers who are ready to discover and love what you offer!
-            Ready to get started? Sign up today and take the first step toward success in eCommerce!</p>
-          <Button variant='outlined' component={Link} to="/becomeaseller" className='mx-4 my-2'>Register as a seller</Button>
-          <Button variant='outlined' component={Link} to="/sellerlogin" className='mx-4 my-2 mb-4'>Login as a seller</Button>
-
-        </div>
-      </>}
-
-    </>
-  )
+      </div>
+    </div>
+  );
 }

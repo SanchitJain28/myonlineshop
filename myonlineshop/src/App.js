@@ -12,18 +12,17 @@ import OrderSuccess from './components/order/OrderSuccess';
 import FlowbiteNavbar from './components/UI/Header';
 import SimpleBottomNavigation from './components/UI/BottomNavbar';
 import Wishlist from './components/User/Wishlist';
-import BecomeAseller from './components/Seller/BecomeAseller';
 import CategoryPage from './components/Product/CategoryPage';
 import DashBoard from './components/User/DashBoard';
 import LoginPage from './components/auth/LoginPage';
 import OrderPage from './components/order/OrderPage';
 import RegisterPage from './components/auth/RegisterPage';
-import SellerDashboard from './components/Seller/SellerDashboard';
-import SellerLogin from './components/Seller/SellerLogin';
 import UpdateProduct from './components/Product/UpdateProduct';
 import FileUpload from './components/Product/FileUpload';
 import CartPage from './components/User/cartPage';
 import CheckoutPage from './components/order/checkout';
+import SellerRegistration from './components/Seller/SellerRegister';
+import SellerDashboard from './components/Seller/SellerDashboard';
 
 
 
@@ -77,7 +76,7 @@ function App() {
       path: "/becomeaseller",
       element: <>
         <FlowbiteNavbar />
-        <BecomeAseller />
+        <SellerRegistration/>
         <SimpleBottomNavigation />
 
       </>,
@@ -92,19 +91,10 @@ function App() {
       </>,
     },
     {
-      path: "/sellerlogin",
-      element: <>
-        <FlowbiteNavbar />
-        <SellerLogin />
-        <SimpleBottomNavigation />
-
-      </>,
-    },
-    {
       path: "/sellerdashboard",
       element: <>
         <FlowbiteNavbar />
-        <SellerDashboard />
+        <SellerDashboard/>
         <SimpleBottomNavigation />
 
       </>,

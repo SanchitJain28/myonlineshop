@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { authContext } from "../../contexts/AuthContext";
+import { axiosInstance } from "../../axiosConfig";
 
 export default function RegisterPage() {
   const toast = useToast();
@@ -23,31 +24,26 @@ export default function RegisterPage() {
       return;
     }
     try {
-      const { errors } = await auth.getMeRegistered(
+      const { data } = await axiosInstance.post("/api/createuser", {
         email,
         password,
         name,
-        phoneNo
-      );
-      if (!errors) {
-        setTimeout(() => {
-          navigate("/");
-        }, 1500);
-        return toast({
-          title: `Account created Succesfully`,
-          status: "success",
-          isClosable: true,
-        });
-      }
-      navigate("/login");
-      toast({
-        title: `Account cannot created`,
-        description: errors[0].msg,
-        status: "error",
+        phoneNo,
+      });
+      console.log(data);
+      return toast({
+        title: `Account created Succesfully`,
+        status: "success",
         isClosable: true,
       });
     } catch (error) {
       console.log(error);
+      toast({
+        title: `Account cannot created`,
+        description: error.msg,
+        status: "error",
+        isClosable: true,
+      });
     } finally {
       setIsLoading(false);
     }

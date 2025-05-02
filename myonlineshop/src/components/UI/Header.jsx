@@ -74,6 +74,7 @@ export default function Header() {
               </span>
             )}
           </Link>
+          {user?.isSeller && <Link to="/sellerdashboard">Seller</Link>}
         </div>
       </div>
     </header>
