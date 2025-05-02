@@ -4,7 +4,7 @@ import { productAPI } from "../../contexts/ProductContext";
 import { Card as FlowbiteCard } from "flowbite-react";
 
 export default function ReactCardForCart(props) {
-  const cartInfo = useContext(productAPI);
+  const {removeFromCart} = useContext(productAPI);
   const { productName, productDescription, productPrice, images, _id } =
     props.product;
   return (
@@ -19,12 +19,7 @@ export default function ReactCardForCart(props) {
           </p>
           <Button
             onClick={(e) => {
-              let cartProducts = cartInfo.productCart;
-              cartProducts = cartProducts.filter((e) => {
-                return e._id !== _id;
-              });
-              cartInfo.setProductCart(cartProducts);
-              localStorage.setItem("cart",JSON.stringify(cartProducts))
+              removeFromCart(_id);
             }}
             className="my-2 bg-red-700"
           >

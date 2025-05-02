@@ -11,7 +11,6 @@ export default function ProductCard({ data }) {
 
   return (
     <>
-      
       <div
         key={_id}
         className="min-w-full snap-start px-4 md:min-w-[50%] lg:min-w-[33.333%] xl:min-w-[25%]"

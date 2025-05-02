@@ -13,7 +13,9 @@ export function ProductContext(props) {
   const [createProductInfo, setCreateProductInfo] = useState({ loader: false });
   const [category, setCategory] = useState("Electronics");
   const [orderProducts, setOrderProducts] = useState([]);
+
   const [productCart, setProductCart] = useState([]);
+  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const [updateProduct, setUpdateProduct] = useState([]);
   const [wishList, setWishList] = useState([]);
   useEffect(() => {
@@ -215,6 +217,15 @@ export function ProductContext(props) {
     return;
   };
 
+  const removeFromCart = (productId) => {
+    let cartProducts = productCart;
+    cartProducts = cartProducts.filter((e) => {
+      return e._id !== productId;
+    });
+    setProductCart(cartProducts);
+    localStorage.setItem("cart", JSON.stringify(cartProducts));
+  };
+
   const checkInCart = (id) => {
     const isInCart =
       productCart.map((product) => product._id).indexOf(id) !== -1;
@@ -224,6 +235,7 @@ export function ProductContext(props) {
   return (
     <productAPI.Provider
       value={{
+        removeFromCart,
         isCartOpen,
         setIsCartOpen,
         checkInCart,
@@ -251,6 +263,8 @@ export function ProductContext(props) {
         deleteProduct,
         wishList,
         setWishList,
+        isCartDrawerOpen,
+        setIsCartDrawerOpen,
       }}
     >
       {props.children}

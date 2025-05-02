@@ -111,16 +111,16 @@ router.post("/api/upload", upload.array("file", 10), async (req, res) => {
 
 router.get("/api/getsingleproduct", async (req, res) => {
   const { productid } = req.query;
-  console.log(productid)
+  console.log(productid);
   try {
     if (!productid) {
       return res.send({ error: "No product id provided" });
     }
     const product = await Product.findById(productid);
-    return res.status(201).json({ 
+    return res.status(201).json({
       status: "true",
-      product
-     });
+      product,
+    });
   } catch (error) {
     return res.status(500).json({
       status: false,
@@ -131,14 +131,14 @@ router.get("/api/getsingleproduct", async (req, res) => {
 
 router.get("/api/sellerinfo", Sellermiddleware, async (req, res) => {
   try {
-    const { sellerid } = req.seller;
-    if (!sellerid) {
+    const { id } = req.seller;
+    if (!id) {
       return res.send({ errors: [{ msg: "SellerID not Provided" }] });
     }
     console.log(sellerid);
-    const findProducts = await Product.find({ sellerId: sellerid });
+    const findProducts = await Product.find({ sellerId: id });
     const findOrders = await order
-      .find({ "orderItems.seller": sellerid })
+      .find({ "orderItems.seller": id })
       .populate("orderItems.product")
       .populate("user");
     res.send({

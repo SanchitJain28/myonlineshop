@@ -4,14 +4,14 @@ import { productAPI } from '../../contexts/ProductContext';
 import ProductCard from "../Product/ProductCard";
 import { useContext, useState, useEffect } from "react";
 
-export default function ProductCarousel(props) {
+export default function ProductCarousel({category}) {
   const productInfo = useContext(productAPI);
   const [productData, setProductData] = useState([]);
 
   useEffect(() => {
     const getMeData = async () => {
       try {
-        const data = await productInfo.getProductsByCategory('Clothes', "0");
+        const data = await productInfo.getProductsByCategory(category, "0");
         setProductData(data?data:[]);
         console.log(data);
       } catch (error) {

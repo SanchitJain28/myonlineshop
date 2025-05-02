@@ -5,6 +5,7 @@ import { Card } from 'flowbite-react'
 import { authContext } from '../../contexts/AuthContext'
 import { productAPI } from '../../contexts/ProductContext'
 import ProductCard from '../Product/ProductCard'
+import { axiosInstance } from '../../axiosConfig'
 
 
 export default function SellerDashboard() {
@@ -12,6 +13,11 @@ export default function SellerDashboard() {
   const [sellerData, setSellerData] = useState(null)
   const sellerInformation = useContext(productAPI)
   const [sellerProducts, setSellerProducts] = useState([])
+  const getProductsbySeller = async () => {
+    const {data}=await axiosInstance.get('api/sellerinfo')
+    console.log(data)
+  };
+
   const [orders, setOrders] = useState([])
   const getProducts = async () => {
     const data = await sellerInformation.getProductsbySeller()
@@ -22,7 +28,8 @@ export default function SellerDashboard() {
     console.log(data)
   }
   useEffect(() => {
-    getProducts()
+    // getProducts()
+    getProductsbySeller()
   }, [])
 
   return (

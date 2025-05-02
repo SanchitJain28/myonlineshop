@@ -16,7 +16,7 @@ import { productAPI } from "../../contexts/ProductContext";
 
 export default function CartDrawerChakra(props) {
   const btnRef = React.useRef();
-  const cartInfo = useContext(productAPI);
+  const {productCart,setOrderProducts,isCartDrawerOpen,setIsCartDrawerOpen} = useContext(productAPI);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,7 +25,10 @@ export default function CartDrawerChakra(props) {
   };
   const onClose = () => {
     setIsOpen(false);
+    setIsCartDrawerOpen(false)
   };
+  
+  
   return (
     <>
       {/* <p href="#" ref={btnRef} colorScheme='teal' onClick={onOpen} className={props.className}><i class="fa-solid fa-cart-shopping"></i></p> */}
@@ -37,7 +40,7 @@ export default function CartDrawerChakra(props) {
       />
 
       <Drawer
-        isOpen={isOpen}
+        isOpen={isCartDrawerOpen}
         placement="right"
         onClose={onClose}
         finalFocusRef={btnRef}
@@ -50,7 +53,7 @@ export default function CartDrawerChakra(props) {
 
           <DrawerBody className="">
             <>
-              {cartInfo.productCart.length === 0 ? (
+              {productCart.length === 0 ? (
                 <>
                   <div className="flex justify-center">
                     <p className="text-xl text-center ">
@@ -61,7 +64,7 @@ export default function CartDrawerChakra(props) {
               ) : (
                 <>
                   <div className="">
-                    {cartInfo.productCart.map((e, index) => {
+                    {productCart.map((e, index) => {
                       return (
                         <div className="m-2" key={index}>
                           <ReactCardForCart product={e} />
@@ -81,12 +84,12 @@ export default function CartDrawerChakra(props) {
             <Button
               variant="contained"
               onClick={() => {
-                cartInfo.setOrderProducts(cartInfo.productCart);
+                setOrderProducts(productCart);
                 navigate("/createorder");
                 onClose();
               }}
               className="mx-2"
-              disabled={cartInfo.productCart.length === 0}
+              disabled={productCart.length === 0}
             >
               Checkout
             </Button>

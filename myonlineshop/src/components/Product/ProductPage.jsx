@@ -15,7 +15,7 @@ import { productAPI } from "../../contexts/ProductContext";
 export default function ProductPage() {
   let [searchParams] = useSearchParams();
   const [product, setProduct] = useState(null);
-  const cart = useContext(productAPI);
+  const {addToCart,checkInCart,setIsCartDrawerOpen} = useContext(productAPI);
   // const checkInCart = () => {
   //   if (productContext.productCart.map((e) => e._id).indexOf(product._id) !== -1) {
   //     setDisabled(true);
@@ -58,7 +58,7 @@ export default function ProductPage() {
     fetchProduct();
   }, []);
   useEffect(() => {
-    const result = cart.checkInCart(searchParams.get("productid"));
+    const result = checkInCart(searchParams.get("productid"));
     setIsInCart(result);
     console.log(result);
   }, [product]);
@@ -190,9 +190,9 @@ export default function ProductPage() {
           <button
             className="flex items-center justify-center gap-2 px-6 py-3 mt-8 font-medium text-white transition-colors rounded-md bg-rose-600 hover:bg-rose-700"
             onClick={() => {
-              cart.addToCart(product);
+              addToCart(product);
+              setIsCartDrawerOpen(true);
               setIsInCart(true);
-              cart.setIsCartOpen(true)
             }}
           >
             <ShoppingCart className="w-5 h-5" />

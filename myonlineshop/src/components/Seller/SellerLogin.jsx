@@ -23,12 +23,11 @@ export default function SellerLogin() {
 
 
         <Button className='my-2' onClick={async () => {
+          console.log("RUNNIG")
           const data = await sellerLogin.sellerLogin(email, password)
           sellerLogin.setSellerDetails(data)
           console.log(data)
           if (!data.errors) {
-            localStorage.setItem("sellerId", data.token)
-            localStorage.setItem("sellerDetails",data)
             navigate('/sellerdashboard')
             return toast({
               title: 'Login Successful',
