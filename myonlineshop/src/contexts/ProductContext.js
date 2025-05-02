@@ -14,8 +14,11 @@ export function ProductContext(props) {
   const [category, setCategory] = useState("Electronics");
   const [orderProducts, setOrderProducts] = useState([]);
 
+  const [order,setOrder] = useState([]);
+
   const [productCart, setProductCart] = useState([]);
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
+
   const [updateProduct, setUpdateProduct] = useState([]);
   const [wishList, setWishList] = useState([]);
   useEffect(() => {
@@ -232,6 +235,10 @@ export function ProductContext(props) {
     if (isInCart) return true;
     return false;
   };
+
+  const addOrderItemsFromCart= ()=>{
+    setOrder(productCart)
+  }
   return (
     <productAPI.Provider
       value={{
@@ -265,6 +272,8 @@ export function ProductContext(props) {
         setWishList,
         isCartDrawerOpen,
         setIsCartDrawerOpen,
+        order,
+        setOrder
       }}
     >
       {props.children}

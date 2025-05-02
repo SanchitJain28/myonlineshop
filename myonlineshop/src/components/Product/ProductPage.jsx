@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { axiosInstance } from "../../axiosConfig";
 import {
   ChevronLeft,
@@ -15,7 +15,8 @@ import { productAPI } from "../../contexts/ProductContext";
 export default function ProductPage() {
   let [searchParams] = useSearchParams();
   const [product, setProduct] = useState(null);
-  const {addToCart,checkInCart,setIsCartDrawerOpen} = useContext(productAPI);
+  const { addToCart, checkInCart, setIsCartDrawerOpen, setOrder,order } =
+    useContext(productAPI);
   // const checkInCart = () => {
   //   if (productContext.productCart.map((e) => e._id).indexOf(product._id) !== -1) {
   //     setDisabled(true);
@@ -30,6 +31,12 @@ export default function ProductPage() {
     );
   };
 
+  const createOrder = ()=>{
+    console.log(product)
+    setOrder((prev)=>[product])
+    console.log(order)
+  }
+
   const prevImage = () => {
     setCurrentImage((prev) =>
       prev === 0 ? product.images.length - 1 : prev - 1
@@ -37,19 +44,25 @@ export default function ProductPage() {
   };
 
   const incrementQuantity = () => {
+    if(quantity >=5) return;
+    setProduct((prev) => ({ ...prev, quantity: quantity + 1}))
     setQuantity((prev) => prev + 1);
+
   };
 
   const decrementQuantity = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+    if(quantity <= 1) return;
+    setProduct((prev) => ({ ...prev, quantity: quantity - 1}))
+    setQuantity((prev) => prev - 1);
   };
 
   const fetchProduct = async () => {
     try {
-      const response = await axiosInstance.get(
+      const {data:{product}} = await axiosInstance.get(
         `/api/getsingleproduct?productid=${searchParams.get("productid")}`
       );
-      setProduct(response.data.product);
+      const filteredImages = product.images.filter((image) => image !== null);
+      setProduct({...product,quantity:1,images:filteredImages});
     } catch (error) {
       console.log(error);
     }
@@ -57,11 +70,7 @@ export default function ProductPage() {
   useEffect(() => {
     fetchProduct();
   }, []);
-  useEffect(() => {
-    const result = checkInCart(searchParams.get("productid"));
-    setIsInCart(result);
-    console.log(result);
-  }, [product]);
+  
 
   if (!product) {
     return (
@@ -198,6 +207,14 @@ export default function ProductPage() {
             <ShoppingCart className="w-5 h-5" />
             {isInCart ? "Already in cart" : "Add in cart"}
           </button>
+          <Link
+            to={'/order'}
+            className="flex items-center justify-center gap-2 px-6 py-3 mt-3 font-medium text-white transition-colors bg-blue-600 rounded-md hover:bg-blue-700"
+            onClick={createOrder}
+          >
+            <ShoppingCart className="w-5 h-5" />
+            Buy Now
+          </Link>
         </div>
       </div>
 

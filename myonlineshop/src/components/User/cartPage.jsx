@@ -32,7 +32,7 @@ const initialCartItems = [
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState(initialCartItems);
-  const { productCart,removeFromCart } = useContext(productAPI);
+  const { productCart,removeFromCart,setOrder } = useContext(productAPI);
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
 
@@ -42,7 +42,10 @@ export default function CartPage() {
       )
     );
   };
- 
+  
+  const createOrder = ()=>{
+    setOrder(productCart)
+  }
 
  
 
@@ -61,7 +64,7 @@ export default function CartPage() {
         Your Cart has {productCart.length} items
       </h1>
 
-      {cartItems.length === 0 ? (
+      {productCart.length === 0 ? (
         <div className="py-12 text-center">
           <h2 className="mb-4 text-xl font-medium text-gray-900">
             Your cart is empty
@@ -199,12 +202,14 @@ export default function CartPage() {
               </div>
 
               <div className="mt-8">
-                <button
+                <Link
                   type="button"
+                  to="/order"
                   className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  onClick={createOrder}
                 >
                   Proceed to Checkout
-                </button>
+                </Link>
               </div>
 
               <div className="mt-4 text-center">
