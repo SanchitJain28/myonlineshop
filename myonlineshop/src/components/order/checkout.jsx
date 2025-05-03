@@ -55,7 +55,7 @@ export default function CheckoutPage() {
       return;
     }
     // Create order by calling the server endpoint
-    const response = await fetch("http://localhost:8080/api/create-order", {
+    const response = await fetch("https://myonlineshop-production.up.railway.app/api/create-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
