@@ -1,9 +1,7 @@
 import { createContext, useState } from "react";
 import React from "react";
-import { useDispatch } from "react-redux";
 
 import { axiosInstance } from "../axiosConfig";
-import { response } from "express";
 
 export const authContext = createContext(null);
 
