@@ -11,7 +11,6 @@ import {
 import { productAPI } from "../../contexts/ProductContext";
 import { authContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const { currentUser } = useContext(authContext);
@@ -31,6 +30,69 @@ export default function CheckoutPage() {
   useEffect(() => {
     getUser();
   }, []);
+
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
+
+  const createOrder = async () => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+    // Create order by calling the server endpoint
+    const response = await fetch("http://localhost:8080/api/create-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: 50000,
+        currency: "INR",
+        receipt: "receipt#1",
+        notes: {},
+      }),
+    });
+
+    const order = await response.json();
+
+    // Open Razorpay Checkout
+    const options = {
+      key: "rzp_live_NzX6nOcaB8kXHI", // Replace with your Razorpay key_id
+      amount: "399", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: "Insta mart",
+      description: "Test Transaction",
+      order_id: "order_IluGWxBm9U8zJ8", // This is the order_id created in the backend
+      callback_url: "http://localhost:3000/payment-success", // Your success URL
+      
+      prefill: {
+        name: "Sanchit jain",
+        email: "mythichuman28@gmail.com",
+        contact: "9650296375",
+      },
+      theme: {
+        color: "#F37254",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
 
   const { order } = useContext(productAPI);
   const [step, setStep] = useState(1);
@@ -131,21 +193,27 @@ export default function CheckoutPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      createOrder();
       // In a real app, you would submit the order to your backend here
-      window.location.href = "/ordersuccess";
+      // window.location.href = "/ordersuccess";
     }
   };
 
-  const { setOrderRedirection}=useContext(productAPI)
+  const { setOrderRedirection } = useContext(productAPI);
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50" onClick={()=>{
-        navigate("/login")
-        setOrderRedirection(true)
-      }}>
+      <div
+        className="flex flex-col items-center justify-center min-h-screen bg-gray-50"
+        onClick={() => {
+          navigate("/login");
+          setOrderRedirection(true);
+        }}
+      >
         <p className="my-4 text-xl text-center">Please login to continue</p>
-        <button className="w-24 p-4 text-white bg-blue-700 rounded-xl">Login</button>
+        <button className="w-24 p-4 text-white bg-blue-700 rounded-xl">
+          Login
+        </button>
       </div>
     );
   }

@@ -4,7 +4,11 @@ export const router = Router();
 import { orderModel as order } from '../Schemmas/OrderSchemma.js';
 import { verifyUser } from '../MiddleWare/userMiddleWare.js';
 import { body, validationResult } from "express-validator";
-
+import Razorpay from 'razorpay'
+const instance = new Razorpay({
+  key_id: 'rzp_live_NzX6nOcaB8kXHI',
+  key_secret: 'fpxoGerXDrctz9X8ybUXNEqq',
+});
 //DO CONSOLE LOG FOR ERROR
 router.post("/api/createorder", verifyUser, body("orderItems").notEmpty().withMessage("Ordered Items cannot be empty").isLength({min:1}),
     body("fullName").notEmpty().withMessage("Please enter your full name"),
@@ -57,3 +61,19 @@ router.post("/api/createorder", verifyUser, body("orderItems").notEmpty().withMe
             return error
         }
     })
+
+    
+    router.post('/api/create-order', async (req, res) => {
+        const options = {
+          amount: req.body.amount, // Amount in paise
+          currency: 'INR',
+          receipt: 'order_rcptid_11',
+        };
+        try {
+          const order = await instance.orders.create(options);
+          res.json(order);
+        } catch (error) {
+            console.log(error)
+          res.json({ error });
+        }
+      });
