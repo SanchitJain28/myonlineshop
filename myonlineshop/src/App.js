@@ -31,6 +31,8 @@ import ShippingPolicy from './components/Others/ShippingPolicy';
 import CancellationPolicy from './components/Others/return-refund-policy';
 import ReturnAndRefundPolicy from './components/Others/return-refund-policy';
 import NewCancellationPolicy from './components/Others/Cancelltion-policy';
+import ContactUs from './components/Others/contact-us';
+import Footer from './components/UI/Footer';
 
 
 
@@ -85,7 +87,7 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <SellerRegistration/>
-        <SimpleBottomNavigation />
+        <Footer/>
 
       </>,
     },
@@ -103,8 +105,8 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <SellerDashboard/>
-        <SimpleBottomNavigation />
-
+        <Footer/>
+      
       </>,
     },
     {
@@ -121,6 +123,8 @@ function App() {
       element: <>
         <Header />
         <TermsAndConditions/>
+        <Footer/>
+
       </>,
     },
     {
@@ -128,6 +132,8 @@ function App() {
       element: <>
         <Header />
         <PrivacyPolicy/>
+        <Footer/>
+
       </>,
     },
     {
@@ -135,6 +141,8 @@ function App() {
       element: <>
         <Header />
         <ShippingPolicy/>
+        <Footer/>
+
       </>,
     },
     {
@@ -142,6 +150,8 @@ function App() {
       element: <>
         <Header />
         <ReturnAndRefundPolicy/>
+        <Footer/>
+
       </>,
     },
     {
@@ -149,6 +159,16 @@ function App() {
       element: <>
         <Header />
         <NewCancellationPolicy/>
+        <Footer/>
+
+      </>,
+    },
+    {
+      path: "/contact-us",
+      element: <>
+        <Header />
+        <ContactUs/>
+        <Footer/>
       </>,
     },
     {
@@ -156,7 +176,7 @@ function App() {
       element: <>
         <Header />
         <OrderSuccess />
-        <SimpleBottomNavigation />
+        <Footer/>
 
       </>,
     },
@@ -184,7 +204,7 @@ function App() {
       
         <FlowbiteNavbar />
         <ShopPage/>
-
+        <Footer/>
       </>,
     },
     {
@@ -192,7 +212,7 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <Wishlist />
-        <SimpleBottomNavigation />
+        <Footer/>
       </>,
     },
     {
@@ -200,7 +220,7 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <CartPage/>
-        <SimpleBottomNavigation />
+        <Footer/>
       </>,
     },
     {
@@ -208,7 +228,7 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <CheckoutPage/>
-        <SimpleBottomNavigation />
+        <Footer/>
       </>,
     }
   ]);

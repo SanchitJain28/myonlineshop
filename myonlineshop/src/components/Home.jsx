@@ -5,6 +5,7 @@ import LoadingScreen from "./UI/LoadingScreen/LoadingScreen";
 import { ShoppingCart, User } from "lucide-react";
 import { productAPI } from "../contexts/ProductContext";
 import Header from "./UI/Header";
+import Footer from "./UI/Footer";
 // Mock product data for carousels
 
 // Categories with appropriate clothing images
@@ -446,137 +447,7 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full text-white bg-black">
-        <div className="container px-4 py-12 mx-auto md:px-6">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <h3 className="mb-4 text-xl font-bold">STYLISH</h3>
-              <p className="mb-4 text-gray-400">
-                Premium clothing for the modern individual. Quality, style, and
-                comfort in every piece.
-              </p>
-              <div className="flex space-x-4">
-                <Link to="#" className="text-white hover:text-gray-300">
-                  Facebook
-                </Link>
-                <Link to="#" className="text-white hover:text-gray-300">
-                  Instagram
-                </Link>
-                <Link to="#" className="text-white hover:text-gray-300">
-                  Twitter
-                </Link>
-              </div>
-            </div>
-            <div>
-              <h3 className="mb-4 text-lg font-semibold">Shop</h3>
-              <ul className="space-y-2">
-                {categories.slice(0, 4).map((category) => (
-                  <li key={category.name}>
-                    <Link
-                      to={`/category/${category.name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
-                      className="text-gray-400 hover:text-white"
-                    >
-                      {category.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-4 text-lg font-semibold">Company</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link to="/about" className="text-gray-400 hover:text-white">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/careers"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/stores" className="text-gray-400 hover:text-white">
-                    Store Locator
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/sustainability"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Sustainability
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-4 text-lg font-semibold">Customer Service</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    to="/contact"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/shipping"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Shipping & Returns
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/faq" className="text-gray-400 hover:text-white">
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/size-guide"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Size Guide
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-between pt-8 mt-12 border-t border-gray-800 md:flex-row">
-            <p className="text-gray-400">
-              © 2023 STYLISH. All rights reserved.
-            </p>
-            <div className="flex mt-4 space-x-6 md:mt-0">
-              <Link
-                to="/terms"
-                className="text-sm text-gray-400 hover:text-white"
-              >
-                Terms & Conditions
-              </Link>
-              <Link
-                to="/privacy"
-                className="text-sm text-gray-400 hover:text-white"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                to="/cookies"
-                className="text-sm text-gray-400 hover:text-white"
-              >
-                Cookie Policy
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   );
 }
