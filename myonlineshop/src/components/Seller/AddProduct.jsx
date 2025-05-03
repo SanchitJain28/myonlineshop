@@ -1,8 +1,9 @@
-"use client";
 
 import { useState, useRef } from "react";
 import { X } from "lucide-react";
 import { axiosInstance } from "../../axiosConfig";
+import { useNavigate } from "react-router-dom";
+import {  toast } from 'react-toastify';
 
 export default function AddProduct({sellerid,BusinessName}) {
   const [formData, setFormData] = useState({
@@ -20,14 +21,16 @@ export default function AddProduct({sellerid,BusinessName}) {
   const fileInputRef = useRef(null);
 
   const categories = [
-    "Electronics",
-    "Clothing",
-    "Home & Kitchen",
-    "Books",
-    "Toys & Games",
-    "Beauty & Personal Care",
-    "Sports & Outdoors",
+    "T-Shirts & Tops",
+    "Shirts & Blouses",
+    "Jeans & Trousers",
+    "Dresses & Ethnic Wear",
+    "Jackets & Hoodies",
+    "Activewear & Sportswear",
+    "Nightwear & Loungewear",
+    "Accessories",
   ];
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -124,11 +127,37 @@ export default function AddProduct({sellerid,BusinessName}) {
           formDataToSubmit
         );
         console.log(data)
-        
+        toast("Product added successfully!", {
+          type: "success",
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+        setFormData({
+          name: "",
+          description: "",
+          price: "",
+          category: "",
+          inventory: "",
+        })
+        fileInputRef.current.value = null;
+        setImageFiles([]);
+        setImagePreviews([]);
       }
     } catch (error) {
       console.log(error)
-      
+      toast("Product cannot be added successfully!", {
+        type: "error",
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
     }
     finally{
       setIsSubmitting(false);

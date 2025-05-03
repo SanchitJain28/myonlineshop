@@ -35,7 +35,7 @@ router.post(
     try {
       const images = req.files;
       const productImages = [];
-      
+
       //uploads on cloudinary
       if (!images || images.length == 0) {
         return res.send({ errors: [{ msg: "please upload an image" }] });
@@ -77,18 +77,28 @@ router.get("/api/getallproducts", async (req, res) => {
   res.send(data);
 });
 
-router.get("/api/getproductbycategory", async (req, res) => {
-  const { category, page } = req.query;
-
-  if (!category || !page) {
-    return res.send({ error: "please select the category and the pageNo" });
+router.get("/api/get-product-by-category", async (req, res) => {
+  const { category } = req.query;
+  try {
+    if (!category) {
+      return res.json({
+        success: true,
+        message: "Please provide a category",
+      });
+    }
+    console.log(category)
+    const data = await Product.find({ productCategory: category });
+    return res.json({
+      success: true,
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: true,
+      message: "Internal error occured",
+    });
   }
-  const data = await Product.find({ productCategory: req.query.category })
-    .limit(10)
-    .skip(Number(page * 10));
-
-  res.send(data);
-  console.log(data.length);
 });
 
 //BAS Itna sa tha yaar ,wtf

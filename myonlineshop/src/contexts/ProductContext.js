@@ -79,9 +79,11 @@ export function ProductContext(props) {
   //WHY I WAS NOT USING RETURN STATEMENT TILL NOW,WHY??
   //this will get the product be Categories
   const getProductsByCategory = async (category, page) => {
+    const Category = encodeURIComponent(category)
+
     try {
-      const { data } = await axiosInstance.get(
-        `/api/getproductbycategory?category=${category}&page=${page}`
+      const { data :{data}} = await axiosInstance.get(
+        `/api/get-product-by-category?category=${Category}`
       );
       return data;
     } catch (error) {

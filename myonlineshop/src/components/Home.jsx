@@ -1,251 +1,582 @@
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ProductCarousel from "./UI/ProductCarousel";
-import "swiper/css";
-
+import { axiosInstance } from "../axiosConfig";
+import LoadingScreen from "./UI/LoadingScreen/LoadingScreen";
+import { ShoppingCart, User } from "lucide-react";
+import { productAPI } from "../contexts/ProductContext";
 import Header from "./UI/Header";
+// Mock product data for carousels
+
+// Categories with appropriate clothing images
+const categories = [
+  {
+    name: "T-Shirts & Tops",
+    img: "https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    name: "Shirts & Blouses",
+    img: "https://images.unsplash.com/photo-1608234808654-2a8875faa7fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    name: "Jeans & Trousers",
+    img: "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    name: "Dresses & Ethnic Wear",
+    img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    name: "Jackets & Hoodies",
+    img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    name: "Activewear & Sportswear",
+    img: "https://images.unsplash.com/photo-1518459031867-a89b944bffe4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    name: "Nightwear & Loungewear",
+    img: "https://images.unsplash.com/photo-1617331721458-bd3bd3f9c7f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    name: "Accessories",
+    img: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
+  },
+];
+
+// Product Carousel Component
+const ProductCarousel = ({ products }) => {
+  return (
+    <div className="relative">
+      <div className="flex gap-4 pb-4 overflow-x-auto snap-x scrollbar-hide">
+        {products.map((product) => {
+          console.log(product.images[0]);
+          return (
+            <Link
+              to={`/product?productid=${product._id}`}
+              key={product._id}
+              className="min-w-[250px] snap-start flex-shrink-0 group"
+            >
+              <div className="relative overflow-hidden bg-gray-100 rounded-lg">
+                <img
+                  src={product.images[0]}
+                  alt={product.productName}
+                  className="h-[300px] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              <div className="mt-3">
+                <h3 className="text-sm font-medium">{product.productName}</h3>
+                <p className="text-sm text-gray-500">
+                  {product.productCategory}
+                </p>
+                <p className="mt-1 font-semibold">₹{product.productPrice}</p>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+
 
 export default function LandingPage() {
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [trendingProducts, setTrendingProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const fetchFeaturedProducts = async () => {
+    setLoading(true);
+    try {
+      const category = encodeURIComponent("Shirts & Blouses");
+      console.log(category);
+      const {
+        data: { data },
+      } = await axiosInstance.get(
+        `/api/get-product-by-category?category=${category}`
+      );
+      setFeaturedProducts([...data]);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setFeaturedProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchTrendingProducts = async () => {
+    setLoading(true);
+    try {
+      const category = encodeURIComponent("Dresses & Ethnic Wear");
+      console.log(category);
+      const {
+        data: { data },
+      } = await axiosInstance.get(
+        `/api/get-product-by-category?category=${category}`
+      );
+      setTrendingProducts([...data]);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setFeaturedProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchInstaStyle = async () => {
+    setLoading(true);
+    try {
+      const category = encodeURIComponent("Jackets & Hoodies");
+      console.log(category);
+      const {
+        data: { data },
+      } = await axiosInstance.get(
+        `/api/get-product-by-category?category=${category}`
+      );
+      const mapImages = data.map((item) => item.images[0]);
+      setInstaStyle([...mapImages]);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setFeaturedProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const [instaStyle, setInstaStyle] = useState([]);
+  useEffect(() => {
+    fetchFeaturedProducts();
+    fetchTrendingProducts();
+    fetchInstaStyle();
+  }, []);
+  const handleLoadingComplete = () => {
+    setLoading(false);
+  };
+  if (loading) {
+    return (
+      <LoadingScreen
+        onLoadingComplete={handleLoadingComplete}
+        minLoadingTime={2500}
+        maxLoadingTime={4000}
+      />
+    );
+  }
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       <Header />
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
+        {/* Hero Section */}
+        <section className="relative w-full py-12 overflow-hidden md:py-24 lg:py-32 bg-gray-50">
+          <div className="container px-4 mx-auto md:px-6">
+            <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                    Discover Amazing Products for Your Lifestyle
+                    Elevate Your Style With Our Collection
                   </h1>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Shop the latest trends with free shipping on orders over
-                    $50. Quality products at affordable prices.
+                  <p className="max-w-[600px] text-gray-500 md:text-xl">
+                    Discover the latest fashion trends with free shipping on
+                    orders over ₹50. Premium quality at affordable prices.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <button className="px-8 py-2 border border-black rounded-xl">
+                  <Link
+                    to="/sale-page"
+                    className="inline-flex items-center justify-center h-12 px-8 text-sm font-medium text-white transition-colors bg-black rounded-md shadow hover:bg-black/90"
+                  >
                     Shop Now
-                  </button>
-                  <button className="px-8 py-2 border border-black rounded-xl">
-                    View Deals
-                  </button>
+                  </Link>
+                  <Link
+                    to="/sale-page?category=Dresses%20%26%20Ethnic%20Wear"
+                    className="inline-flex items-center justify-center h-12 px-8 text-sm font-medium transition-colors bg-white border border-black rounded-md shadow-sm hover:bg-gray-100"
+                  >
+                    New Arrivals
+                  </Link>
                 </div>
               </div>
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center overflow-hidden rounded-xl">
                 <img
-                  src="https://blog.tubikstudio.com/wp-content/uploads/2019/07/fashion_ecommerce_website_design_tubik-1024x768.png"
-                  width={550}
-                  height={550}
-                  alt="Hero img"
-                  className="object-cover rounded-xl"
+                  src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                  width={600}
+                  height={600}
+                  alt="Fashion model wearing trendy outfit"
+                  className="aspect-[4/3] object-cover rounded-xl"
                 />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+        {/* Featured Products Section */}
+        <section className="w-full py-12 md:py-24">
+          <div className="container px-4 mx-auto md:px-6">
+            <div className="flex flex-col items-center justify-center mb-10 space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block px-3 py-1 text-sm rounded-lg bg-muted">
-                  New Arrivals
+                <div className="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg">
+                  New Season
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-                  Featured Products
+                  Featured Collection
                 </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl">
-                  Check out our latest collection of products that are trending
-                  right now
+                <p className="max-w-[900px] text-gray-500 md:text-xl">
+                  Discover our handpicked selection of this season's must-have
+                  pieces
                 </p>
               </div>
             </div>
-            <div className="mt-8 md:mt-12 lg:mt-16">
-              <ProductCarousel category="Clothes"/>
-            </div>
+            <ProductCarousel products={featuredProducts} />
             <div className="flex justify-center mt-8">
-              <button className="gap-1">View All Products</button>
-            </div>
-
-            <div className="mt-8 md:mt-12 lg:mt-16">
-              <ProductCarousel category="Electronics"/>
-            </div>
-            <div className="flex justify-center mt-8">
-              <button className="gap-1">View All Products</button>
+              <Link
+                to="/sale-page"
+                className="inline-flex items-center justify-center h-10 px-6 py-2 text-sm font-medium transition-colors border border-black rounded-md hover:bg-black hover:text-white"
+              >
+                View All Featured Products
+              </Link>
             </div>
           </div>
         </section>
 
-        <section className="w-full py-12 overflow-hidden md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                    Why Choose Us
-                  </h2>
-                  <p className=" md:text-xl">
-                    We're committed to providing the best shopping
-                    <br className="" /> experience with quality products and
-                    excellent service.
-                  </p>
-                </div>
-                <ul className="grid gap-4">
-                  <li className="flex items-center gap-2">
-                    <span className="font-medium">
-                      Free shipping on orders over $50
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="font-medium">
-                      30-day money-back guarantee
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="font-medium">24/7 customer support</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="font-medium">
-                      Secure payment processing
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              <div className="flex items-center justify-center">
-                <img
-                  src="https://blog.tubikstudio.com/wp-content/uploads/2019/07/fashion_ecommerce_website_design_tubik-1024x768.png"
-                  width={600}
-                  height={400}
-                  alt="Features img"
-                  className="object-cover rounded-xl"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+        {/* Categories Section */}
+        <section className="w-full py-12 md:py-24 bg-gray-50">
+          <div className="container px-4 mx-auto md:px-6">
+            <div className="flex flex-col items-center justify-center mb-10 space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
                   Shop by Category
                 </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl">
-                  Browse our wide selection of products by category
+                <p className="max-w-[900px] text-gray-500 md:text-xl">
+                  Browse our wide selection of clothing and accessories
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
-              {categories.map((category) => (
-                <Link
-                  key={category.name}
-                  to="#"
-                  className="relative overflow-hidden transition-all border rounded-lg group bg-background hover:shadow-lg"
-                >
-                  <div className="overflow-hidden aspect-square">
-                    <img
-                      src={category.img || "/placeholder.svg"}
-                      alt={category.name}
-                      className="object-cover w-[300px] h-[500px] transition-transform group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="absolute inset-0 flex items-end p-4 text-white bg-gradient-to-t from-black/60 to-transparent">
-                    <h3 className="font-medium">{category.name}</h3>
-                  </div>
-                </Link>
-              ))}
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+              {categories.map((category) => {
+                const categoryName = encodeURIComponent(category.name);
+                return (
+                  <Link
+                    key={category.name}
+                    to={`/sale-page?category=${categoryName}`}
+                    className="relative overflow-hidden rounded-lg group"
+                  >
+                    <div className="aspect-[3/4] overflow-hidden">
+                      <img
+                        src={category.img || "/placeholder.svg"}
+                        alt={category.name}
+                        className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="absolute inset-0 flex items-end p-4 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
+                      <h3 className="font-medium text-white">
+                        {category.name}
+                      </h3>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
-        <section className="w-full py-12 overflow-hidden md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
-              <div className="flex items-center justify-center">
+
+        {/* Trending Products Section */}
+        <section className="w-full py-12 md:py-24">
+          <div className="container px-4 mx-auto md:px-6">
+            <div className="flex flex-col items-center justify-center mb-10 space-y-4 text-center">
+              <div className="space-y-2">
+                <div className="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg">
+                  Popular Now
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                  Trending This Week
+                </h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl">
+                  The styles everyone's talking about right now
+                </p>
+              </div>
+            </div>
+            <ProductCarousel products={trendingProducts} />
+            <div className="flex justify-center mt-8">
+              <Link
+                to="/collections/trending"
+                className="inline-flex items-center justify-center h-10 px-6 py-2 text-sm font-medium transition-colors border border-black rounded-md hover:bg-black hover:text-white"
+              >
+                View All Trending Products
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Choose Us Section */}
+        <section className="w-full py-12 md:py-24 bg-gray-50">
+          <div className="container px-4 mx-auto md:px-6">
+            <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
+              <div className="flex items-center justify-center overflow-hidden rounded-xl">
                 <img
-                  src="https://blog.tubikstudio.com/wp-content/uploads/2019/07/fashion_ecommerce_website_design_tubik-1024x768.png"
+                  src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
                   width={600}
                   height={400}
-                  alt="Newsletter img"
-                  className="object-cover rounded-xl"
+                  alt="Fashion store interior"
+                  className="aspect-[4/3] object-cover rounded-xl"
                 />
               </div>
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                    Join Our Newsletter
+                    Why Choose STYLISH
                   </h2>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Subscribe to our newsletter to receive updates on new
-                    products, special offers, and more.
+                  <p className="text-gray-500 md:text-xl">
+                    We're committed to providing the best shopping experience
+                    with quality products and excellent service.
+                  </p>
+                </div>
+                <ul className="grid gap-4">
+                  <li className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 text-white bg-black rounded-full">
+                      ✓
+                    </div>
+                    <span className="font-medium">
+                      Free shipping on orders over ₹50
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 text-white bg-black rounded-full">
+                      ✓
+                    </div>
+                    <span className="font-medium">
+                      30-day money-back guarantee
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 text-white bg-black rounded-full">
+                      ✓
+                    </div>
+                    <span className="font-medium">24/7 customer support</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 text-white bg-black rounded-full">
+                      ✓
+                    </div>
+                    <span className="font-medium">
+                      Secure payment processing
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 text-white bg-black rounded-full">
+                      ✓
+                    </div>
+                    <span className="font-medium">
+                      Ethically sourced materials
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Newsletter Section */}
+        <section className="w-full py-12 md:py-24">
+          <div className="container px-4 mx-auto md:px-6">
+            <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
+              <div className="flex flex-col justify-center space-y-4">
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+                    Join Our Style Community
+                  </h2>
+                  <p className="text-gray-500 md:text-xl">
+                    Subscribe to our newsletter for exclusive offers, style
+                    tips, and first access to new collections.
                   </p>
                 </div>
                 <div className="flex max-w-md flex-col gap-2 min-[400px]:flex-row">
                   <input
                     type="email"
                     placeholder="Enter your email"
-                    className="flex w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex w-full h-12 px-3 py-2 text-sm bg-white border border-gray-300 rounded-md placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black"
                   />
-                  <button className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md whitespace-nowrap bg-primary text-primary-foreground ring-offset-background hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                  <button className="inline-flex items-center justify-center h-12 px-6 text-sm font-medium text-white transition-colors bg-black rounded-md hover:bg-black/90">
                     Subscribe
                   </button>
                 </div>
+                <p className="text-xs text-gray-500">
+                  By subscribing, you agree to our Privacy Policy and consent to
+                  receive updates from our company.
+                </p>
+              </div>
+              <div className="flex items-center justify-center overflow-hidden rounded-xl">
+                <img
+                  src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                  width={600}
+                  height={400}
+                  alt="Woman shopping for clothes"
+                  className="aspect-[4/3] object-cover rounded-xl"
+                />
               </div>
             </div>
           </div>
         </section>
-      </main>
-      <footer className="w-full border-t bg-background">
-        <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-bold">ShopNow</span>
+
+        {/* Instagram Section */}
+        <section className="w-full py-12 md:py-24 bg-gray-50">
+          <div className="container px-4 mx-auto md:px-6">
+            <div className="flex flex-col items-center justify-center mb-10 space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                  #STYLISHWEAR
+                </h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl">
+                  Follow us on Instagram and tag your photos with #STYLISHWEAR
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 md:grid-cols-4 lg:gap-4">
+              {instaStyle.map((item) => (
+                <Link
+                  key={item}
+                  to="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative overflow-hidden group aspect-square"
+                >
+                  <img
+                    src={item}
+                    alt={`Instagram post ${item}`}
+                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                  />
+                </Link>
+              ))}
+            </div>
           </div>
-          <nav className="flex gap-4 md:gap-6">
-            <Link
-              href="#"
-              className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
-            >
-              Terms
-            </Link>
-            <Link
-              href="#"
-              className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
-            >
-              Privacy
-            </Link>
-            <Link
-              href="#"
-              className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
-            >
-              Contact
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <p className="text-sm text-muted-foreground">
-              © 2023 ShopNow. All rights reserved.
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="w-full text-white bg-black">
+        <div className="container px-4 py-12 mx-auto md:px-6">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <h3 className="mb-4 text-xl font-bold">STYLISH</h3>
+              <p className="mb-4 text-gray-400">
+                Premium clothing for the modern individual. Quality, style, and
+                comfort in every piece.
+              </p>
+              <div className="flex space-x-4">
+                <Link to="#" className="text-white hover:text-gray-300">
+                  Facebook
+                </Link>
+                <Link to="#" className="text-white hover:text-gray-300">
+                  Instagram
+                </Link>
+                <Link to="#" className="text-white hover:text-gray-300">
+                  Twitter
+                </Link>
+              </div>
+            </div>
+            <div>
+              <h3 className="mb-4 text-lg font-semibold">Shop</h3>
+              <ul className="space-y-2">
+                {categories.slice(0, 4).map((category) => (
+                  <li key={category.name}>
+                    <Link
+                      to={`/category/${category.name
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                      className="text-gray-400 hover:text-white"
+                    >
+                      {category.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="mb-4 text-lg font-semibold">Company</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link to="/about" className="text-gray-400 hover:text-white">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/careers"
+                    className="text-gray-400 hover:text-white"
+                  >
+                    Careers
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/stores" className="text-gray-400 hover:text-white">
+                    Store Locator
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/sustainability"
+                    className="text-gray-400 hover:text-white"
+                  >
+                    Sustainability
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="mb-4 text-lg font-semibold">Customer Service</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    to="/contact"
+                    className="text-gray-400 hover:text-white"
+                  >
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/shipping"
+                    className="text-gray-400 hover:text-white"
+                  >
+                    Shipping & Returns
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/faq" className="text-gray-400 hover:text-white">
+                    FAQ
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/size-guide"
+                    className="text-gray-400 hover:text-white"
+                  >
+                    Size Guide
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-between pt-8 mt-12 border-t border-gray-800 md:flex-row">
+            <p className="text-gray-400">
+              © 2023 STYLISH. All rights reserved.
             </p>
+            <div className="flex mt-4 space-x-6 md:mt-0">
+              <Link
+                to="/terms"
+                className="text-sm text-gray-400 hover:text-white"
+              >
+                Terms & Conditions
+              </Link>
+              <Link
+                to="/privacy"
+                className="text-sm text-gray-400 hover:text-white"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                to="/cookies"
+                className="text-sm text-gray-400 hover:text-white"
+              >
+                Cookie Policy
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
     </div>
   );
 }
-
-const categories = [
-  {
-    name: "Electronics",
-    img: "https://www.matric.com/hubfs/classes%20of%20electronics.jpg",
-  },
-  {
-    name: "Clothing",
-    img: "https://www.shutterstock.com/image-vector/illustration-graphic-vector-men-clothes-600nw-2082239521.jpg",
-  },
-  {
-    name: "Home & Kitchen",
-    img: "https://www.shutterstock.com/image-photo/blue-empty-wooden-table-bright-260nw-2516102707.jpg",
-  },
-  {
-    name: "Beauty",
-    img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmVhdXR5JTIwcHJvZHVjdHN8ZW58MHx8MHx8fDA%3D",
-  },
-];

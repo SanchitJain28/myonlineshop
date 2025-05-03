@@ -23,6 +23,7 @@ import CartPage from './components/User/cartPage';
 import CheckoutPage from './components/order/checkout';
 import SellerRegistration from './components/Seller/SellerRegister';
 import SellerDashboard from './components/Seller/SellerDashboard';
+import ShopPage from './components/Product/SalePage';
 
 
 
@@ -141,6 +142,14 @@ function App() {
         <FlowbiteNavbar />
         <UpdateProduct />
         <SimpleBottomNavigation />
+
+      </>,
+    },
+    {
+      path: "/sale-page",
+      element: <>
+        <FlowbiteNavbar />
+        <ShopPage/>
 
       </>,
     },
