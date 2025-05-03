@@ -111,6 +111,7 @@ router.post(
           status: true,
           message: "Login Successfully",
           data: user,
+          accessToken: accessToken,
         });
     } catch (error) {
       console.log(error);

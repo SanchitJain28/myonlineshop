@@ -10,8 +10,10 @@ import {
 } from "lucide-react";
 import { productAPI } from "../../contexts/ProductContext";
 import { authContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutPage() {
+  const navigate = useNavigate();
   const { currentUser } = useContext(authContext);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -134,10 +136,16 @@ export default function CheckoutPage() {
     }
   };
 
+  const { setOrderRedirection}=useContext(productAPI)
+
   if (!user) {
     return (
-      <div className="">
-        <p className="">Please login to continue</p>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50" onClick={()=>{
+        navigate("/login")
+        setOrderRedirection(true)
+      }}>
+        <p className="my-4 text-xl text-center">Please login to continue</p>
+        <button className="w-24 p-4 text-white bg-blue-700 rounded-xl">Login</button>
       </div>
     );
   }

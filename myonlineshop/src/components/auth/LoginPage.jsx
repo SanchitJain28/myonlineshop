@@ -1,45 +1,51 @@
-import React, {  useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useToast,} from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { axiosInstance } from "../../axiosConfig";
+import { productAPI } from "../../contexts/ProductContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const toast = useToast();
   //context
-  
+
   //states
   const [isLoading, setIsLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {orderRedirection}=useContext(productAPI)
   const handleSignIn = async (e) => {
-    setIsLoading(true)
+    setIsLoading(true);
     e.preventDefault();
     if (!email || !password) {
       return;
     }
     try {
-        const {data,config} =await axiosInstance.post("/api/loginuser",{
-          email,
-          password
-        })
-        console.log(data,config)
-        navigate("/");
-        toast({
-          title: "Login Successful",
-          description: "You have successfully logged in.",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
+      const {
+        data
+      } = await axiosInstance.post("/api/loginuser", {
+        email,
+        password,
+      });
+      if(orderRedirection){
+        navigate("/order")
+        return
       }
-     catch (error) {
+      navigate("/");
+      localStorage.setItem("accessToken", data.accessToken);
+      toast({
+        title: "Login Successful",
+        description: "You have successfully logged in.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
       console.log(error);
-    }
-    finally{
-        setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -63,8 +69,6 @@ export default function LoginPage() {
             </p>
 
             <form onSubmit={handleSignIn} className="space-y-5">
-              
-
               <div className="space-y-1">
                 <label
                   htmlFor="email"
@@ -91,7 +95,6 @@ export default function LoginPage() {
                   >
                     Password
                   </label>
-                  
                 </div>
                 <div className="relative">
                   <input
@@ -103,11 +106,8 @@ export default function LoginPage() {
                     className="w-full h-10 px-3 py-2 pr-10 transition-colors border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   />
-                  
                 </div>
               </div>
-
-              
 
               <button
                 type="submit"
@@ -121,8 +121,6 @@ export default function LoginPage() {
                 {isLoading ? "Signing in..." : "Sign In"}
               </button>
             </form>
-
-            
           </div>
 
           <div className="flex justify-center px-6 py-4 border-t border-gray-100 bg-gray-50">
@@ -141,5 +139,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-

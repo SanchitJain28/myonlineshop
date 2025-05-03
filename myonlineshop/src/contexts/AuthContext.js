@@ -23,7 +23,11 @@ export function AuthContext(props) {
     try {
       const {
         data: { user },
-      } = await axiosInstance.get("/api/getuser");
+      } = await axiosInstance.get("/api/getuser",{
+        headers:{
+          'Authorization':localStorage.getItem("accessToken")
+        }
+      });
       return user;
     } catch (error) {
       console.log(error);

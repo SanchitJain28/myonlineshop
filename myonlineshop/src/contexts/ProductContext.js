@@ -21,6 +21,8 @@ export function ProductContext(props) {
 
   const [updateProduct, setUpdateProduct] = useState([]);
   const [wishList, setWishList] = useState([]);
+
+  const [orderRedirection, setOrderRedirection] = useState(false);
   useEffect(() => {
     const productsInCart = JSON.parse(localStorage.getItem("cart"));
     if (productsInCart) {
@@ -267,7 +269,8 @@ export function ProductContext(props) {
         isCartDrawerOpen,
         setIsCartDrawerOpen,
         order,
-        setOrder
+        setOrder,
+        orderRedirection, setOrderRedirection
       }}
     >
       {props.children}
