@@ -50,7 +50,6 @@ const ProductCarousel = ({ products }) => {
     <div className="relative">
       <div className="flex gap-4 pb-4 overflow-x-auto snap-x scrollbar-hide">
         {products.map((product) => {
-          console.log(product.images[0]);
           return (
             <Link
               to={`/product?productid=${product._id}`}
@@ -89,7 +88,6 @@ export default function LandingPage() {
     setLoading(true);
     try {
       const category = encodeURIComponent("Shirts & Blouses");
-      console.log(category);
       const {
         data: { data },
       } = await axiosInstance.get(
@@ -107,7 +105,6 @@ export default function LandingPage() {
     setLoading(true);
     try {
       const category = encodeURIComponent("Dresses & Ethnic Wear");
-      console.log(category);
       const {
         data: { data },
       } = await axiosInstance.get(
@@ -125,7 +122,6 @@ export default function LandingPage() {
     setLoading(true);
     try {
       const category = encodeURIComponent("Jackets & Hoodies");
-      console.log(category);
       const {
         data: { data },
       } = await axiosInstance.get(
