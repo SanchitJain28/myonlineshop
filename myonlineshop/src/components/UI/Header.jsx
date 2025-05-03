@@ -10,7 +10,11 @@ export default function Header() {
     try {
       const {
         data: { user },
-      } = await axiosInstance.get("/api/getuser");
+      } = await axiosInstance.get("/api/getuser",{
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      });
       setUser(user);
       console.log(user);
     } catch (error) {
