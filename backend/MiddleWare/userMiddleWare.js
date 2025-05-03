@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 const secret = "SAnchit28";
 export const verifyUser = async (req, res, next) => {
   try {
-    const token = req.cookies.accessToken || req.headers["Authorization"];
+    const token = req.cookies.accessToken || req.headers["authorization"];
     if (!token) {
       return res.send({ errors: [{ msg: "Please provide the Auth-Token" }] });
     }
