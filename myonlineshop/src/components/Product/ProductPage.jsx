@@ -120,7 +120,7 @@ export default function ProductPage() {
                     : "border-transparent"
                 }`}
               >
-                to
+                
                 <img
                   src={image || "/placeholder.svg"}
                   alt={`Product thumbnail ${index + 1}`}

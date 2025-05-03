@@ -130,7 +130,7 @@ export default function CheckoutPage() {
     e.preventDefault();
     if (validateForm()) {
       // In a real app, you would submit the order to your backend here
-      window.location.href = "/order-success";
+      window.location.href = "/ordersuccess";
     }
   };
 

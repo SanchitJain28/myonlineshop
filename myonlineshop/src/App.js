@@ -24,6 +24,13 @@ import CheckoutPage from './components/order/checkout';
 import SellerRegistration from './components/Seller/SellerRegister';
 import SellerDashboard from './components/Seller/SellerDashboard';
 import ShopPage from './components/Product/SalePage';
+import TermsAndConditions from './components/Others/TermsAndConditions';
+import Header from './components/UI/Header';
+import PrivacyPolicy from './components/Others/PrivacyPolicy';
+import ShippingPolicy from './components/Others/ShippingPolicy';
+import CancellationPolicy from './components/Others/return-refund-policy';
+import ReturnAndRefundPolicy from './components/Others/return-refund-policy';
+import NewCancellationPolicy from './components/Others/Cancelltion-policy';
 
 
 
@@ -110,18 +117,44 @@ function App() {
       </>,
     },
     {
-      path: "/cart",
+      path: "/terms-and-conditions",
       element: <>
-        <FlowbiteNavbar />
-        <Cart />
-        <SimpleBottomNavigation />
-
+        <Header />
+        <TermsAndConditions/>
+      </>,
+    },
+    {
+      path: "/privacy-policy",
+      element: <>
+        <Header />
+        <PrivacyPolicy/>
+      </>,
+    },
+    {
+      path: "/shipping-policy",
+      element: <>
+        <Header />
+        <ShippingPolicy/>
+      </>,
+    },
+    {
+      path: "/returns-refunds-policy",
+      element: <>
+        <Header />
+        <ReturnAndRefundPolicy/>
+      </>,
+    },
+    {
+      path: "/cancellation-policy",
+      element: <>
+        <Header />
+        <NewCancellationPolicy/>
       </>,
     },
     {
       path: "/ordersuccess",
       element: <>
-        <FlowbiteNavbar />
+        <Header />
         <OrderSuccess />
         <SimpleBottomNavigation />
 
@@ -130,7 +163,7 @@ function App() {
     {
       path: "/userdashboard",
       element: <>
-        <FlowbiteNavbar />
+        <Header />
         <DashBoard />
         <SimpleBottomNavigation />
 
@@ -139,7 +172,7 @@ function App() {
     {
       path: "/updateproduct",
       element: <>
-        <FlowbiteNavbar />
+        <Header />
         <UpdateProduct />
         <SimpleBottomNavigation />
 
@@ -148,6 +181,7 @@ function App() {
     {
       path: "/sale-page",
       element: <>
+      
         <FlowbiteNavbar />
         <ShopPage/>
 

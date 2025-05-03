@@ -61,7 +61,7 @@ export default function OrderSuccessPage() {
             <div className="px-4 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">Confirmed</div>
           </div>
 
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <h3 className="mb-3 text-lg font-medium">Order Details</h3>
             <div className="divide-y divide-gray-200">
               {orderDetails.items.map((item) => (
@@ -93,7 +93,7 @@ export default function OrderSuccessPage() {
               <p className="text-lg font-medium">Total</p>
               <p className="text-lg font-bold">₹{orderDetails.total.toFixed(2)}</p>
             </div>
-          </div>
+          </div> */}
 
           <div className="grid gap-6 md:grid-cols-2">
             <div>
@@ -104,7 +104,7 @@ export default function OrderSuccessPage() {
               <h3 className="mb-2 text-lg font-medium">Payment Method</h3>
               <p className="text-gray-600">{orderDetails.paymentMethod}</p>
             </div>
-          </div>
+          </div> 
         </div>
 
         {/* Delivery Timeline */}
