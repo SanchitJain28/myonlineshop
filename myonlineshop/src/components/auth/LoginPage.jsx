@@ -29,6 +29,7 @@ export default function LoginPage() {
         email,
         password,
       });
+      console.log(data)
       if(orderRedirection){
         navigate("/order")
         return

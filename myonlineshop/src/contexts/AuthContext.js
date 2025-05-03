@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 import { axiosInstance } from "../axiosConfig";
+import { response } from "express";
 
 export const authContext = createContext(null);
 
@@ -21,14 +22,13 @@ export function AuthContext(props) {
 
   const currentUser = async () => {
     try {
-      const {
-        data: { user },
-      } = await axiosInstance.get("/api/getuser",{
+      const response = await axiosInstance.get("/api/getuser",{
         headers:{
           'Authorization':localStorage.getItem("accessToken")
         }
       });
-      return user;
+      console.log(response)
+      return response.data.user;
     } catch (error) {
       console.log(error);
     }
