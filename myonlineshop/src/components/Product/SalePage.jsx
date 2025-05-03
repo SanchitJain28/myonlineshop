@@ -3,8 +3,7 @@ import { useEffect, useState } from "react"
 import { FiHeart, FiShoppingBag, FiChevronRight, FiFilter, FiList, FiX } from "react-icons/fi"
 import { axiosInstance } from "../../axiosConfig"
 import {Link, useSearchParams} from 'react-router-dom'
-import { set } from "lodash"
-import { preprocess } from "zod"
+
 // Product Card Component
 function ProductCard({ product }) {
   const [isLoading, setIsLoading] = useState(true)
