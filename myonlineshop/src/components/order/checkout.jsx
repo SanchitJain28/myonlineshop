@@ -46,52 +46,56 @@ export default function CheckoutPage() {
   }
 
   const createOrder = async () => {
-    const res = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
+    try {
+      const res = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js"
+      );
 
-    if (!res) {
-      alert("Razorpay SDK failed to load. Are you online?");
-      return;
-    }
-    // Create order by calling the server endpoint
-    const response = await fetch("https://myonlineshop-production.up.railway.app/api/create-order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: 50000,
+      if (!res) {
+        alert("Razorpay SDK failed to load. Are you online?");
+        return;
+      }
+      // Create order by calling the server endpoint
+      const response = await fetch("http://localhost:8080/api/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: 50000,
+          currency: "INR",
+          receipt: "receipt#1",
+          notes: {},
+        }),
+      });
+
+      const order = await response.json();
+      console.log(order);
+      // Open Razorpay Checkout
+      const options = {
+        key: "rzp_live_NzX6nOcaB8kXHI", // Replace with your Razorpay key_id
+        amount: "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
-        receipt: "receipt#1",
-        notes: {},
-      }),
-    });
+        name: "Insta mart",
+        description: "Test Transaction",
+        order_id: order.id, // This is the order_id created in the backend
+        callback_url: "http://localhost:3000/payment-success", // Your success URL
 
-    const order = await response.json();
+        prefill: {
+          name: "Sanchit jain",
+          email: "mythichuman28@gmail.com",
+          contact: "9650296375",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
 
-    // Open Razorpay Checkout
-    const options = {
-      key: "rzp_live_NzX6nOcaB8kXHI", // Replace with your Razorpay key_id
-      amount: "399", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      currency: "INR",
-      name: "Insta mart",
-      description: "Test Transaction",
-      order_id: "order_IluGWxBm9U8zJ8", // This is the order_id created in the backend
-      callback_url: "http://localhost:3000/payment-success", // Your success URL
-      
-      prefill: {
-        name: "Sanchit jain",
-        email: "mythichuman28@gmail.com",
-        contact: "9650296375",
-      },
-      theme: {
-        color: "#F37254",
-      },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const { order } = useContext(productAPI);
