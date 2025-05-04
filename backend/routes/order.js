@@ -93,7 +93,7 @@ router.post("/api/create-order", verifyUser, async (req, res) => {
     paymentMethod,
   } = req.body;
   const options = {
-    amount: 100, // Amount in paise
+    amount: 10, // Amount in paise
     currency: "INR",
     receipt: "order_rcptid_11",
   };
@@ -141,7 +141,7 @@ router.post("/api/create-order", verifyUser, async (req, res) => {
 
 router.post("/api/webhook/payment", async (req, res) => {
   try {
-    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
+    const webhookSecret = "sK!9Zr@8Vm#4Lp$Wq2Nt&EbGdX6TcY3Q"
     const webhookSignature = req.headers["x-razorpay-signature"];
     const rawBody = req.body;
 
