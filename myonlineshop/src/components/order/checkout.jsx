@@ -105,7 +105,7 @@ export default function CheckoutPage() {
       // Open Razorpay Checkout
       const options = {
         key: "rzp_live_NzX6nOcaB8kXHI", // Replace with your Razorpay key_id
-        amount: "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        amount: "100", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
         name: "Insta mart",
         description: "Test Transaction",
