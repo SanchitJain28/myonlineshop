@@ -109,8 +109,11 @@ export default function CheckoutPage() {
         currency: "INR",
         name: "Insta mart",
         description: "Test Transaction",
-        order_id: data.order.id, // This is the order_id created in the backend
-        callback_url: `https://instamart28.netlify.app/order-success?orderId=${data.newOrder.customOrderId}`, // Your success URL
+        order_id: data.order.id, // This is the order_id created in the backend, // Your success URL
+        handler: function (response) {
+          // Redirect manually after payment
+          window.location.href = `https://myonlineshop-production.up.railway.app/api/webhook/payment`;
+        },
         prefill: {
           name: "Sanchit jain",
           email: "mythichuman28@gmail.com",
