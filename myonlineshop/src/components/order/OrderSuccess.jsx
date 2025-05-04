@@ -2,26 +2,43 @@ import { Check, Home, Package, Truck } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { axiosInstance } from "../../axiosConfig";
 import { useEffect, useState } from "react";
+import LoadingScreen from "../UI/LoadingScreen/LoadingScreen";
 
 export default function OrderSuccessPage() {
   // In a real app, you would fetch the order details from your backend
   // or pass them through state management/URL parameters
   const [searchParams] = useSearchParams();
-  const [orderDetails, setOrderDetails] = useState({});
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
   const fetchOrderDetails = async () => {
+    setLoading(true);
     try {
       const { data } = await axiosInstance.get(
         `/api/get-order-details?orderId=${searchParams.get("orderId")}`
       );
-      console.log(data.orderDetails)
-      setOrderDetails(data.orderDetails);
-    } catch (error) {}
+      console.log(data.orderDetails[0]);
+      setOrderDetails(data.orderDetails[0]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchOrderDetails();
   }, []);
-
+  if (loading) {
+    return (
+      <LoadingScreen
+        onLoadingComplete={() => setLoading(false)}
+        minLoadingTime={2500}
+        maxLoadingTime={4000}
+      />
+    );
+  }
+  const createdAt = new Date(orderDetails.createdAt); // Convert string to Date
+  const deliveryDate = createdAt.setDate(createdAt.getDate() + 5); // Add 5 days
   return (
     <div className="min-h-screen py-12 bg-gray-50">
       <div className="max-w-3xl px-4 mx-auto">
@@ -43,10 +60,14 @@ export default function OrderSuccessPage() {
           <div className="flex items-center justify-between pb-4 mb-4 border-b">
             <div>
               <h2 className="text-xl font-semibold">
-                Order #{orderDetails.customOrderId}
+                Order #
+                {orderDetails.customOrderId
+                  ? orderDetails.customOrderId
+                  : "NOT FOUND"}
               </h2>
               <p className="text-gray-600">
-                Placed on {orderDetails.createdAt?orderDetails.createdAt:"Today"}
+                Placed on{" "}
+                {orderDetails.createdAt ? orderDetails.createdAt : "Today"}
               </p>
             </div>
             <div className="px-4 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">
@@ -54,16 +75,21 @@ export default function OrderSuccessPage() {
             </div>
           </div>
 
-          {/* <div className="mb-6">
+          <div className="mb-6">
             <h3 className="mb-3 text-lg font-medium">Order Details</h3>
             <div className="divide-y divide-gray-200">
-              {orderDetails.items.map((item) => (
-                <div key={item.id} className="flex justify-between py-3">
+              {orderDetails.orderItems.map((item) => (
+                <div
+                  key={item.product._id}
+                  className="flex justify-between py-3"
+                >
                   <div>
-                    <p className="font-medium">{item.name}</p>
-                    <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                    <p className="font-medium">{item.product.productName}</p>
+                    <p className="text-sm text-gray-600">
+                      Qty: {item.quantity}
+                    </p>
                   </div>
-                  <p className="font-medium">₹{item.price.toFixed(2)}</p>
+                  <p className="font-medium">₹{item.product.productPrice}</p>
                 </div>
               ))}
             </div>
@@ -72,26 +98,28 @@ export default function OrderSuccessPage() {
           <div className="pt-4 mb-6 border-t border-gray-200">
             <div className="flex justify-between py-2">
               <p className="text-gray-600">Subtotal</p>
-              <p className="font-medium">₹{orderDetails.subtotal.toFixed(2)}</p>
+              <p className="font-medium">₹{orderDetails.itemsPrice}</p>
             </div>
             <div className="flex justify-between py-2">
               <p className="text-gray-600">Shipping</p>
-              <p className="font-medium">₹{orderDetails.shipping.toFixed(2)}</p>
+              <p className="font-medium">₹{orderDetails.shippingPrice}</p>
             </div>
             <div className="flex justify-between py-2">
               <p className="text-gray-600">Tax (GST 18%)</p>
-              <p className="font-medium">₹{orderDetails.tax.toFixed(2)}</p>
+              <p className="font-medium">₹{orderDetails.taxPrice}</p>
             </div>
             <div className="flex justify-between py-2 mt-2 border-t border-gray-200">
               <p className="text-lg font-medium">Total</p>
-              <p className="text-lg font-bold">₹{orderDetails.total.toFixed(2)}</p>
+              <p className="text-lg font-bold">₹{orderDetails.totalPrice}</p>
             </div>
-          </div> */}
+          </div>
 
           <div className="grid gap-6 md:grid-cols-2">
             <div>
               <h3 className="mb-2 text-lg font-medium">Shipping Address</h3>
-              <p className="text-gray-600">{orderDetails.shippingAddress}</p>
+              <p className="text-gray-600">
+                {orderDetails.shippingAddress.address}
+              </p>
             </div>
             <div>
               <h3 className="mb-2 text-lg font-medium">Payment Method</h3>
@@ -112,7 +140,9 @@ export default function OrderSuccessPage() {
               </div>
               <div className="pt-3 ml-6">
                 <h4 className="font-medium">Order Confirmed</h4>
-                <p className="text-gray-600">{orderDetails.createdAt?orderDetails.createdAt:"Today"}</p>
+                <p className="text-gray-600">
+                  {orderDetails.createdAt ?new Date(orderDetails.createdAt).toLocaleDateString()  : "Today"}
+                </p>
               </div>
             </div>
 
@@ -130,12 +160,12 @@ export default function OrderSuccessPage() {
               <div className="z-10 flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full">
                 <Truck className="w-8 h-8 text-gray-600" />
               </div>
-              {/* <div className="pt-3 ml-6">
+              <div className="pt-3 ml-6">
                 <h4 className="font-medium">Estimated Delivery</h4>
                 <p className="text-gray-600">
-                  {orderDetails.estimatedDelivery}
+                  {new Date(deliveryDate).toLocaleDateString()}
                 </p>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
