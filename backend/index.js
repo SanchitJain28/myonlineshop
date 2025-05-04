@@ -30,5 +30,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Hey!! Fucker");
+  console.log("Hey!! it's running instamart");
 });
