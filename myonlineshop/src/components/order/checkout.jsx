@@ -71,7 +71,7 @@ export default function CheckoutPage() {
     const itemsPrice = subtotal
     const taxPrice= tax
     const shippingPrice= shipping
-    const totalPrice = total
+    const totalPrice = Number(total.toFixed(1)); // totalPrice = 123.5
     setLoadingPaymentWindow(true);
     try {
       const res = await loadScript(
@@ -84,7 +84,7 @@ export default function CheckoutPage() {
       }
       // Create order by calling the server endpoint
       const { data } = await axiosInstance.post("/api/create-order", {
-        amount: total,
+        amount: total*100,//IN PAISE
         receipt: "receipt#1",
         notes: {},
         itemsPrice,
