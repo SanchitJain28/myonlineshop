@@ -6,6 +6,7 @@ import { verifyUser } from "../MiddleWare/userMiddleWare.js";
 import { body, validationResult } from "express-validator";
 import Razorpay from "razorpay";
 import { validateWebhookSignature } from "razorpay/dist/utils/razorpay-utils.js";
+import { find } from "lodash";
 const instance = new Razorpay({
   key_id: "rzp_live_NzX6nOcaB8kXHI",
   key_secret: "fpxoGerXDrctz9X8ybUXNEqq",
@@ -120,7 +121,9 @@ router.post("/api/create-order", verifyUser, async (req, res) => {
       isDelivered: false,
       deliveredAt: null,
       paymentMethod,
-      paymentDetails:order.id
+      paymentDetails: {
+        id: order.id ? order.id : "Not provided",
+      },
     });
     await newOrder.save();
     res.json({
@@ -141,7 +144,7 @@ router.post("/api/create-order", verifyUser, async (req, res) => {
 
 router.post("/api/webhook/payment", async (req, res) => {
   try {
-    const webhookSecret = "sK!9Zr@8Vm#4Lp$Wq2Nt&EbGdX6TcY3Q"
+    const webhookSecret = "sK!9Zr@8Vm#4Lp$Wq2Nt&EbGdX6TcY3Q";
     const webhookSignature = req.headers["x-razorpay-signature"];
     const rawBody = req.body;
 
@@ -160,25 +163,41 @@ router.post("/api/webhook/payment", async (req, res) => {
     }
 
     const event = JSON.parse(rawBody.toString());
-    console.log(event)
     // Optional: Handle different event types
     if (event.event === "payment.captured") {
+      const paymentData = event.payload.payment.entity;
+      const findOrder =await Order.findOne({
+        paymentDetails: { id: paymentData.id },
+      });
+      if(!findOrder) {
+        return res.status(404).json({
+          status: false,
+          message: "Order not found",
+        });
+      }
+      findOrder.isPaid = true;
+      findOrder.paidAt = new Date();
+      findOrder.isSuccess = true;
+      await findOrder.save();
+      // TODO: Update your order in DB as successful
+      // Example: updateOrderByRazorpayId(paymentData.order_id, { isSuccess: true })
+      console.log("✅ Payment captured:", paymentData.id);
+      console.log("Order updated successfully", findOrder)
+      return res.status(201).json({
+        status: true,
+        message: "updated successfully",
+        findOrder
+      });
+    }
+
+    if (event.event === "payment.failed") {
       const paymentData = event.payload.payment.entity;
 
       // TODO: Update your order in DB as successful
       // Example: updateOrderByRazorpayId(paymentData.order_id, { isSuccess: true })
 
-      console.log("✅ Payment captured:", paymentData.id);
+      console.log("Payment failed", paymentData.id);
     }
-
-    if (event.event === "payment.failed") {
-        const paymentData = event.payload.payment.entity;
-  
-        // TODO: Update your order in DB as successful
-        // Example: updateOrderByRazorpayId(paymentData.order_id, { isSuccess: true })
-  
-        console.log("Payment failed", paymentData.id);
-      }
 
     res.status(200).json({ status: "Webhook verified" });
   } catch (error) {
