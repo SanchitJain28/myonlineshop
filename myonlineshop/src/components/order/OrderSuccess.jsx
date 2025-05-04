@@ -13,6 +13,7 @@ export default function OrderSuccessPage() {
       const { data } = await axiosInstance.get(
         `/api/get-order-details?orderId=${searchParams.get("orderId")}`
       );
+      console.log(data.orderDetails)
       setOrderDetails(data.orderDetails);
     } catch (error) {}
   };

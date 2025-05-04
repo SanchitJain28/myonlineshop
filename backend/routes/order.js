@@ -214,7 +214,7 @@ router.post("/api/webhook/payment", async (req, res) => {
 router.get("/api/get-order-details", verifyUser, async (req, res) => {
   const { orderId } = req.query;
   try {
-    const orderDetails = await Order.findById({customOrderId: orderId});
+    const orderDetails = await Order.find({customOrderId: orderId});
     if (!orderDetails) {
       return res.status(404).json({
         status: false,
