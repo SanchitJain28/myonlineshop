@@ -6,7 +6,6 @@ import { verifyUser } from "../MiddleWare/userMiddleWare.js";
 import { body, validationResult } from "express-validator";
 import Razorpay from "razorpay";
 import { validateWebhookSignature } from "razorpay/dist/utils/razorpay-utils.js";
-import { find } from "lodash";
 const instance = new Razorpay({
   key_id: "rzp_live_NzX6nOcaB8kXHI",
   key_secret: "fpxoGerXDrctz9X8ybUXNEqq",
