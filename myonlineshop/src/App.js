@@ -172,7 +172,7 @@ function App() {
       </>,
     },
     {
-      path: "/ordersuccess",
+      path: "/order-success",
       element: <>
         <Header />
         <OrderSuccess />

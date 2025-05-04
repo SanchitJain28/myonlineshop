@@ -98,6 +98,7 @@ router.post("/api/create-order", verifyUser, async (req, res) => {
     receipt: "order_rcptid_11",
   };
   try {
+    const customOrderId = "ORDER" + Date.now();
     const order = await instance.orders.create(options);
     const newOrder = new Order({
       user: req.user.id,
@@ -113,6 +114,7 @@ router.post("/api/create-order", verifyUser, async (req, res) => {
       },
       itemsPrice,
       taxPrice,
+      customOrderId,
       shippingPrice,
       totalPrice,
       isPaid: false,
@@ -165,10 +167,10 @@ router.post("/api/webhook/payment", async (req, res) => {
     // Optional: Handle different event types
     if (event.event === "payment.captured") {
       const paymentData = event.payload.payment.entity;
-      const findOrder =await Order.findOne({
+      const findOrder = await Order.findOne({
         paymentDetails: { id: paymentData.order_id },
       });
-      if(!findOrder) {
+      if (!findOrder) {
         return res.status(404).json({
           status: false,
           message: "Order not found",
@@ -181,11 +183,11 @@ router.post("/api/webhook/payment", async (req, res) => {
       // TODO: Update your order in DB as successful
       // Example: updateOrderByRazorpayId(paymentData.order_id, { isSuccess: true })
       console.log("✅ Payment captured:", paymentData.id);
-      console.log("Order updated successfully", findOrder)
+      console.log("Order updated successfully", findOrder);
       return res.status(201).json({
         status: true,
         message: "updated successfully",
-        findOrder
+        findOrder,
       });
     }
 
@@ -202,6 +204,32 @@ router.post("/api/webhook/payment", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
+      status: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+router.get("/api/get-order-details", verifyUser, async (req, res) => {
+  const { orderId } = req.query;
+  try {
+    const orderDetails = await Order.findById({customOrderId: orderId});
+    if (!orderDetails) {
+      return res.status(404).json({
+        status: false,
+        message: "Order not found",
+      });
+    }
+    return res.status(200).json({
+        status: true,
+        message: "Order details fetched successfully",
+        orderDetails,
+    })
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
       status: false,
       message: "Internal server error",
       error: error.message,

@@ -1,43 +1,25 @@
-import { Check, Home, Package, Truck } from "lucide-react"
-import { Link } from "react-router-dom"
-
+import { Check, Home, Package, Truck } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+import { axiosInstance } from "../../axiosConfig";
+import { useEffect, useState } from "react";
 
 export default function OrderSuccessPage() {
   // In a real app, you would fetch the order details from your backend
   // or pass them through state management/URL parameters
-  const orderDetails = {
-    orderNumber: "OD" + Math.floor(100000 + Math.random() * 900000),
-    orderDate: new Date().toLocaleDateString("en-IN", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }),
-    items: [
-      {
-        id: 1,
-        name: "Premium Wireless Headphones",
-        price: 8999,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        name: "Smartphone Case",
-        price: 1499,
-        quantity: 2,
-      },
-    ],
-    paymentMethod: "Razorpay",
-    shippingAddress: "123 Main Street, Bangalore, Karnataka, 560001",
-    subtotal: 11997,
-    shipping: 99,
-    tax: 2159.46, // 18% GST
-    total: 14255.46,
-    estimatedDelivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString("en-IN", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }),
-  }
+  const [searchParams] = useSearchParams();
+  const [orderDetails, setOrderDetails] = useState({});
+  const fetchOrderDetails = async () => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/api/get-order-details?orderId=${searchParams.get("orderId")}`
+      );
+      setOrderDetails(data.orderDetails);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchOrderDetails();
+  }, []);
 
   return (
     <div className="min-h-screen py-12 bg-gray-50">
@@ -47,18 +29,28 @@ export default function OrderSuccessPage() {
           <div className="inline-flex items-center justify-center w-24 h-24 mb-6 bg-green-100 rounded-full">
             <Check className="w-12 h-12 text-green-600" />
           </div>
-          <h1 className="mb-2 text-3xl font-bold text-gray-900">Order Placed Successfully!</h1>
-          <p className="text-lg text-gray-600">Thank you for your purchase. Your order has been confirmed.</p>
+          <h1 className="mb-2 text-3xl font-bold text-gray-900">
+            Order Placed Successfully!
+          </h1>
+          <p className="text-lg text-gray-600">
+            Thank you for your purchase. Your order has been confirmed.
+          </p>
         </div>
 
         {/* Order Information */}
         <div className="p-6 mb-8 bg-white rounded-lg shadow-sm">
           <div className="flex items-center justify-between pb-4 mb-4 border-b">
             <div>
-              <h2 className="text-xl font-semibold">Order #{orderDetails.orderNumber}</h2>
-              <p className="text-gray-600">Placed on {orderDetails.orderDate}</p>
+              <h2 className="text-xl font-semibold">
+                Order #{orderDetails.customOrderId}
+              </h2>
+              <p className="text-gray-600">
+                Placed on {orderDetails.createdAt?orderDetails.createdAt:"Today"}
+              </p>
             </div>
-            <div className="px-4 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">Confirmed</div>
+            <div className="px-4 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">
+              Confirmed
+            </div>
           </div>
 
           {/* <div className="mb-6">
@@ -104,7 +96,7 @@ export default function OrderSuccessPage() {
               <h3 className="mb-2 text-lg font-medium">Payment Method</h3>
               <p className="text-gray-600">{orderDetails.paymentMethod}</p>
             </div>
-          </div> 
+          </div>
         </div>
 
         {/* Delivery Timeline */}
@@ -119,7 +111,7 @@ export default function OrderSuccessPage() {
               </div>
               <div className="pt-3 ml-6">
                 <h4 className="font-medium">Order Confirmed</h4>
-                <p className="text-gray-600">{orderDetails.orderDate}</p>
+                <p className="text-gray-600">{orderDetails.createdAt?orderDetails.createdAt:"Today"}</p>
               </div>
             </div>
 
@@ -137,10 +129,12 @@ export default function OrderSuccessPage() {
               <div className="z-10 flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full">
                 <Truck className="w-8 h-8 text-gray-600" />
               </div>
-              <div className="pt-3 ml-6">
+              {/* <div className="pt-3 ml-6">
                 <h4 className="font-medium">Estimated Delivery</h4>
-                <p className="text-gray-600">{orderDetails.estimatedDelivery}</p>
-              </div>
+                <p className="text-gray-600">
+                  {orderDetails.estimatedDelivery}
+                </p>
+              </div> */}
             </div>
           </div>
         </div>
@@ -149,7 +143,8 @@ export default function OrderSuccessPage() {
         <div className="p-6 mb-8 bg-white rounded-lg shadow-sm">
           <h3 className="mb-2 text-lg font-medium">Need Help?</h3>
           <p className="mb-4 text-gray-600">
-            If you have any questions about your order, please contact our customer support.
+            If you have any questions about your order, please contact our
+            customer support.
           </p>
           <div className="flex space-x-4">
             <a
@@ -179,5 +174,5 @@ export default function OrderSuccessPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

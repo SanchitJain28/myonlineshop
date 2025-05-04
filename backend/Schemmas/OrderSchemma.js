@@ -33,6 +33,10 @@ const orderSchemma = new mongoose.Schema(
       type: String,
       required: true,
     },
+    customOrderId :{
+        type: String,
+        required: true,
+    },
     paymentDetails: {
       id: { type: String },
     },
