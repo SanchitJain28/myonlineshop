@@ -112,7 +112,7 @@ export default function CheckoutPage() {
         order_id: data.order.id, // This is the order_id created in the backend, // Your success URL
         handler: function (response) {
           // Redirect manually after payment
-          window.location.href = `https://myonlineshop-production.up.railway.app/api/webhook/payment`;
+          window.location.href = `https://instamart28.netlify.app/order-success?orderId=${data.newOrder.customOrderId}`;
         },
         prefill: {
           name: "Sanchit jain",
