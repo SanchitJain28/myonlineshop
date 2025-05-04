@@ -5,7 +5,9 @@ import { router as orderRouter } from "./routes/order.js";
 import { main as Database } from "./Database.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+const normalFunction =()=>{
+  console.log("Order created successfully")
+}
 const port = 8080;
 const app = express();
 app.use(
@@ -17,6 +19,7 @@ app.use(
   })
 );
 app.use(cookieParser());
+app.use('/api/webhook/payment', express.raw({ type: 'application/json' }));
 app.use(express.json());
 app.use(UserRouter);
 app.use(ProductRouter);

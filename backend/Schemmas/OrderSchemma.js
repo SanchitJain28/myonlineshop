@@ -1,3 +1,4 @@
+import { identity } from "lodash";
 import mongoose from "mongoose";
 
 const orderSchemma=new mongoose.Schema({
@@ -13,38 +14,28 @@ const orderSchemma=new mongoose.Schema({
                 ref: 'Product', // Reference to the Product schema
                 required: true,
             },
-            seller:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'SellerAccount', // Reference to the Product schema
-                required: true
-            },
             quantity: {
-                type: Number,
-                required: true,
-            },
-            price: {
                 type: Number,
                 required: true,
             },
         },
     ],
     shippingAddress: {
-        fullName: { type: String, required: true },
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
         address: { type: String, required: true },
         city: { type: String, required: true },
+        state: { type: String, required: true },
         postalCode: { type: String, required: true },
         country: { type: String, required: true },
     },
-    // paymentMethod: {
-    //     type: String,
-    //     required: true,
-    // },
-    // paymentResult: {
-    //     id: { type: String },
-    //     status: { type: String },
-    //     update_time: { type: String },
-    //     email_address: { type: String },
-    // },
+    paymentMethod: {
+        type: String,
+        required: true,
+    },
+    paymentDetails: {
+        id:{type:String},
+    },
     itemsPrice: {
         type: Number,
         required: true,
@@ -65,6 +56,10 @@ const orderSchemma=new mongoose.Schema({
         required: true,
         default: 0.0,
     },
+    isSuccess : {
+        type: Boolean,
+        default: false,
+    },
     isPaid: {
         type: Boolean,
         required: true,
@@ -79,11 +74,7 @@ const orderSchemma=new mongoose.Schema({
     },
     deliveredAt: {
         type: Date,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
     }
-})
+},{timestamps:true});
 
 export const orderModel=mongoose.model('order', orderSchemma);

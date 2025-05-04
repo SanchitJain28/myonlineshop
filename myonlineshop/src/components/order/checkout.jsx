@@ -11,7 +11,12 @@ import {
 import { productAPI } from "../../contexts/ProductContext";
 import { authContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "../UI/LoadingScreen/LoadingScreen";
+import LoadingOverlay from "../UI/LoadingOverlay";
+import { axiosInstance } from "../../axiosConfig";
 export default function CheckoutPage() {
+  const { order } = useContext(productAPI);
+
   const navigate = useNavigate();
   const { currentUser } = useContext(authContext);
   const [loading, setLoading] = useState(true);
@@ -31,6 +36,19 @@ export default function CheckoutPage() {
     getUser();
   }, []);
 
+
+  // Calculate order summary
+  const subtotal = order.reduce(
+    (total, item) => total + item.productPrice * item.quantity,
+    0
+  );
+  const shipping = 49;
+  const tax = subtotal * 0.03; // 18% GST
+  const total = subtotal + shipping + tax;
+
+  const [loadingPaymentWindow, setLoadingPaymentWindow] = useState(false);
+
+
   function loadScript(src) {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -46,6 +64,15 @@ export default function CheckoutPage() {
   }
 
   const createOrder = async () => {
+    const orderedItems = order.map((item) => ({
+      product: item._id,
+      quantity: item.quantity,
+    }));
+    const itemsPrice = subtotal
+    const taxPrice= tax
+    const shippingPrice= shipping
+    const totalPrice = total
+    setLoadingPaymentWindow(true);
     try {
       const res = await loadScript(
         "https://checkout.razorpay.com/v1/checkout.js"
@@ -56,21 +83,25 @@ export default function CheckoutPage() {
         return;
       }
       // Create order by calling the server endpoint
-      const response = await fetch("https://myonlineshop-production.up.railway.app/api/create-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: 50000,
-          currency: "INR",
-          receipt: "receipt#1",
-          notes: {},
-        }),
+      const { data } = await axiosInstance.post("/api/create-order", {
+        amount: 50000,
+        receipt: "receipt#1",
+        notes: {},
+        itemsPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice,
+        orderItems: orderedItems,
+        paymentMethod: "razorpay",
+        firstName:formData.firstName,
+        lastName:formData.lastName,
+        address:formData.address,
+        city:formData.city,
+        state:formData.state,
+        postalCode:formData.zipCode,
+        country:formData.country
       });
-
-      const order = await response.json();
-      console.log(order);
+      console.log(data)
       // Open Razorpay Checkout
       const options = {
         key: "rzp_live_NzX6nOcaB8kXHI", // Replace with your Razorpay key_id
@@ -78,7 +109,7 @@ export default function CheckoutPage() {
         currency: "INR",
         name: "Insta mart",
         description: "Test Transaction",
-        order_id: order.id, // This is the order_id created in the backend
+        order_id: data.order.id, // This is the order_id created in the backend
         callback_url: "http://localhost:3000/payment-success", // Your success URL
 
         prefill: {
@@ -95,10 +126,11 @@ export default function CheckoutPage() {
       rzp.open();
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoadingPaymentWindow(false);
     }
   };
 
-  const { order } = useContext(productAPI);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -117,14 +149,9 @@ export default function CheckoutPage() {
   });
   const [errors, setErrors] = useState({});
 
-  // Calculate order summary
-  const subtotal = order.reduce(
-    (total, item) => total + item.productPrice * item.quantity,
-    0
-  );
-  const shipping = 49;
-  const tax = subtotal * 0.03; // 18% GST
-  const total = subtotal + shipping + tax;
+  useEffect(() => {
+    console.log(order);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -205,6 +232,16 @@ export default function CheckoutPage() {
 
   const { setOrderRedirection } = useContext(productAPI);
 
+  if (loading) {
+    return (
+      <LoadingScreen
+        onLoadingComplete={() => setLoading(false)}
+        minLoadingTime={2500}
+        maxLoadingTime={4000}
+      />
+    );
+  }
+
   if (!user) {
     return (
       <div
@@ -218,14 +255,6 @@ export default function CheckoutPage() {
         <button className="w-24 p-4 text-white bg-blue-700 rounded-xl">
           Login
         </button>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="">
-        <p className="">Loading</p>
       </div>
     );
   }
@@ -716,6 +745,7 @@ export default function CheckoutPage() {
             </div>
           </div>
         </div>
+        <LoadingOverlay isLoading={loadingPaymentWindow} />
       </div>
     </div>
   );
