@@ -110,7 +110,7 @@ export default function CheckoutPage() {
         name: "Insta mart",
         description: "Test Transaction",
         order_id: data.order.id, // This is the order_id created in the backend
-        callback_url: `https://instamart28.netlify.app/order-success?orderId=${data.newOrder.customOrderId}`, // Your success URL
+        callback_url: `https://instamart28.netlify.app/order-success?orderId=${data.findOrder.customOrderId}`, // Your success URL
         prefill: {
           name: "Sanchit jain",
           email: "mythichuman28@gmail.com",
