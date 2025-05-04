@@ -11,11 +11,13 @@ import {
 } from "lucide-react";
 import { reviews } from "../../props/reviews";
 import { productAPI } from "../../contexts/ProductContext";
+import LoadingOverlay from "../UI/LoadingOverlay";
 
 export default function ProductPage() {
   let [searchParams] = useSearchParams();
   const [product, setProduct] = useState(null);
-  const { addToCart, checkInCart, setIsCartDrawerOpen, setOrder,order } =
+  const [loading, setLoading] = useState(true);
+  const { addToCart, setIsCartDrawerOpen, setOrder, order } =
     useContext(productAPI);
   // const checkInCart = () => {
   //   if (productContext.productCart.map((e) => e._id).indexOf(product._id) !== -1) {
@@ -31,11 +33,11 @@ export default function ProductPage() {
     );
   };
 
-  const createOrder = ()=>{
-    console.log(product)
-    setOrder((prev)=>[product])
-    console.log(order)
-  }
+  const createOrder = () => {
+    console.log(product);
+    setOrder((prev) => [product]);
+    console.log(order);
+  };
 
   const prevImage = () => {
     setCurrentImage((prev) =>
@@ -44,40 +46,39 @@ export default function ProductPage() {
   };
 
   const incrementQuantity = () => {
-    if(quantity >=5) return;
-    setProduct((prev) => ({ ...prev, quantity: quantity + 1}))
+    if (quantity >= 5) return;
+    setProduct((prev) => ({ ...prev, quantity: quantity + 1 }));
     setQuantity((prev) => prev + 1);
-
   };
 
   const decrementQuantity = () => {
-    if(quantity <= 1) return;
-    setProduct((prev) => ({ ...prev, quantity: quantity - 1}))
+    if (quantity <= 1) return;
+    setProduct((prev) => ({ ...prev, quantity: quantity - 1 }));
     setQuantity((prev) => prev - 1);
   };
 
   const fetchProduct = async () => {
+    setLoading(true);
     try {
-      const {data:{product}} = await axiosInstance.get(
+      const {
+        data: { product },
+      } = await axiosInstance.get(
         `/api/getsingleproduct?productid=${searchParams.get("productid")}`
       );
       const filteredImages = product.images.filter((image) => image !== null);
-      setProduct({...product,quantity:1,images:filteredImages});
+      setProduct({ ...product, quantity: 1, images: filteredImages });
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     fetchProduct();
   }, []);
-  
 
-  if (!product) {
-    return (
-      <div className="">
-        <p className="text-5xl">Loading</p>
-      </div>
-    );
+  if (loading) {
+    return <LoadingOverlay isLoading={loading} message="Loading Product" />;
   }
 
   return (
@@ -120,7 +121,6 @@ export default function ProductPage() {
                     : "border-transparent"
                 }`}
               >
-                
                 <img
                   src={image || "/placeholder.svg"}
                   alt={`Product thumbnail ${index + 1}`}
@@ -208,7 +208,7 @@ export default function ProductPage() {
             {isInCart ? "Already in cart" : "Add in cart"}
           </button>
           <Link
-            to={'/order'}
+            to={"/order"}
             className="flex items-center justify-center gap-2 px-6 py-3 mt-3 font-medium text-white transition-colors bg-blue-600 rounded-md hover:bg-blue-700"
             onClick={createOrder}
           >

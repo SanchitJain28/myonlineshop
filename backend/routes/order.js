@@ -93,7 +93,7 @@ router.post("/api/create-order", verifyUser, async (req, res) => {
     paymentMethod,
   } = req.body;
   const options = {
-    amount: 100, // Amount in paise
+    amount: amount, // Amount in paise
     currency: "INR",
     receipt: "order_rcptid_11",
   };

@@ -84,7 +84,7 @@ export default function CheckoutPage() {
       }
       // Create order by calling the server endpoint
       const { data } = await axiosInstance.post("/api/create-order", {
-        amount: 50000,
+        amount: total,
         receipt: "receipt#1",
         notes: {},
         itemsPrice,
