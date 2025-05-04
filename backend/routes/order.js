@@ -166,7 +166,7 @@ router.post("/api/webhook/payment", async (req, res) => {
     if (event.event === "payment.captured") {
       const paymentData = event.payload.payment.entity;
       const findOrder =await Order.findOne({
-        paymentDetails: { id: paymentData.id },
+        paymentDetails: { id: paymentData.order_id },
       });
       if(!findOrder) {
         return res.status(404).json({
