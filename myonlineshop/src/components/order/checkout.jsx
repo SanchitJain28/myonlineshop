@@ -26,6 +26,8 @@ export default function CheckoutPage() {
       setLoading(true);
       const user = await currentUser();
       setUser(user);
+      const nameArray = user.name.split(" ")
+      setFormData({...formData,email:user.email,firstName:nameArray[0],lastName:nameArray[1]})
     } catch (error) {
       console.log(error);
     } finally {
@@ -108,7 +110,7 @@ export default function CheckoutPage() {
         amount: "100", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
         name: "Insta mart",
-        description: "Test Transaction",
+        description: "Payment for the order",
         order_id: data.order.id, // This is the order_id created in the backend, // Your success URL
         handler: function (response) {
           // Redirect manually after payment
