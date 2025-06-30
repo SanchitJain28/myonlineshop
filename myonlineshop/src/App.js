@@ -42,9 +42,7 @@ function App() {
     {
       path: "/",
       element: <>
-        {/* <FlowbiteNavbar /> */}
         <Home />
-        {/* <SimpleBottomNavigation /> */}
       </>,
     },
     {
@@ -52,7 +50,6 @@ function App() {
       element: <>
       <Header/>
       <Profile/>
-        {/* <SimpleBottomNavigation /> */}
       </>,
     },
     {
@@ -60,7 +57,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <RegisterPage />
-        <SimpleBottomNavigation />
 
       </>,
     },
@@ -69,7 +65,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <LoginPage />
-        <SimpleBottomNavigation />
 
       </>,
     },
@@ -78,7 +73,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <FileUpload />
-        <SimpleBottomNavigation />
 
       </>,
     },
@@ -87,7 +81,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <ProductPage />
-        <SimpleBottomNavigation />
 
       </>,
     },
@@ -105,7 +98,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <CategoryPage />
-        <SimpleBottomNavigation />
 
       </>,
     },
@@ -123,7 +115,6 @@ function App() {
       element: <>
         <FlowbiteNavbar />
         <OrderPage />
-        <SimpleBottomNavigation />
 
       </>,
     },
@@ -194,7 +185,6 @@ function App() {
       element: <>
         <Header />
         <DashBoard />
-        <SimpleBottomNavigation />
 
       </>,
     },
@@ -203,7 +193,6 @@ function App() {
       element: <>
         <Header />
         <UpdateProduct />
-        <SimpleBottomNavigation />
 
       </>,
     },
