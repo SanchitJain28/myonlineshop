@@ -71,7 +71,7 @@ export default function CartPageImproved() {
         <div className="px-4 py-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link to="/products" className="flex items-center text-gray-600 transition-colors hover:text-gray-900">
+              <Link to="/" className="flex items-center text-gray-600 transition-colors hover:text-gray-900">
                 <ChevronLeft className="w-5 h-5 mr-1" />
                 Continue Shopping
               </Link>
