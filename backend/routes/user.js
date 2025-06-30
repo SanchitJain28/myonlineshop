@@ -253,7 +253,7 @@ router.get("/api/userdetails", verifyUser, async (req, res) => {
   }
 });
 
-router.post("/api/seller-register",verifyUser, async (req, res) => {
+router.post("/api/seller-register", verifyUser, async (req, res) => {
   try {
     const { name, address, phone, email } = req.body;
     const existingSeller = await Seller.findOne({ email });
@@ -271,7 +271,7 @@ router.post("/api/seller-register",verifyUser, async (req, res) => {
       address: address,
     });
     await seller.save();
-    const user= await User.findById(req.user.id);
+    const user = await User.findById(req.user.id);
     user.isSeller = true;
     user.sellerId = seller._id; // Set the sellerId to the newly created seller's ID
     await user.save();
@@ -279,7 +279,7 @@ router.post("/api/seller-register",verifyUser, async (req, res) => {
       status: true,
       message: "Seller account created successfully",
       seller,
-      user
+      user,
     });
   } catch (error) {
     console.log(error);
@@ -292,7 +292,9 @@ router.post("/api/seller-register",verifyUser, async (req, res) => {
 
 router.get("/api/get-seller", verifyUser, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password").populate("sellerId");
+    const user = await User.findById(req.user.id)
+      .select("-password")
+      .populate("sellerId");
     return res.status(200).json({
       status: true,
       message: "seller Fetched Successfully",
@@ -307,3 +309,55 @@ router.get("/api/get-seller", verifyUser, async (req, res) => {
   }
 });
 
+router.get("/api/profile", verifyUser, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Validate user ID
+    if (!userId) {
+      return res.status(400).json({
+        status: false,
+        message: "User ID is required",
+      });
+    }
+
+    // Fetch user and orders concurrently
+    const [user, orders] = await Promise.all([
+      User.findById(userId).select("-password -__v").lean(),
+      order.find({ user: userId }).select("-__v").lean()
+    ]);
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({
+        status: false,
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      status: true,
+      message: "Profile fetched successfully",
+      data: {
+        user,
+        orders: orders || []
+      }
+    });
+
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    
+    // Handle specific error types
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid user ID format",
+      });
+    }
+
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error",
+    });
+  }
+});

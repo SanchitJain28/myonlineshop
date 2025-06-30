@@ -143,6 +143,55 @@ router.post("/api/create-order", verifyUser, async (req, res) => {
   }
 });
 
+router.post("/api/create-cod-order",verifyUser, async (req, res) => {
+  const {
+    firstName,
+    lastName,
+    address,
+    city,
+    state,
+    postalCode,
+    country,
+    itemsPrice,
+    taxPrice,
+    orderItems,
+    shippingPrice,
+    totalPrice,
+    paymentMethod,
+  } = req.body;
+  const customOrderId = "ORDER" + Date.now();
+  const newOrder = new Order({
+    user: req.user.id,
+    orderItems,
+    shippingAddress: {
+      firstName,
+      lastName,
+      address,
+      city,
+      state,
+      postalCode,
+      country,
+    },
+    itemsPrice,
+    taxPrice,
+    customOrderId,
+    shippingPrice,
+    totalPrice,
+    isPaid: false,
+    paidAt: null,
+    isDelivered: false,
+    deliveredAt: null,
+    paymentMethod,
+    paymentDetails: "null",
+  });
+  await newOrder.save();
+  res.json({
+    status: true,
+    message: "Order created successfully",
+    newOrder,
+  });
+});
+
 router.post("/api/webhook/payment", async (req, res) => {
   try {
     const webhookSecret = "sK!9Zr@8Vm#4Lp$Wq2Nt&EbGdX6TcY3Q";
@@ -214,7 +263,9 @@ router.post("/api/webhook/payment", async (req, res) => {
 router.get("/api/get-order-details", verifyUser, async (req, res) => {
   const { orderId } = req.query;
   try {
-    const orderDetails = await Order.find({customOrderId: orderId}).populate("orderItems.product");
+    const orderDetails = await Order.find({ customOrderId: orderId }).populate(
+      "orderItems.product"
+    );
     if (!orderDetails) {
       return res.status(404).json({
         status: false,
@@ -222,11 +273,10 @@ router.get("/api/get-order-details", verifyUser, async (req, res) => {
       });
     }
     return res.status(200).json({
-        status: true,
-        message: "Order details fetched successfully",
-        orderDetails,
-    })
-
+      status: true,
+      message: "Order details fetched successfully",
+      orderDetails,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({

@@ -1,21 +1,34 @@
-
-import { useEffect, useState } from "react"
-import { FiHeart, FiShoppingBag, FiChevronRight, FiFilter, FiList, FiX } from "react-icons/fi"
-import { axiosInstance } from "../../axiosConfig"
-import {Link, useSearchParams} from 'react-router-dom'
+import { useEffect, useState } from "react";
+import {
+  FiHeart,
+  FiShoppingBag,
+  FiChevronRight,
+  FiFilter,
+  FiList,
+  FiX,
+} from "react-icons/fi";
+import { axiosInstance } from "../../axiosConfig";
+import { Link, useSearchParams } from "react-router-dom";
 
 // Product Card Component
 function ProductCard({ product }) {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <Link to={`/product?productid=${product._id}`} className="flex flex-col h-full overflow-hidden bg-white border border-gray-100 rounded-lg shadow-sm group">
+    <Link
+      to={`/product?productid=${product._id}`}
+      className="flex flex-col h-full overflow-hidden bg-white border border-gray-100 rounded-lg shadow-sm group"
+    >
       <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
-        {isLoading && <div className="absolute inset-0 z-10 bg-gray-200 animate-pulse"></div>}
+        {isLoading && (
+          <div className="absolute inset-0 z-10 bg-gray-200 animate-pulse"></div>
+        )}
         <img
           src={
             product.images[0] ||
-            `/placeholder.svg?height=400&width=300&text=${encodeURIComponent(product.category || "Product")}`
+            `/placeholder.svg?height=400&width=300&text=${encodeURIComponent(
+              product.category || "Product"
+            )}`
           }
           alt={product.productName}
           className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
@@ -30,10 +43,16 @@ function ProductCard({ product }) {
         </div>
       </div>
       <div className="flex-grow p-3 sm:p-4">
-        <h3 className="text-base font-medium truncate">{product.productName}</h3>
-        <p className="mt-1 text-xs text-gray-500 sm:text-sm line-clamp-2">{product.productDescription}</p>
+        <h3 className="text-base font-medium truncate">
+          {product.productName}
+        </h3>
+        <p className="mt-1 text-xs text-gray-500 sm:text-sm line-clamp-2">
+          {product.productDescription}
+        </p>
         <div className="flex items-center gap-2 mt-2">
-          <p className="text-base font-semibold sm:text-lg">₹{product.productPrice}</p>
+          <p className="text-base font-semibold sm:text-lg">
+            ₹{product.productPrice}
+          </p>
         </div>
       </div>
       <div className="flex justify-between p-3 pt-0 sm:p-4">
@@ -43,7 +62,7 @@ function ProductCard({ product }) {
         </button>
       </div>
     </Link>
-  )
+  );
 }
 
 // Empty State Component
@@ -55,10 +74,11 @@ function EmptyState() {
       </div>
       <h3 className="text-lg font-medium">No products found</h3>
       <p className="max-w-md mt-2 text-sm text-gray-500">
-        We couldn't find any products in this category. Please try another category or check back later.
+        We couldn't find any products in this category. Please try another
+        category or check back later.
       </p>
     </div>
-  )
+  );
 }
 
 // Product Skeleton Loader
@@ -74,7 +94,7 @@ function ProductSkeleton() {
         <div className="w-full bg-gray-200 rounded-full h-9 animate-pulse"></div>
       </div>
     </div>
-  )
+  );
 }
 
 // Simple Loading Screen Component
@@ -86,12 +106,18 @@ function SimpleLoadingScreen() {
         <p className="mt-4 text-gray-600">Loading products...</p>
       </div>
     </div>
-  )
+  );
 }
 
 // Mobile Filter Sheet Component
-function MobileFilterSheet({ isOpen, onClose, categories, activeTab, onCategoryChange }) {
-  if (!isOpen) return null
+function MobileFilterSheet({
+  isOpen,
+  onClose,
+  categories,
+  activeTab,
+  onCategoryChange,
+}) {
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex md:hidden">
@@ -113,23 +139,31 @@ function MobileFilterSheet({ isOpen, onClose, categories, activeTab, onCategoryC
                   : "text-gray-600 hover:bg-gray-50 border border-gray-200"
               }`}
               onClick={() => {
-                onCategoryChange(category)
-                onClose()
+                onCategoryChange(category);
+                onClose();
               }}
             >
               {category}
-              {activeTab === category && <FiChevronRight className="w-4 h-4 ml-auto" />}
+              {activeTab === category && (
+                <FiChevronRight className="w-4 h-4 ml-auto" />
+              )}
             </button>
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Mobile Sort Sheet Component
-function MobileSortSheet({ isOpen, onClose, sortOptions, activeSortOption, onSortChange }) {
-  if (!isOpen) return null
+function MobileSortSheet({
+  isOpen,
+  onClose,
+  sortOptions,
+  activeSortOption,
+  onSortChange,
+}) {
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex md:hidden">
@@ -151,8 +185,8 @@ function MobileSortSheet({ isOpen, onClose, sortOptions, activeSortOption, onSor
                   : "text-gray-600 hover:bg-gray-50 border border-gray-200"
               }`}
               onClick={() => {
-                onSortChange(option.value)
-                onClose()
+                onSortChange(option.value);
+                onClose();
               }}
             >
               {option.label}
@@ -161,19 +195,21 @@ function MobileSortSheet({ isOpen, onClose, sortOptions, activeSortOption, onSor
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Main Shop Page Component
 export default function ShopPage() {
   let [searchParams] = useSearchParams();
 
-  const [activeTab, setActiveTab] = useState(searchParams.get('category') || "T-Shirts & Tops")
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [sortOption, setSortOption] = useState("featured")
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const [mobileSortOpen, setMobileSortOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get("category") || "T-Shirts & Tops"
+  );
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [sortOption, setSortOption] = useState("featured");
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [mobileSortOpen, setMobileSortOpen] = useState(false);
 
   const categories = [
     "T-Shirts & Tops",
@@ -184,49 +220,52 @@ export default function ShopPage() {
     "Activewear & Sportswear",
     "Nightwear & Loungewear",
     "Accessories",
-  ]
+  ];
 
   const sortOptions = [
     { value: "featured", label: "Featured" },
     { value: "price-asc", label: "Price: Low to High" },
     { value: "price-desc", label: "Price: High to Low" },
     { value: "newest", label: "Newest" },
-  ]
+  ];
 
   const fetchProductsByCategory = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const category = encodeURIComponent(activeTab) 
-      console.log(category)
+      const category = encodeURIComponent(activeTab);
+      console.log(category);
       const {
         data: { data },
       } = await axiosInstance.get(
         `/api/get-product-by-category?category=${category}`
-      ); 
-      setProducts([...data])
+      );
+      setProducts([...data]);
     } catch (error) {
-      console.error("Error fetching products:", error)
-      setProducts([])
+      console.error("Error fetching products:", error);
+      setProducts([]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    
-    fetchProductsByCategory()
-  }, [activeTab, sortOption])
+    fetchProductsByCategory();
+  }, [activeTab, sortOption]);
+
+  useEffect(() => {
+    setActiveTab(searchParams.get("category"));
+  }, [searchParams.get("category")]);
 
   // Handle category change
   const handleCategoryChange = (category) => {
-    setActiveTab(category)
-    setMobileFiltersOpen(false)
-    searchParams.set('category', category)
-    window.history.replaceState({}, '', `?${searchParams.toString()}`)
-  }
+    setActiveTab(category);
+    setMobileFiltersOpen(false);
+    searchParams.set("category", category);
+    window.history.replaceState({}, "", `?${searchParams.toString()}`);
+  };
 
   if (loading && products.length === 0) {
-    return <SimpleLoadingScreen />
+    return <SimpleLoadingScreen />;
   }
 
   return (
@@ -290,7 +329,9 @@ export default function ShopPage() {
                     onClick={() => setActiveTab(category)}
                   >
                     {category}
-                    {activeTab === category && <FiChevronRight className="w-4 h-4" />}
+                    {activeTab === category && (
+                      <FiChevronRight className="w-4 h-4" />
+                    )}
                   </button>
                 </li>
               ))}
@@ -304,7 +345,9 @@ export default function ShopPage() {
           <div className="items-center justify-between hidden mb-6 md:flex">
             <div>
               <h1 className="text-2xl font-bold">{activeTab}</h1>
-              <p className="mt-1 text-sm text-gray-500">{products.length} products found</p>
+              <p className="mt-1 text-sm text-gray-500">
+                {products.length} products found
+              </p>
             </div>
             <div className="flex items-center gap-2">
               <select
@@ -349,5 +392,5 @@ export default function ShopPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

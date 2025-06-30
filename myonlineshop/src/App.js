@@ -33,6 +33,7 @@ import ReturnAndRefundPolicy from './components/Others/return-refund-policy';
 import NewCancellationPolicy from './components/Others/Cancelltion-policy';
 import ContactUs from './components/Others/contact-us';
 import Footer from './components/UI/Footer';
+import Profile from './components/User/Profiles';
 
 
 
@@ -43,6 +44,14 @@ function App() {
       element: <>
         {/* <FlowbiteNavbar /> */}
         <Home />
+        {/* <SimpleBottomNavigation /> */}
+      </>,
+    },
+    {
+      path: "/profile",
+      element: <>
+      <Header/>
+      <Profile/>
         {/* <SimpleBottomNavigation /> */}
       </>,
     },

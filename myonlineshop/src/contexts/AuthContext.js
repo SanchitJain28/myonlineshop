@@ -16,16 +16,15 @@ export function AuthContext(props) {
       ? JSON.parse(localStorage.getItem("sellerDetails"))
       : null
   );
-  
 
   const currentUser = async () => {
     try {
-      const response = await axiosInstance.get("/api/getuser",{
-        headers:{
-          'Authorization':localStorage.getItem("accessToken")
-        }
+      const response = await axiosInstance.get("/api/getuser", {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
       });
-      console.log(response)
+      console.log(response);
       return response.data.user;
     } catch (error) {
       console.log(error);
@@ -141,7 +140,7 @@ export function AuthContext(props) {
         getUserInfo,
         sellerDetails,
         setSellerDetails,
-        currentUser
+        currentUser,
       }}
     >
       {props.children}
