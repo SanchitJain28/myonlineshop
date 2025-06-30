@@ -13,6 +13,7 @@ import { getSellerInformation as Sellermiddleware } from "../MiddleWare/sellerAc
 import { ProductModel as Product } from "../Schemmas/ProductSchemmas.js";
 import { verifyUser } from "../MiddleWare/userMiddleWare.js";
 
+
 //Creating a product
 router.post(
   "/api/createproduct",
@@ -86,7 +87,7 @@ router.get("/api/get-product-by-category", async (req, res) => {
         message: "Please provide a category",
       });
     }
-    console.log(category)
+    console.log(category);
     const data = await Product.find({ productCategory: category });
     return res.json({
       success: true,
@@ -208,5 +209,36 @@ router.delete("/api/deleteproduct", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.post("/api/search", async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({
+      status: false,
+      message: "Search query `q` is required.",
+    });
+  }
+
+  try {
+    const searchedProducts = await Product.find({
+      $or: [
+        { productName: { $regex: q, $options: "i" } },
+        { productCategory: { $regex: q, $options: "i" } },
+      ], // case-insensitive partial match
+    }).limit(20);
+
+    return res.status(200).json({
+      status: true,
+      searchedProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: false,
+      message: "Unexpected Error occurred",
+    });
   }
 });

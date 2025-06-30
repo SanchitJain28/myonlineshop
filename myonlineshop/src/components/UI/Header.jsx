@@ -1,8 +1,17 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, User, Menu, X, Search, Heart, Store } from "lucide-react";
+import {
+  ShoppingCart,
+  User,
+  Menu,
+  X,
+  Search,
+  Heart,
+  Store,
+} from "lucide-react";
 import { axiosInstance } from "../../axiosConfig";
 import { productAPI } from "../../contexts/ProductContext";
+import SearchBar from "./LoadingScreen/SearchBar";
 
 export default function Header() {
   const [user, setUser] = React.useState(null);
@@ -33,7 +42,7 @@ export default function Header() {
   const categories = [
     {
       name: "T-Shirts & Tops",
-      img: "https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80",
+      img: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTN0NVm10rebj2sRCrQUZEnxCgNO6bB_a56OOOQxuHKqoVRx__SidsKoZHaw-n5R8C5GqHxKYJbeq2RKl_L-Y48MvyGKG1TNuA5X_qQijSkdbMJPGp7aytI",
     },
     {
       name: "Shirts & Blouses",
@@ -84,12 +93,14 @@ export default function Header() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
             <div className="flex items-center">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="flex items-center gap-2 text-xl font-bold text-gray-900 transition-colors duration-200 lg:text-2xl hover:text-blue-600"
               >
                 <div className="flex items-center justify-center w-8 h-8 rounded-lg lg:w-10 lg:h-10 bg-gradient-to-br from-blue-600 to-purple-600">
-                  <span className="text-sm font-bold text-white lg:text-base">IM</span>
+                  <span className="text-sm font-bold text-white lg:text-base">
+                    IM
+                  </span>
                 </div>
                 <span className="hidden sm:block">Insta Mart</span>
               </Link>
@@ -113,8 +124,18 @@ export default function Header() {
               <div className="relative group">
                 <button className="flex items-center gap-1 text-sm font-medium text-gray-700 transition-colors duration-200 hover:text-gray-900">
                   More
-                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <svg
+                    className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
                 <div className="absolute left-0 invisible w-48 mt-2 transition-all duration-200 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 top-full group-hover:opacity-100 group-hover:visible">
@@ -145,8 +166,8 @@ export default function Header() {
               </button>
 
               {/* Sell Link */}
-              <Link 
-                to="/sellerdashboard" 
+              <Link
+                to="/sellerdashboard"
                 className="items-center hidden gap-1 px-3 py-2 text-sm font-medium text-gray-700 transition-all duration-200 rounded-lg sm:flex hover:text-gray-900 hover:bg-gray-100"
               >
                 <Store size={16} />
@@ -154,8 +175,8 @@ export default function Header() {
               </Link>
 
               {/* Categories Link */}
-              <Link 
-                to="/sale-page" 
+              <Link
+                to="/sale-page"
                 className="hidden px-3 py-2 text-sm font-medium text-gray-700 transition-all duration-200 rounded-lg sm:block hover:text-gray-900 hover:bg-gray-100"
               >
                 Categories
@@ -167,8 +188,8 @@ export default function Header() {
               </button>
 
               {/* Cart */}
-              <Link 
-                to="/cart-page" 
+              <Link
+                to="/cart-page"
                 className="relative p-2 text-gray-600 transition-all duration-200 rounded-lg hover:text-gray-900 hover:bg-gray-100"
               >
                 <ShoppingCart size={20} />
@@ -180,12 +201,16 @@ export default function Header() {
               </Link>
 
               {/* User Account */}
-              <Link 
-                to={user ? "/profile" : "/login"} 
+              <Link
+                to={user ? "/profile" : "/login"}
                 className="flex items-center gap-2 p-2 text-gray-600 transition-all duration-200 rounded-lg hover:text-gray-900 hover:bg-gray-100"
               >
                 <User size={20} />
-                {user && <span className="hidden text-sm font-medium lg:block">{user.name}</span>}
+                {user && (
+                  <span className="hidden text-sm font-medium lg:block">
+                    {user.name}
+                  </span>
+                )}
               </Link>
 
               {/* Mobile Menu Button */}
@@ -200,11 +225,11 @@ export default function Header() {
         </div>
 
         {/* Mobile Menu */}
-        <div 
+        <div
           className={`xl:hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen 
-              ? 'max-h-96 opacity-100' 
-              : 'max-h-0 opacity-0 overflow-hidden'
+            isMenuOpen
+              ? "max-h-96 opacity-100"
+              : "max-h-0 opacity-0 overflow-hidden"
           }`}
         >
           <div className="bg-white border-t border-gray-200">
@@ -240,42 +265,7 @@ export default function Header() {
       </header>
 
       {/* Search Overlay */}
-      <div 
-        className={`fixed inset-0 z-50 transition-all duration-300 ${
-          isSearchOpen 
-            ? 'opacity-100 visible' 
-            : 'opacity-0 invisible'
-        }`}
-      >
-        <div 
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-          onClick={() => setIsSearchOpen(false)}
-        />
-        <div className="relative z-10 max-w-2xl px-4 mx-auto mt-20">
-          <form onSubmit={handleSearch} className="relative">
-            <input
-              type="text"
-              placeholder="Search for products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-6 py-4 pr-12 text-lg bg-white shadow-2xl rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-              autoFocus
-            />
-            <button
-              type="submit"
-              className="absolute p-2 text-gray-600 transition-colors duration-200 transform -translate-y-1/2 right-4 top-1/2 hover:text-gray-900"
-            >
-              <Search size={20} />
-            </button>
-          </form>
-          <button
-            onClick={() => setIsSearchOpen(false)}
-            className="absolute p-2 text-white transition-colors duration-200 -top-12 right-4 hover:text-gray-300"
-          >
-            <X size={24} />
-          </button>
-        </div>
-      </div>
+      <SearchBar isSearchOpen={isSearchOpen} onSearchClosed={setIsSearchOpen}/>
     </>
   );
 }
